@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 本地存储就是为了把一些临时数据存盘,方便下次打开应用时再使用.
+        // 本地存储时html5的其中一个新特性.
+        // 没有本地存储之前,浏览器都是通过cookie来存储临时数据的.
+
+        // 通过cookie临时存储token数据.这个数据的值是asdjfhajsdhfjahdsj
+        // document.cookie = 'token=asdjfhajsdhfjahdsj';
+        // 通过cookie临时存储username数据.这个数据的值是carlmeng2009
+        document.cookie = 'username=carlmeng2009';
+
+        // cookie可以设置过期时间.有效时间内,都可以一直访问,不会被销毁
+        document.cookie = 'password=13838389438; Expires=' + new Date('2020-10-11 16:46:50').toUTCString();
+
+        // cookie可以设置过期时间.有效时间内,都可以一直访
+
+        // localStorage.setItem('token','asdjfhajsdhfjahdsj');
+
+    </script>
+
+</body>
+</html>

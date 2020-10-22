@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 声明变量 (要做的事情) (时间，地点，人物)
+        // 这个变量什么时候声明，声明在哪里（作用域）。
+        // let x = 10;
+
+        // 如何循环声明变量。循环5次，声明5个不同的变量。
+
+        {
+            // let声明的变量认识块级作用域
+            // x声明在了一个块级作用域内。
+            let x = 20;
+        }
+
+        console.log(x);
+
+        function fn(){
+            // fn内的y声明在fn内。
+            let y = 100;
+        }
+
+        function add(){
+            // add内的y声明在add内
+            let y = 200;
+        }
+
+        // add内的y和fn内的y声明在不同的作用域内，因此是不同的y
+
+        // for(let i=0;i<5;i++){
+        //     let x = 20;
+        // }
+
+    </script>
+
+</body>
+</html>

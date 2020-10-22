@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 隐式转换是什么，有啥用？
+
+        // x得到10*'坤坤'。数字如何跟字符串进行算术运算？
+        // 因为字符串无法和数字进行计算，因此浏览器就偷偷的吧字符串转换成了数字。
+        // 转换之后，再计算。
+
+        // 把字符串类型转换成数字类型 （隐式转换的例子）
+        let x = 10*'坤坤';
+
+        // Number('坤坤') -> 显示（手动）转换 '坤坤' 为 number
+
+        // 当需要特定数据类型的地方，得到了不匹配的数据类型，js都会进行隐身转换
+        // 例如算术运算符的操作数应该式数字类型，如果不是就隐身转换为数字类型
+        // 例如判断的()里应该是布尔值，如果不是，就隐式转换为布尔值。
+
+        let obj = {name:'坤坤'}
+        // alert的参数应该是字符串，不是，就隐式转换
+        alert(obj);
+
+    </script>
+
+</body>
+</html>

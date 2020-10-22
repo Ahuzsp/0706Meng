@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        const App = {
+            // template的作用 -> 生成虚拟节点 -> 生成响应式视图
+            // template是字符串,字符串如何转换为虚拟节点?
+            // 这里需要编译,(AST抽象语法树).
+            // 能不能直接跳过编译过程,直接生成虚拟节点?提高性能.
+            // 可以使用render函数来代替template的字符串模板
+            // template:`
+            //     <div id='app'>
+            //         <h3>App组件</h3>
+            //     </div>
+            // `,
+            
+            // 直接跳过了编译字符串模板的过程,直接通过render函数生成虚拟节点.
+            // render函数提高了性能,但是降低了可读性和开发效率
+            // render函数的回调函数我们习惯用h来代替.
+            render(h){
+                return h('div',{
+                    attrs:{id:'app'}
+                },[
+                    h('h3',null,['App组件'])
+                ]);
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            // template:`<App />`,
+            // render:function(h){
+            //     return h(App)
+            // },
+            render:h=>h(App),
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <a href="#">首页</a>
+        <a href="#">新闻</a>
+        <a href="#">攻略</a>
+        <div>
+            <h3>首页</h3>
+            <p>首页的内容..<span>2018-07-22</span></p>
+        </div>
+        <div>
+            <h3新闻</h3>
+            <p>新闻的内容..<span>2018-07-23</span></p>
+        </div>
+        <div>
+            <h3>攻略</h3>
+            <p>攻略的内容..<span>2018-07-24</span></p>
+        </div>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script src="../js/vue-router.js"></script>
+<script>
+
+    // 异步路由:动态加载路由选项.例如一开始2个选项,后面根据需求动态加载额外的3个路由选项.
+    // 如何在配置好的路由选项后再额外添加路由选项.核心方法:router.addRoutes
+
+    // 后台管理系统的权限逻辑会需要使用router.addRoutes.
+    // 后台管理系统有很多角色权限,例如普通管理员,超级管理源,一般用户.
+    // 不同角色能够访问的页面的数量不一样.
+
+    const Login = {
+        template:`
+            <div>
+                <h3>登录</h3>
+                <input type='text' /><br />
+                <input type='password' />
+                <button @click='studentLogin'>学生登录</button>
+                <button @click='driverLogin'>司机登录</button>
+            </div>
+        `,
+        methods:{
+            driverLogin(){
+                // 添加请假路由选项
+                routes.push({
+                    path:'/driver',
+                    component:Driver
+                });
+                // 为司机角色动态配置学生的权限路由
+                this.$router.addRoutes([...routes])
+            },
+            studentLogin(){
+                // 添加请假路由选项
+                routes.push({
+                    path:'/student',
+                    component:Student
+                });
+                // 为学生角色动态配置学生的权限路由
+                this.$router.addRoutes([...routes])
+            }
+        }
+    }
+
+    const NotFound = {
+        template:`
+            <div>
+                <h3>404</h3>
+                <p>你要查看的页面回家过国庆了</p>
+            </div>
+        `
+    }
+    
+    const Driver = {
+        template:`
+            <div>
+                <h3>审批页面</h3>
+                <p>审批页面..</p>
+            </div>
+        `
+    }
+
+    const Student = {
+        template:`
+            <div>
+                <h3>请假页面</h3>
+                <p>请假页面..</p>
+            </div>
+        `
+    }
+
+    // 所有用户都可以查看的默认路由选项.
+    const routes = [
+        {
+            path:'/login',
+            component:Login
+        },{
+            path:'/notFound',
+            component:NotFound
+        },{
+            path:'/',
+            redirect:'/login'
+        }
+    ]
+
+    const router = new VueRouter({routes})
+
+    const App = {
+        template:`
+            <div id='app'>
+                <router-link to='/login'>登录</router-link>
+                <router-link to='/notFound'>404</router-link>
+                <router-link to='/student'>学生</router-link>
+                <router-link to='/driver'>司机</router-link>
+                <router-view />
+            </div>
+        `
+    }
+
+    new Vue({
+        router,
+        render:h=>h(App),
+        components:{App}
+    }).$mount('#app')
+    
+    
+</script>
+</html>

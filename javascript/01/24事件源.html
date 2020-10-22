@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        div{
+            width: 200px;
+            height: 200px;
+            border:1px solid #000;
+        }
+
+        button{
+            margin-left:300px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div>
+        <button>按钮</button>
+    </div>
+
+    <script>
+
+        // 事件源：事件真正发生的标签。
+
+        let oDiv = document.querySelector('div');
+        let oBtn = document.querySelector('button');
+
+        document.onclick = function(){
+            console.log('document被点击了');
+        }
+
+        document.body.onclick = function(ev){
+            console.log('body被点击了');
+        }
+
+        oDiv.onclick = function(ev){
+            console.log('div被点击了');
+            // this表示绑定事件的标签
+            console.log('this',this); //oDiv
+            // 事件源表示发生事件的标签
+            console.log('事件源',ev.target); //button
+        }
+
+
+    </script>
+
+</body>
+</html>

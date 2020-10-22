@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let oDiv = document.querySelector('div');
+
+        // 报错 
+        // 因为let oDiv = document.querySelector('div')不是表达式
+        // 不是表达式就没有返回值。
+        // 没有返回值就无法判断。
+        // if(oDiv = document.querySelector('div')){}
+
+        // 报错
+        // 因为if(true){200}不是表达式。
+        // let x = if(true){200};
+
+        // 任何运算符的操作数都可以写任意表达式
+        // 函数调用的实参，出参都可以写任意表达式
+        // if,switch,while的()都可以先任意表达式
+
+        // 把0?"888":20的返回值 + 表达式oDiv = document.querySelector('div')的返回值
+        let res = (0?"888":20) + (oDiv = document.querySelector('div'));
+
+    </script>
+
+</body>
+</html>

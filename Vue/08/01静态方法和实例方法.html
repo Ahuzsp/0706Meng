@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 静态方法和实例方法。
+
+        // 静态方法 -> 类调用的方法 -> 静态方法在类的原型链上.
+        // 实例方法 -> 实例调用的方法 -> 实例方法在实例的原型链上.
+
+        // 静态方法实例是无法访问的.
+
+        // Person -> Function.prototype -> Object.prototype
+        // arr -> Array.prototype -> Object.prototype
+        // {} -> Object.prototype
+
+        function Person(){}
+
+        // p -> Person.prototype -> Object.prototype
+        let p = new Person();
+
+        let obj = {name:99000};
+
+        // values就是一个静态方法
+        let arr = Object.values(obj);   
+        // 不能这样写,因为values不在实例obj的原型链上
+        let arr = obj.values();
+
+
+    </script>
+
+</body>
+</html>

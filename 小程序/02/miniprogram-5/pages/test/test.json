@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "list-item":"../../components/item/item",
+    "children":"../../components/children/children",
+    "box":"../../components/box/box"
+  }
+}

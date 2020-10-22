@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        // Vue不能在子组件中修改父组件数据.
+
+        // 父组件可以把引用类型的数据传递给子组件,子组件修改
+        // 不能修改这个引用类型的引用.
+
+        class Item extends React.Component{
+            render(){
+                console.log('render',this.props);
+                // 解构赋值获取所有的父组件传递的数据.
+                let {item,abc,data} = this.props;
+                return (
+                    <li>
+                        {item}-
+                        <button onClick={this.del.bind(this)}>删除</button>
+                    </li>
+                )
+            }
+
+            del(){
+                // 不能在子组件中修改父组件传递的数据
+                // this.props.item = 888888888888;
+                // props传递的数据如果是引用类型,则传递的是该数据的引用.不能修改这个引用,否则报错
+                // this.props.arr = [111,333];
+
+                // 不修改引用,而是修改这个引用背后的对象,则不会报错
+                this.props.arr.splice(this.props.i,1);
+
+                // 重新挂载整个组件.
+                ReactDOM.render(<App />,document.getElementById('root'))
+            }
+        }
+
+        class App extends React.Component{
+            constructor(){
+                super();
+                this.arr = [1111,2222,333];
+            }
+            render(){
+                return (
+                    <div>
+                        <h3>根组件</h3>
+                        <ul>
+                        {
+                            this.arr.map((item,i)=>(
+                                <Item item={item} arr={this.arr} i={i} key={i}  />
+                            ))
+                        }
+                        </ul>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

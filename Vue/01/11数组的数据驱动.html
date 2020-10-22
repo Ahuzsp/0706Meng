@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <ul>
+            <li v-for='(item,i) in arr'>
+                <button @click='fn(i)'>删除</button>{{item}}
+            </li>
+        </ul>        
+        <ul>
+            <li v-for='(item,i) in arr'>
+                <button @click='up(i)'>上移</button>{{item}}
+            </li>
+        </ul>        
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 数据驱动.
+        // 点击按钮,删除li.3个li变成两个.这个变化通过删除数组的一个元素来驱动.
+        // 数据如何变化,视图就跟着变化.
+
+        // 数据驱动.
+        // 点击按钮,交换两个li的位置,这个变化通过交换两个数组元素的位置来驱动.
+        // 数据如何变化,视图就跟着变化.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                arr:[11,22,33]
+            },
+            methods:{
+                fn(i){
+                    this.arr.splice(i,1);
+                },
+                up(i){
+                    console.log(i);
+                    let arr = this.arr;
+                    if(i!=0){
+                        // 前面的元素
+                        let prev = arr[i-1];
+                        // 当前元素
+                        let now = arr[i];
+                        // 删除两个元素,再替换掉.
+                        arr.splice(i-1,2,now,prev);
+                    }                   
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

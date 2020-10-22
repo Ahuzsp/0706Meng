@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id='app'>
+        <select @change='select1' v-model='country'>
+            <option 
+                v-for='(item,i) in first'
+                :value="item.AREA_NAME"
+            >
+                {{item.AREA_NAME}}
+            </option>
+        </select>
+        <select @change='select2' v-model='city'>
+            <option 
+                v-for='(item,i) in second'
+                :value="item.AREA_NAME">
+                {{item.AREA_NAME}}
+            </option>
+        </select>
+        <select v-model='district'>
+            <option 
+                v-for='(item,i) in third'
+                :value="item.AREA_NAME">
+                {{item.AREA_NAME}}
+            </option>
+        </select>
+        <div>
+            <span>省:{{country}}</span>
+            <span>市:{{city}}</span>
+            <span>区:{{district}}</span>
+        </div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 3个select需要3个数组来驱动视图.
+        // 第一个select选择数据后,后续的select自动筛选出对应二级数据.(视图更新)
+
+        let info = [
+            {
+                index: 1,
+                AREA_NAME: '广东',
+                city: [
+                    {
+                        index: 1,
+                        AREA_NAME: '深圳市',
+                        district: [
+                            {
+                                index: 1,
+                                AREA_NAME: '宝安区'
+                            },
+                            {
+                                index: 2,
+                                AREA_NAME: '南山区'
+                            },
+                            {
+                                index: 3,
+                                AREA_NAME: '福田区'
+                            }
+                        ]
+                    },{
+                        index: 1,
+                        AREA_NAME: '广州市',
+                        district: [
+                            {
+                                index: 1,
+                                AREA_NAME: '白云区'
+                            },
+                            {
+                                index: 2,
+                                AREA_NAME: '青秀区'
+                            },
+                            {
+                                index: 3,
+                                AREA_NAME: '崇文区'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                index: 2,
+                AREA_NAME: '河北',
+                city: [
+                    {
+                        index: 2,
+                        AREA_NAME: '石家庄市',
+                        district: [
+                            {
+                                index: 4,
+                                AREA_NAME: '长安区'
+                            },
+                            {
+                                index: 5,
+                                AREA_NAME: '桥东区'
+                            },
+                            {
+                                index: 6,
+                                AREA_NAME: '桥西区'
+                            }
+                        ]
+                    },
+                    {
+                        index: 3,
+                        AREA_NAME: '唐山市',
+                        district: [
+                            {
+                                index: 7,
+                                AREA_NAME: '路南区'
+                            },
+                            {
+                                index: 8,
+                                AREA_NAME: '路北区'
+                            },
+                            {
+                                index: 9,
+                                AREA_NAME: '古冶区'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+
+        new Vue({
+            el:'#app',
+            data:{
+                first:info,
+                second:info[0].city,
+                third:info[0].city[0].district,
+                country:'广东',
+                city:'深圳市',
+                district:'南山区'
+            },
+            methods:{
+                select1(){
+                    let i = this.first.findIndex((item)=>{
+                       return item.AREA_NAME == this.country
+                    });
+                    this.second = info[i].city;
+                    this.third = this.second[0].district;
+
+                    this.city = this.second[0].AREA_NAME;
+                    this.district = this.third[0].AREA_NAME;
+                },
+                select2(){
+                    let i = this.second.findIndex((item)=>{
+                       return item.AREA_NAME == this.city
+                    });
+                    this.third = this.second[i].district;
+                    this.district = this.third[0].AREA_NAME;
+                }
+            }
+        })
+        
+
+    </script>
+
+</body>
+
+</html>

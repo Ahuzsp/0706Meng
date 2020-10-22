@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+			
+		</div>
+	</body>
+	<script src="../js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/babel.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/babel">
+		
+		//用react实现购物车全选功能.
+		//分割线上的复选框做成组件.列表渲染.(类别渲染的数据是state)
+		
+		//提示:
+		//分割线上面的3个复选框和全选复选框，都是受控组件。(受state数据控制)
+		//想要更新他们的状态,只能通过更新对应的state来实现.
+		
+		const {Component,Fragment} = React;
+
+		// 1:是props的不是state
+		// 2:永远不变的不是state
+		// 3:由别的数据计算得来,不是state
+
+		class Item extends Component{
+			render(){
+				const {item,setArr} = this.props;
+				return (
+					<li>
+						<input type="checkbox" onChange={setArr} checked={item.checked} />{item.content}
+					</li>
+				)
+			}
+		}
+
+		class App extends Component{
+			constructor(props){
+				super(props);
+				// 组件状态数据(响应式数据)
+				this.state = {
+					arr:[
+						{content:111,checked:false},
+						{content:222,checked:false},
+						{content:333,checked:false}
+					],
+					all:false
+				}
+			}
+			render(){
+				return (
+					<Fragment>
+						<ul>
+						{
+							this.state.arr.map((item,i)=>(
+								<Item key={i} item={item} setArr={this.setArr.bind(this,i)} />
+							))
+						}
+						</ul>
+						<hr />
+						<input type='checkbox' onChange={this.selectAll.bind(this)} checked={this.state.all} />全选
+					</Fragment>
+				)
+			}
+
+			setArr(i,ev){
+
+				// 最简单的深拷贝缓存数组
+				let arr = JSON.parse(JSON.stringify(this.state.arr));
+
+				arr[i].checked = ev.target.checked;
+
+				this.setState({
+					arr:[...arr]
+				},()=>{
+					this.setState({
+						all:this.state.arr.every((item,i)=>item.checked)
+					})					
+				})
+			}
+
+			selectAll(ev){
+				// 缓存checked状态
+				let checked = ev.target.checked;
+				this.setState({
+					all:checked
+				},()=>{
+					// 最简单的深拷贝缓存数组
+					let arr = JSON.parse(JSON.stringify(this.state.arr));
+					// 遍历所有的项目,切换勾选状态
+					arr.forEach((item,i)=>{
+						item.checked = checked
+					})
+					// setState更新最新状态
+					this.setState({
+						arr:[...arr]
+					})
+				})
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'))
+		
+	</script>
+</html>

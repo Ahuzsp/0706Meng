@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src='js/vue-router.js'></script>
+    <script>
+
+        // 路由传参（路由的组件通信）：
+        //     从路由A组件跳转到路由B组件的过程中，如何把A组件的数据传递给B组件
+
+        // 从App传递数据给其他组件,可以使用props传递.
+
+        const Home = {
+            template:`
+                <div>
+                    <h3>首页</h3>
+                    <div>{{num}}</div>
+                    <button @click='toNews'>Home里面的按钮</button>
+                    <input type='text' v-model='msg' />
+                </div>
+            `,
+            props:['num'],
+            methods:{
+                toNews(){
+                    // 从首页跳到新闻页
+                    // query路由传参会通过url参数来传递。因此长度有限制.
+                    // query传递的参数,在新闻页刷新后还存在.
+                    // query传参,能使用path键名和name键名
+                    this.$router.push({
+                        // name:'news',
+                        path:'/news',
+                        query:{
+                            msg:this.msg
+                        }
+                    })
+                    
+                    // 通过params传参,只能使用name做跳转的键名. 
+                    // params传递的参数,在新闻页刷新后就会丢失.                  
+                    // this.$router.push({
+                    //     name:'news',
+                    //     params:{
+                    //         msg:this.msg
+                    //     }
+                    // })
+                }
+            },
+            data(){
+                return {msg:''}
+            }
+        }
+
+        const News = {
+            template:`
+                <div>
+                    <h3>新闻</h3>
+                    <div>{{msg}}</div>
+                </div>
+            `,
+            // data(){
+            //     return{
+            //         msg:''
+            //     }
+            // },
+            computed:{
+                msg(){
+                    return this.$route.query.msg
+                    // return this.$route.params.msg
+                }
+            },
+            created(){
+                // this.msg = this.$route.query.msg
+            }
+        }
+
+        const Sport = {
+            template:`
+                <div>体育</div>
+            `
+        }
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/',
+                    component:Home,
+                    name:'home'
+                },{
+                    path:'/news',
+                    component:News,
+                    name:'news'
+                },{
+                    path:'/sport',
+                    component:Sport,
+                    name:'sport'
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>                   
+                    <button @click='toPage("/")'>首页</button>
+                    <button @click='toPage("/news")'>新闻</button>
+                    <button @click='toPage("/sport")'>体育</button>
+                    <keep-alive>
+                        <router-view :num='num' />
+                    </keep-alive>
+                </div>
+            `,
+            methods:{
+                toPage(hash){
+                    this.$router.push({path:hash});
+                }
+            },
+            data(){
+                return {num:'100000'}
+            }
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

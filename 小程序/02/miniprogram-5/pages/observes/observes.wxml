@@ -1,0 +1,6 @@
+<!--pages/observes/observes.wxml-->
+<view>
+  <view>observes组件</view>
+  <observes wx:if='{{flag}}' />
+  <button bindtap='delObserves'>移除observes组件</button>
+</view>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // 如果受控组件是一个复选框,则应该吧flag绑定到checked属性上
+
+    class App extends Component{
+
+        state = {
+            flag:true
+        }
+
+        render(){     
+            return (
+                <Fragment>
+                    <input type='checkbox' onChange={this.fn.bind(this)} checked={this.state.flag} />
+                    { this.state.flag && <div>11111111111</div> }
+                </Fragment>
+            )
+        }
+
+        fn(ev){
+            // 设置total并且更新视图
+            this.setState({
+                flag:ev.target.checked
+            })
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

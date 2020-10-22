@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let x = 200;
+
+        function fn(){
+            let x = 100;
+            function add(){
+                x = 300;
+                console.log(x); // 300
+            }
+            add();
+            console.log(x);// 300
+        }
+        fn();
+        console.log(x);// 200
+
+        // 1:声明x = 200 (全局)
+        // 2:调用fn (全局)
+        //     a：声明x = 100；（fn作用域）
+        //     b：add调用
+        //         x = 300; (add -> fn)(把fn内的x变成了300)
+        //         打印fn内的x
+        //     c：打印fn内的x （fn->全局）
+        // 3：打印x。
+
+    </script>
+
+</body>
+</html>

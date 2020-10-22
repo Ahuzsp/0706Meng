@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect} = ReactRouterDOM;
+        
+        // React现在的路由是4.0以下的版本。插件名：react-router
+
+        
+        // React现在的路由是5.0+版本。插件名：react-router-dom
+        // React现在的路由是4.0以下的版本。插件名：react-router
+
+        // React的路由没有路由配置,但是可以自定义.
+        // 写React的路由就是在写React的视图.
+        // 写路由需要一些内置的路由组件.
+
+        // HashRouter包裹所有的路由内置组件
+        // NavLink是a标签
+        // Route组件就是设置path和component的对应关系
+        // Redirect组件用于重定向.
+
+        class Home extends Component{
+			render(){
+				return <h3>Home组件</h3>
+			}
+        }
+        
+        class News extends Component{
+			render(){
+				return <h3>News组件</h3>
+			}
+        }
+        
+        class Sport extends Component{
+			render(){
+				return <h3>Sport组件</h3>
+			}
+		}
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <HashRouter>
+                            <NavLink to='/home'>首页</NavLink>
+                            <NavLink to='/news'>新闻</NavLink>
+                            <NavLink to='/sport'>体育</NavLink>
+                            <Route path='/home' component={Home} />                        
+                            <Route path='/news' component={News} />                        
+                            <Route path='/sport' component={Sport} />
+                            <Redirect path='/' to='/home' />                        
+                        </HashRouter>
+                    </Fragment>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+
+	</script>
+</html>

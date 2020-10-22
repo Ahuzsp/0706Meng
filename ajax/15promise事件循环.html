@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 1,5,8,2,3,6,4,7
+
+        // 同步:[console.log(1),console.log(5),console.log(8)]
+        // 微:[console.log(2),console.log(6)],
+        // 宏:[console.log(7)],
+
+        // 步骤:
+        // 1:new Promise
+        //     console.log(1);
+        //     resolve();
+        // 2:new Promisec
+        //     console.log(5);
+        //     resolve();
+        // 3:定时器
+        // 4:打印8
+
+        // 打印2的微任务
+        //    console.log(2);
+        //    console.log(3); (同步)
+        //    resolve(); (微任务) 
+        //    console.log(4) (放到微任务队列的最后面)
+
+        new Promise((resolve,reject)=>{
+            console.log(1);
+            resolve();
+        }).then(()=>{
+            console.log(2);
+            return new Promise((resolve,reject)=>{
+                console.log(3);
+                resolve();
+            })
+        }).then(()=>{
+            console.log(4)
+        })
+        
+        new Promise((resolve,reject)=>{
+            console.log(5);
+            resolve();
+        }).then(()=>{
+            console.log(6);
+        })
+
+        setTimeout(()=>{
+            console.log(7)
+        },0)
+
+        console.log(8);
+        
+    </script>
+
+</body>
+</html>

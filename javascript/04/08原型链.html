@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let arr = [1,2,3];
+        let obj = {};
+        arr.push(100);
+
+        // arr没有push方法,又不用call和apply,是如何调用push的?
+        // arr没有push，但是它爸爸有push。
+        // arr没有push，它爸爸也没有push,可能它爷爷有...
+
+        // 原型链:直系家族谱系
+        //    确定某个属性能不能使用.
+
+        // 数组的家族谱系(原型链)
+        //    arr -> Array.prototype -> Object.prototype -> null
+
+        // 纯对象的家族谱系(原型链)
+        //    obj -> Object.prototype -> null
+
+        // arr的爸爸有push,arr的爷爷也有push,arr.push调用的是哪个push?
+        //     调用的是离自己最近的push.
+        
+
+    </script>
+
+</body>
+</html>

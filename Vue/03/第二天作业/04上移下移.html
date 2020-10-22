@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'>
+			<input type="text" value="" />
+			<input type="button" value="发表" />
+			<ul>
+				<li>
+					<span>1</span><span>11111111</span>
+					<input type="button" value="上移"  />					
+					<input type="button" value="下移"  />
+					<input type="button" value="删除" />
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script src="../js/vue.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		// 以上的li做成组件.
+		// 点击发表,生成一个li,li内第二个span的内容从文本框获取.第一个span显示序号.
+
+//		提示:
+//		数据驱动,本题你需要自己构造结构如下的类似数组.
+//		arr:[{content:1111,edit:true},{content:222222,edit:false}]
+//		通过操作此数组实现上移下移,方法:arr.splice(下标,删除个数)		
+
+		const listItem = {
+			template:`
+				<li>
+					<span>{{i+1}}</span>--<span>{{item}}</span>
+
+					<input type="button" 
+						:value="item.val" 
+						@click='handlers[item.handler](i)'
+						v-for='item in dataActions' 
+					/>
+
+					<!--
+						<input type="button" value="上移" @click='handlers.up(i)' />					
+						<input type="button" value="下移" @click='handlers.down(i)' />
+						<input type="button" value="删除" @click='handlers.del(i)' />
+					-->
+				</li>
+			`,
+			data(){
+				return {
+					arr:['上移','下移','删除']
+				}
+			},
+			props:['item','i','handlers'],
+			computed:{
+				dataActions(){
+					let arr = [];
+					// 获取所有父组件传递的方法名
+					let keys = Object.keys(this.handlers);
+					// 遍历生成新的数组					
+					return this.arr.map((item,i)=>{
+						return {val:item,handler:keys[i]}
+					});
+				}
+			}
+		}
+
+		const App = {
+			template:`
+				<div id='div'>
+					<input type="text" value="" v-model='str'/>
+					<input type="button" value="发表" @click='add'  />
+					<ul>
+						<list-item
+							:item='item' 
+							:i='i'
+							v-for='(item,i) in arr'
+							:handlers = '{up,down,del}'
+						 />
+					</ul>
+				</div>
+			`,
+			methods:{
+				add(){
+					this.arr.push(this.str);
+				},
+				del(i){
+					this.arr.splice(i,1);
+				},
+				// 上移
+				up(i){
+					let prev = this.arr[i-1];
+					let now = this.arr[i];
+					if(i>0){
+						this.arr.splice(i-1,2,now,prev);
+					}
+				},
+				// 下移
+				down(i){
+					let next = this.arr[i+1];
+					let now = this.arr[i];
+					if(i < this.arr.length-1){
+						this.arr.splice(i,2,next,now);
+					}
+				}
+			},	
+			components:{listItem},
+			data(){
+				return {
+					arr:[11111],
+					str:''
+				}
+			}
+		}
+		
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+
+		
+	</script>
+</html>

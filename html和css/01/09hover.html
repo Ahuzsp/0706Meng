@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        div,p{
+            width: 200px;
+            height:200px;
+            border:10px solid #000;
+        }
+        /* 被鼠标移入的那个元素背景变红 */
+        /* :hover{           
+            background:red;
+        } */
+
+        /* 是div并且是被鼠标移入的那个元素 */
+        div:hover{
+            background:red;
+        }
+
+        /* 所有的第一个子元素 */
+        /* :nth-child(1){
+            background: green;
+        } */
+
+        /* 是li并且是第一个子元素 */
+        /* li:nth-child(1){
+            background: green;
+        } */
+
+        /* 所有类型中的第一个元素 */
+        /* :nth-of-type(1){
+            background:blue;
+        } */
+
+        /* 是li并且是li元素中的第一个 */
+        li:nth-of-type(1){
+            background:blue;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div>999999999</div>
+    <p>pppppppppppppppp</p>
+
+    <ul>
+        <li>1111</li>
+        <li>2222</li>
+        <li>3333</li>
+    </ul>
+    <ul>
+        <li>1111</li>
+        <li>2222</li>
+        <li>3333</li>
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        // useEffect Hook 就是class组件3个钩子函数的组合
+        // componentDidMount，componentDidUpdate 和 componentWillUnmount。
+
+        const {Component,Fragment,useState,useEffect} = React;
+
+        function Item({item,del}){
+
+            // useEffect的回调函数的return的函数会在组件销毁时触发.
+            useEffect(()=>{
+                return ()=>{
+                    console.log('组件销毁');
+                }
+            })
+
+            return (
+                <li>
+                    <span>{item}</span>
+                    <button onClick={del}>删除</button>
+                </li>
+            )
+        }
+
+        function App(){
+
+            const [arr,setArr] = useState([111,222,333]);
+
+            // useEffect的回调函数会在第一次挂载后和后续组件更新视图时触发
+            // 如果传递第二个参数空数组[],则useEffect只会在默认挂载时触发.
+            // useEffect(()=>{
+            //     console.log('挂载成功')
+            // },[])
+            
+            // 每次当arr变化时,才会触发useEffect
+            useEffect(()=>{
+                console.log('arr变化')
+            },[arr])
+
+            return (
+                <ul>{
+                    arr.map((item,i)=>(
+                        <Item key={i} item={item} del={del.bind(null,i)} />
+                    ))
+                }</ul>
+            )
+
+            function del(i){
+                arr.splice(i,1);
+                setArr([...arr]);
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html> 

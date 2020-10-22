@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        // Vue挂载根组件时,会把挂载点替换掉
+        // React挂载根组件,会把根组件放到挂载点内部,而不是替换.
+
+        // Fragment是React的一个抽象组件.最终不会渲染到视图上.
+        // let Vnode = ( 
+        //     <React.Fragment>
+        //         <span>hello React</span>
+        //         <span>hello Vue</span>  
+        //     </React.Fragment>         
+        // );
+        
+        // 解构赋值获取Fragment抽象组件.
+        let {Fragment} = React;
+
+        let Vnode = ( 
+            <Fragment>
+                <span>hello React</span>
+                <span>hello Vue</span>  
+            </Fragment>         
+        );
+
+        // 挂载Vnode到#root上。
+        ReactDOM.render(Vnode,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html>

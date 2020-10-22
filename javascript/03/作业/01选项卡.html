@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div>div{
+            width: 200px;
+            height: 200px;
+            border:1px solid #000;
+            float: left;
+            display: none;
+        }
+
+        div.active{
+            display: block;
+        }
+
+        input.active{
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div>
+        <input type="button" value='1111' class='active'>
+        <input type="button" value='2222'>
+        <input type="button" value='3333'><br>
+        <div class='active'>11111</div>
+        <div>22222</div>
+        <div>33333</div>
+    </div>  
+
+    <script>
+
+        // 点击第一个按钮，显示第一个div，隐藏其他div
+        // 点击第二个按钮，显示第二个div，隐藏其他div
+        // 点击第三个按钮，显示第三个div，隐藏其他div
+
+        let aBtn = document.querySelectorAll('div>input');
+        let aDiv = document.querySelectorAll('div>div');
+
+        // 循环加事件
+        for(let j=0;j<aBtn.length;j++ ){
+            aBtn[j].onclick = function(){
+                for(let i=0;i<aDiv.length;i++){
+                    // 隐藏所有div
+                    aDiv[i].className = '';
+                    // 让所有按钮btn变白
+                    aBtn[i].className = '';
+                }
+                // 显示div
+                aDiv[j].className = 'active';
+                // 被点的按钮变红
+                this.className = 'active';
+            }
+        }
+
+      
+
+
+    </script>
+
+</body>
+</html>

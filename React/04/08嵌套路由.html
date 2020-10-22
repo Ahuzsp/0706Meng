@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch} = ReactRouterDOM;
+        
+        class Home extends Component{
+			render(){
+				return <h3>Home组件</h3>
+			}
+        }
+        
+        class News extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <h3>News组件</h3>
+                        <HashRouter>
+                            <NavLink to='/news/'>手机</NavLink>
+                            <NavLink to='/news/computer'>电脑</NavLink>
+                            <NavLink to='/news/tv'>电视</NavLink>
+                            <Switch>
+                                <Route path='/news/' exact children={<div>手机</div>} />                        
+                                <Route path='/news/computer' children={<div>电脑</div>} />                        
+                                <Route path='/news/tv' children={<div>电视</div>} />                                         
+                            </Switch>  
+                        </HashRouter>
+                    </Fragment>
+                )
+			}
+        }
+        
+        class Sport extends Component{
+			render(){
+				return <h3>Sport组件</h3>
+			}
+		}
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <HashRouter>
+                            <NavLink to='/'>首页</NavLink>
+                            <NavLink to='/news'>新闻</NavLink>
+                            <NavLink to='/sport'>体育</NavLink>
+                            <Switch>
+                                <Route path='/' exact component={Home} />                        
+                                   <Route path='/news' render={()=><News />} />                     
+                                <Route path='/sport'><Sport /></Route>
+                            </Switch>                        
+                        </HashRouter>
+                    </Fragment>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+
+	</script>
+</html>

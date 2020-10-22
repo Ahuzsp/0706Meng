@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/redux.js"></script>
+	<script type="text/babel">
+
+        const {Component,Fragment} = React;
+        const {createStore,combineReducers} = Redux;
+        
+        // redux存储数据,是存到一个自定义函数的作用域内.(闭包存)
+        // 多个不关联的数据存到多个不同的函数内
+        function getNum(num=0){
+            return num
+        }
+
+        function getMsg(msg=100){
+            return msg
+        }
+
+        // 把两个函数合并成一个,键名和键值一致,采用简写
+        // const reducer = Redux.combineReducers({getNum,getMsg});
+        
+        // 使用合并之后的reducer函数来实例化store实例.
+        // const store = Redux.createStore(Redux.combineReducers({getNum,getMsg}));
+
+        // 实例化Redux的真正写法
+        const store = createStore(combineReducers({getNum,getMsg}));
+
+        class Son extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button>Son按钮</button>
+                        <div>{store.getState().getNum}</div>
+                        <div>{store.getState().getMsg}</div>
+                    </Fragment>   
+                )
+            }
+        }
+        
+        class Item extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button>Item按钮</button>
+                        <div>{store.getState().getNum}</div>
+                        <div>{store.getState().getMsg}</div>
+                    </Fragment>   
+                )
+            }
+        }
+
+        class App extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button>App按钮</button>
+                        <div>{store.getState().getNum}</div>
+                        <div>{store.getState().getMsg}</div>
+                        <Item />
+                        <Son />
+                    </Fragment>   
+                )
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="js/axios.js"></script>
+    <script>
+
+        // cookie和本地存储的区别
+        //     1:cookie只能存大概4k字节的数据,本地存储能够存5M字节的数据.
+        //     2:本地不能设置过期时间,cookie可以.
+        //     3:本地存储不参与数据请求.cookie每次数据请求会通过请求头默认发送给服务器.
+        
+        axios.get('js/data.json').then(res => {
+            console.log(res.data)
+        })
+
+    </script>
+
+</body>
+</html>

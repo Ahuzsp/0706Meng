@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        ul{
+            /* 弹性盒模型声明 */
+            display:flex;
+
+            /* 项目沿着主轴方向排列 （默认值） */
+            /* flex-direction:row; */
+            flex-direction: row-reverse;
+
+            /* 项目沿着交叉轴方向排列 */
+            /* flex-direction:column; */
+
+            list-style: none;
+            border:5px solid #000;
+        }
+
+        li{
+            width: 100px;
+            height: 100px;
+            border:1px solid #000;
+            margin-left:1px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <!-- 弹性盒模型的大多数样式都具有相对意义，相对谁？全部相对于样式flex-direction -->
+
+    <ul>
+        <li>111</li>
+        <li>222</li>
+        <li>333</li>
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul::after{
+            content:'';
+            display:block;
+            clear:both;
+        }
+        li{
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: red;
+            margin-left:1px;
+            list-style: none;
+        }
+        ul{
+            border:10px solid #000;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- :after和:before不是伪类选择器，而是伪元素 -->
+    <!-- :after和:before正常的写法是两个:: -->
+
+    <!-- 伪元素 -> 不是元素的元素 -> 在页面上能摸得到（像普通元素一样） -->
+
+    <ul>
+        <li>1111</li>
+        <li>2222</li>
+        <li>3333</li>
+    </ul>
+
+</body>
+</html>

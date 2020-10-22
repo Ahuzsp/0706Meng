@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'></div>
+	</body>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+
+	<script type="text/javascript">
+		
+        // created触发时,视图还没有挂载,因此理论上无法在created内操作新视图.
+        // 如何在created内操作新视图?
+        // 在created内设置nextTick就可以了.
+
+		const App = {
+			template:`
+				<div id='app'>
+					<ul>
+                        <li>1111</li>
+                        <li id='li2' ref='li2'>2222</li>
+                        <li>333</li>
+                    </ul>
+				</div>
+			`,
+            created(){
+                // created触发后,设置nextTick.
+                // nextTick的回调函数会在created触发后的第一次视图更新时自动触发.
+                // created之后的第一次视图更新,实际上就是mounted挂载.
+                this.$nextTick(()=>{
+                    this.$refs.li2.style.background = 'red';
+                })
+            },
+            methods:{
+                fn(){
+                    // 如果fn内没有到账视图更新的操作.这个nextTick是不会触发的.
+                    // 如果有到账视图更新的操作,则这里的nextTick会自动在视图更新完成之后自动触发.
+                    this.$nextTick(()=>{
+                        this.$refs.li2.style.background = 'red';
+                    })
+                }
+            }
+            // mounted(){
+                // 可以通过this.$refs.ref名来获取DOM元素.
+                // this.$refs.li2.style.background = 'red';
+            // }
+		}
+
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+				
+	</script>
+</html>

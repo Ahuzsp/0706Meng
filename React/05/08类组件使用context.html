@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        const ThemeContext = React.createContext(100);
+
+        const {Component} = React;
+        const {Provider} = ThemeContext;
+        
+        class Son extends Component {
+            static contextType = ThemeContext;
+            render(){
+                return (
+                    <div>
+                        <h3>Son组件</h3>
+                        <div>{this.context}</div>
+                    </div>
+                )
+            }
+        }
+
+        class Item extends Component {
+            render(){
+                return (
+                    <div>
+                        <Son />
+                    </div>
+                )
+            }
+        }
+
+
+        class App extends Component{
+            str = 9527;
+            render(){
+                return(
+                    <div>
+                        <Provider value={this.str}>
+                            <Item />
+                        </Provider>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html> 

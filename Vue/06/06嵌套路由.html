@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <a href="#">首页</a>
+        <a href="#">新闻</a>
+        <a href="#">攻略</a>
+        <div>
+            <h3>首页</h3>
+            <p>首页的内容..<span>2018-07-22</span></p>
+        </div>
+        <div>
+            <h3新闻</h3>
+            <p>新闻的内容..<span>2018-07-23</span></p>
+        </div>
+        <div>
+            <h3>攻略</h3>
+            <p>攻略的内容..<span>2018-07-24</span></p>
+        </div>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script src="../js/vue-router.js"></script>
+<script>
+
+    //按照上面的布局，制作一个路由
+    //点击响应的a标签，切换相应的div组件视图
+    //(提示,3个router-link对应3个div组件)
+
+    const Home = {
+        template:`
+            <div>
+                <h3>首页</h3>
+                <p>首页的内容..<span>2018-07-22</span></p>
+            </div>
+        `
+    }
+
+    const News = {
+        template:`
+            <div>
+                <h3>新闻</h3>
+                <p>新闻的内容..<span>2018-07-23</span></p>
+                <router-link to='/news/phone'>手机</router-link>
+                <router-link to='/news/computer'>电脑</router-link>
+                <router-link to='/news/pad'>平板</router-link>
+                <router-view />
+            </div>
+        `
+    }
+    
+    const Guide = {
+        template:`
+            <div>
+                <h3>攻略</h3>
+                <p>攻略的内容..<span>2018-07-24</span></p>
+            </div>
+        `
+    }
+
+    const Phone = {
+        template:`<div>手机</div>`
+    }
+
+    const Computer = {
+        template:`<div>电脑</div>`
+    }
+
+    const Pad = {
+        template:`<div>平板</div>`
+    }
+
+    const router = new VueRouter({
+        routes:[
+            {
+                path:'/',
+                component:Home
+            },{
+                path:'/news',
+                component:News,
+                // 嵌套路由通过children来设置路由选项.
+                children:[
+                    {
+                        path:'/news/phone',
+                        component:Phone
+                    },{
+                        path:'/news/computer',
+                        component:Computer
+                    },{
+                        path:'/news/pad',
+                        component:Pad
+                    },{
+                        path:'/',
+                        redirect:'/news/phone'
+                    }
+                ]
+            },{
+                path:'/guide',
+                component:Guide
+            }
+        ]
+    })
+
+    const App = {
+        template:`
+            <div id='app'>
+                <router-link to='/'>首页</router-link>
+                <router-link to='/news'>新闻</router-link>
+                <router-link to='/guide'>攻略</router-link>
+                <router-view />
+            </div>
+        `
+    }
+
+    new Vue({
+        router,
+        render:h=>h(App),
+        components:{App}
+    }).$mount('#app')
+    
+    
+</script>
+</html>

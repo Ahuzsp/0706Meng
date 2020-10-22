@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // Promsie的回调函数是同步执行的。
+        // then的回调函数是异步执行的。
+
+        new Promise((resolve,reject)=>{
+            console.log(1);
+            resolve();
+        }).then(()=>{
+            console.log(2);
+        })
+
+        console.log(3)
+
+    </script>
+
+</body>
+</html>

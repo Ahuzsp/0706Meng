@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // setState修改数据的过程是异步的.
+    // 如何指定数据修改完成了?
+    //      setState的第二个参数是一个回调函数,这个回调函数在数据修改完成时,自动触发
+
+    class App extends Component{
+        // num = 0
+        state = {
+            num:0,
+            age:0
+        }
+
+        render(){
+            console.log('render');          
+            return (
+                <Fragment>
+                    <button onClick={this.fn.bind(this)}>按钮</button>
+                    <div>{this.state.num}</div>
+                    <div>{this.state.age}</div>
+                </Fragment>
+            )
+        }
+        fn(){
+
+            // this.setState({
+            //     age:1
+            // });
+
+            // this.setState({
+            //     num:2
+            // })
+
+            // this.setState({
+            //     num:3
+            // })
+            
+            // setState会有合并操作。把多个setState合并成一个再更新视图
+            this.setState({
+                age:1,
+                num:3
+            });
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

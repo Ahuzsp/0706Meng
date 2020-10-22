@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let x = 5;
+
+        function fn(){
+            let x = 10;
+            setTimeout(()=>{
+                x = 20;
+                console.log(x);
+            },2000);
+
+            console.log(x);
+
+            setTimeout(()=>{
+                x = 30;
+                console.log(x);
+            },1000)
+        }
+
+        fn();
+
+        console.log(x);
+
+        // x = 5; (x是全局的);
+        // fn();
+        //      x = 10; (x是局部x);
+        //      开定时器1
+        //      console.log(x); (x是局部的x,10)
+        //      开定时器2
+        // console.log(x); (全局x,5)
+        // [定时器2,定时器1]
+
+        // 定时器1
+        //        x = 30;(x是局部的x)
+        //        console.log(x); (30)
+        // 定时器2
+        //        x = 30;(x是局部的x)
+        //        console.log(x); (20)
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id='btn'>按钮</button>
+
+    <script>
+
+        let oBtn = document.getElementById('btn');
+
+        // oBtn.onclick = show(100);
+        // function show(x){
+        //     return function(){
+        //         console.log(x);
+        //     }            
+        // }
+        
+        // 点击触发匿名函数，匿名函数触发show。
+        oBtn.onclick = function(){
+            show(200);
+        }
+
+        function show(x){
+            console.log(x);
+        }
+
+    </script>
+
+</body>
+</html>

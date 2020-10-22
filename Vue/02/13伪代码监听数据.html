@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id='app'>
+        <button @click='fn'>按钮</button>
+        {{obj.name}}<br />
+        {{arr}}<br />
+    </div>
+    
+    <script src="js/vue.js"></script>
+    <script>
+
+        // Vue初始化时,需要给data内的所有的数据字段设置数据劫持(监听)
+
+       /* function Vue(config){
+
+            // 获取当前的config内配置的data数据.
+            this.$data = config.data;
+
+            for(let key in this.$data){
+                // 获取每一个字段的初始值.
+                let val = this.$data[key]
+
+                // 给没一个字段设置数据监听.
+                Object.defineProperty(this.$data,key,{
+                    get(){
+                        return val
+                    },
+                    set(newValue){
+                        val = newValue;
+                        console.log(key+'变化了');
+                    }
+                })
+            }
+        } */
+
+        // Vue的数据劫持监听的是对数据的修改操作.删除操作是触发不了响应式的.
+        // Vue监听的是数组的引用,要修改只能修改这个引用.修改这个数组的属性是不能触发响应式的.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                name:'幂幂',
+                str:'hhhh',
+                msg:'uuuuu',
+                obj:{
+                    name:'obj的name'
+                },
+                arr:[1,2,3]
+            },
+            methods:{
+                fn(){
+                    delete this.obj.name;
+                    this.arr.length = 0;
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id='btn1'>按钮</button>
+
+    <script>
+
+        let obj = {};
+
+        // obj.name -> 对象属性访问表达式
+        // 不存在的属性返回undefined
+        // console.log(obj.name);
+
+        let arr = [];
+        // arr[0] -> 数组的元素访问表达式
+        // 不存在的数组元素返回undefined
+        // console.log(arr[0]);
+        
+        // can not read property name of undefined
+        // 不能读取undefined的name属性。
+        // console.log(arr[0].name);
+
+        // undefined 和 null 都没有任何的属性可以访问。
+        // 一访问就报错。（其他对象不是这样）
+
+        // 获取一个不存在的元素。oBtn就是null；
+        let oBtn = document.getElementById('btn');
+        // null不能访问和操作任何的属性。
+        // Cannot set property 'onclick' of null
+        // 不能设置null的onclick属性
+        oBtn.onclick = function(){
+            console.log(9999);
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        // react的组件有3种
+        //    1:函数组件.
+        //    2:createClass组件.(配置式)
+        //    3:class组件(ES6的class).
+
+        class App extends React.Component{
+            constructor(){
+                super();
+                this.arr = [1111,2222,333];
+            }
+            render(){
+                return (
+                    <div>
+                        <h3>根组件</h3>
+                        <ul>
+                        {
+                            this.arr.map((item,i)=>(
+                                <li key={i}>
+                                    {item}
+                                    <button onClick={this.del.bind(this,i)}>删除</button>
+                                </li>
+                            ))
+                        }
+                        </ul>
+                    </div>
+                )
+            }
+
+            del(i){
+                        
+              // 修改当前组件数据
+              this.arr.splice(i,1);
+
+              // 强制刷新视图
+              this.forceUpdate();
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

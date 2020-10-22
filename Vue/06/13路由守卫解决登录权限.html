@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <a href="#">首页</a>
+        <a href="#">新闻</a>
+        <a href="#">攻略</a>
+        <div>
+            <h3>首页</h3>
+            <p>首页的内容..<span>2018-07-22</span></p>
+        </div>
+        <div>
+            <h3新闻</h3>
+            <p>新闻的内容..<span>2018-07-23</span></p>
+        </div>
+        <div>
+            <h3>攻略</h3>
+            <p>攻略的内容..<span>2018-07-24</span></p>
+        </div>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script src="../js/vue-router.js"></script>
+<script>
+
+    // News和Guide路由组件需要登录后才可以查看,home不需要.
+    // 跳转到news和guide时需要先判断是否需要登录,再判断是否已经登录成功了.
+    // 如果需要登录并没有登录过,跳转到登录页.
+    // 如果不需要登录,直接跳转.如果需要登录但是登录过了,也直接跳转.
+
+    // 工作中的权限信息都是在mata中进行配置.这里使用require来标记是否需要登录.
+
+    const Home = {
+        template:`
+            <div>
+                <h3>首页</h3>
+                <p>首页的内容..<span>2018-07-22</span></p>
+            </div>
+        `
+    }
+
+    const News = {
+        template:`
+            <div>
+                <h3>新闻</h3>
+                <p>新闻的内容..<span>2018-07-23</span></p>
+            </div>
+        `
+    }
+    
+    const Guide = {
+        template:`
+            <div>
+                <h3>攻略</h3>
+                <p>攻略的内容..<span>2018-07-24</span></p>
+            </div>
+        `
+    }
+
+    const Login = {
+        template:`
+            <div>
+                <h3>登录</h3>
+                <input type='text' />
+                <input type='password' />
+                <button>登录</button>
+            </div>
+        `
+    }
+
+    const router = new VueRouter({
+        routes:[
+            {
+                path:'/',
+                component:Home,
+                meta:{
+                    requireLogin:false
+                }
+            },{
+                path:'/news',
+                component:News,
+                meta:{
+                    requireLogin:true
+                }
+            },{
+                path:'/guide',
+                component:Guide,
+                meta:{
+                    requireLogin:true
+                }
+            },{
+                path:'/login',
+                component:Login,
+                meta:{
+                    requireLogin:false
+                }
+            }
+        ]
+    })
+
+    // 全局拦截处理登录权限逻辑
+    router.beforeEach((to,from,next)=>{
+        // 如果需要登录就跳到登录页.如果不需要直接跳转
+        if(to.meta.requireLogin){
+            next({path:'/login'})
+        }else{
+            next();
+        }
+    })
+
+    const App = {
+        template:`
+            <div id='app'>
+                <router-link to='/'>首页</router-link>
+                <router-link to='/news'>新闻</router-link>
+                <router-link to='/guide'>攻略</router-link>
+                <router-view />
+            </div>
+        `
+    }
+
+    new Vue({
+        router,
+        render:h=>h(App),
+        components:{App}
+    }).$mount('#app')
+    
+    
+</script>
+</html>

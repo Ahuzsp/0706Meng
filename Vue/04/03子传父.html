@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 子传父的逻辑
+        //  结论:这个自定义事件添加在任何Vue实例上都可以实现.只要这个Vue实例是方便获取的.
+
+        // bus子传父
+        //   在父组件内给bus添加事件.在子组件内触发bus的事件,并传入子组件数据.
+
+        const bus = new Vue();
+
+        const Item = {
+            template:`<div>子组件:{{name}}</div>`,
+            data(){
+                return {name:'Item'}
+            },
+            created(){
+                bus.$emit('myevent',this.name);
+            }
+        }
+
+        const App = {
+            template:`
+                <div>
+                    父组件:{{name}}
+                    <Item />
+                </div>`,
+            components:{Item},
+            data(){
+                return {name:''}
+            },
+            created(){
+                bus.$on('myevent',(res)=>{
+                    this.name = res
+                })
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+
+    </script>
+
+</body>
+</html>

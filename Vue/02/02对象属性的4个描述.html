@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script>
+
+        'use strict'
+
+        // 对象属性的4个描述：
+        //     1：值
+        //     2：是否可修改
+        //     3：是否可删除
+        //     4：是否可枚举 (是否可for in检测到)
+
+        let obj = {
+            name:''
+        }
+        // 修改属性
+        // obj.name = '坤坤';
+        // 新增属性
+        // obj.age = '32';
+        // 删除属性
+        // delete obj.name;
+        // 查找age属性
+        // console.log(obj.age);
+
+        // 修改obj的name属性的4个基本描述。
+        Object.defineProperty(obj,'name',{
+            configurable: false, 
+            enumerable: false ,
+            value: "幂幂",
+            writable: false 
+        })
+
+        // 获取obj的name属性的4项基本描述.
+        let des = Object.getOwnPropertyDescriptor(obj,'name');
+        console.log(des);
+
+        // configurable: true (是否可删除)
+        // enumerable: true (是否可枚举)
+        // value: "幂幂"
+        // writable: true (是否可修改)
+
+
+
+    </script>
+
+</body>
+</html>

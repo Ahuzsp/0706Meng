@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/observes/observes",
+    "pages/test/test",
+    "pages/logs/logs",
+    "pages/index/index"  
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/logs/logs",
+      "text": "日志"
+    },{
+      "pagePath": "pages/observes/observes",
+      "text": "observes"
+    }]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

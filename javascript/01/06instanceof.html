@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 数组
+        let arr = [1,2,3];
+        // 空对象
+        let obj = {};
+
+        // 让obj继承arr
+        obj.__proto__ = arr;
+
+        console.log(arr instanceof Array); // true
+        console.log(obj instanceof Array); // true
+
+        // instanceof -> 检测Array的prototype是否存在于obj的原型链上
+
+    </script>
+
+</body>
+</html>

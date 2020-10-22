@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'></div>
+	</body>
+	<script src="../js/vue.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+        // 有时候我们需要初始数据有独立的id属性做key,可以在created中加上去
+
+		const listItem = {
+			template:`
+				<li>
+					<span>{{i+1}}</span>--<span>{{item.content}}</span>
+                    <input type="text" value='' />
+					<input type='button' @click='up(i)' value='上移' />
+				</li>
+			`,
+			props:['item','i','up']
+		}
+
+		const App = {
+			template:`
+				<div id='div'>
+					<ul>
+						<list-item
+							:item='item' 
+							:i='i'
+                            v-for='(item,i) in arr'
+                            :key='item.id'
+							:up = 'up'
+						 />
+					</ul>
+				</div>
+			`,
+			methods:{
+				// 上移
+				up(i){
+					let prev = this.arr[i-1];
+					let now = this.arr[i];
+					if(i>0){
+						this.arr.splice(i-1,2,now,prev);
+					}
+				}
+			},	
+			components:{listItem},
+			data(){
+				return {
+					arr:[
+                        {content:11111},
+                        {content:22222},
+                        {content:33333}
+                    ],
+				}
+            },
+            // 在created中加工原始数据.添加id用在key上.
+            created(){
+                this.arr.forEach((item,i)=>{
+                    item.id = i
+                })
+            }
+		}
+		
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+
+		
+	</script>
+</html>

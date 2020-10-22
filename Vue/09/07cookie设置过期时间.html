@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 当前时间
+        let d = new Date();
+        // 获取1970年1月1日凌晨0点到现在的毫秒数
+        let t = d.getTime();
+        // 把d的时间设置为24*60*60*1000毫秒之后的时间(1天的时间)
+        d.setTime(t + 24*60*60*1000);
+
+        document.cookie = 'msg=888; Expires=' + d.toUTCString();
+
+
+    </script>
+
+</body>
+</html>

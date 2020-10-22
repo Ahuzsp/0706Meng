@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch} = ReactRouterDOM;
+        
+        class Home extends Component{
+			render(){
+				return <h3>Home组件</h3>
+			}
+        }
+        
+        class News extends Component{
+			render(){
+				return <h3>News组件</h3>
+			}
+        }
+        
+        class Sport extends Component{
+			render(){
+				return <h3>Sport组件</h3>
+			}
+		}
+
+        const routes = [
+            {
+                path:'/',
+                component:Home,
+                exact:true
+            },{
+                path:'/news',
+                component:News,
+                exact:false
+            },{
+                path:'/sport',
+                component:Sport,
+                exact:false
+            }
+        ];
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <HashRouter>
+                            <NavLink to='/'>首页</NavLink>
+                            <NavLink to='/news'>新闻</NavLink>
+                            <NavLink to='/sport'>体育</NavLink>
+                            <Switch>
+                            {
+                                routes.map((item,i)=>(
+                                    <Route 
+                                        key={item.path} 
+                                        path={item.path} 
+                                        component={item.component} 
+                                        exact={item.exact}
+                                    />
+                                ))
+                            }
+                            </Switch>                        
+                        </HashRouter>
+                    </Fragment>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+
+	</script>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        var x = 5;
+
+        let oP = {
+            x:10,
+            fn(o){
+                return this.x + o.x
+            }
+        }
+
+        let oS = {
+            x:20,
+            fn(o){
+                return this.x - o.x
+            }
+        }
+
+        function fn(o){
+            return this.x + o.fn(o)
+        }
+
+        let num = oP.fn(oS) + oS.fn.call(window,oP) + fn(oP);
+
+        // 打印什么
+        console.log(num);
+
+      /*   
+        1:x = 5; （window.x是5）
+        2:oP对象。oP.x = 10
+        3:oS对象。oS.x = 20
+        4:num = oP.fn(oS) + oS.fn.call(window,oP) + fn(oP);
+                oP.fn(oS);
+                    return this.x + o.x
+                    return this.x + oS.x
+                    return this.x + 20
+                    return oP.x + 20
+                    return 10 + 20
+                oS.fn.call(window,oP);
+                    return this.x - oP.x
+                    return window.x - 10
+                    return 5 - 10
+
+                fn(oP);
+                    return this.x + oP.fn(oP)
+                    return window.x + oP.fn(oP)
+                    return 5 + oP.fn(oP)
+                        oP.fn(oP):return this.x + o.x
+                        oP.fn(oP):return oP.x + oP.x
+                        oP.fn(oP):return 10 + 10
+                    return 5 + 20
+
+        5:打印num  50 */
+
+    </script>
+
+</body>
+</html>

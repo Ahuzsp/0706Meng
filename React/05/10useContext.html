@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        const ThemeContext = React.createContext(100);
+
+        const {Component,useContext} = React;
+        const {Provider} = ThemeContext;
+
+        // 函数组件如果需要接受Context的Provider提供的共享数据
+        // 需要使用Consumer来接受.Consumer内部需要通过一个函数来返回组件的模板
+        // 这个函数的形参就是Provider提供的共享数据
+
+        // 如果使用了useContext,函数组件内就可以不使用Consumer来接受Provider的共享数据了
+        // Provider的共享数据直接从useContext(ThemeContext)返回
+        
+        function Son(){
+            let msg = useContext(ThemeContext);
+            return (
+                <div>
+                    <h3>Son组件</h3>
+                    <div>{msg}</div>
+                </div>
+            )
+        }
+
+        function Item (){
+            return (
+                <div>
+                    <Son />
+                </div>
+            )
+        }
+
+        function App (){
+            var str = 9527;           
+            return(
+                <div>
+                    <Provider value={str}>
+                        <Item />
+                    </Provider>
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html> 

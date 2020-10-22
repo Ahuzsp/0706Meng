@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let y = 20;
+
+        function fn(x){
+            show(x);
+            return add(x+y)
+        }
+
+        function add(x){
+            return x + 3
+        }
+
+        function show(x){
+            y = x + 5
+        }
+
+        let num = fn(y*2);
+
+        // 打印什么
+        console.log(num);
+
+        /* 
+            1：y = 20; (全局)
+            2: 调用fn(y*2); (y*2是40);
+                show(40)调用;
+                    y = 40+5; (全局的y变成45)
+                return add(40+45)调用;
+                    return 85 + 3             
+            3:打印num 88 
+        */
+        
+
+    </script>
+
+</body>
+</html>

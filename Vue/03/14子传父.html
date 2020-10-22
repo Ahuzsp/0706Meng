@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 子传父
+        //      在子组件中调用父组件的方法,并传入子组件数据.
+        //      子组件如何调用父组件的方法?
+        //          1:props传递父组件方法
+        //          2:通过事件传递父组件方法.
+
+        const Item = {
+            template:`
+                <div>
+                    {{msg}}
+                    <!--<button @click='getData(msg)'>子传父</button>-->
+                    <button @click='$emit("myevent",msg)'>子传父</button>
+                </div>
+            `,
+            data(){
+                return {
+                    msg:'子组件数据'
+                }
+            },
+            props:['getData']
+        }
+        
+        const App = {
+            template:`
+                <div id='app'>
+                    <h3>{{str}}</h3>
+                    <!--<Item :getData='getData' />-->
+                    <Item @myevent='getData' />
+                </div>
+            `,
+            data(){
+                return {str:''}
+            },
+            methods:{
+                // 父组件使用一个方法来接受子组件数据.
+                getData(msg){
+                    this.str = msg;
+                }
+            },
+            components:{Item}
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

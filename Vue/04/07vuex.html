@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+    <script>
+
+        // 使用Vuex进行状态管理
+        //    1:实例化store.
+        //    2:挂载store.
+        //    3:获取state内的数据. (推荐使用计算属性获取)
+        //    4:如果要修改数据,通过actions和mutations修改.
+
+        // mutations和actions的区别:
+        //    mutations内不能有异步.actions内可以.
+
+        // 描述一下Vuex的数据流.
+        // Vue视图 -> 触发actions -> 触发mutations -> 修改state -> 响应式更新到视图
+        
+        // Vuex实例化.
+        const store = new Vuex.Store({
+            // 严格模式.严格模式下,state内的数据必须在mutations内修改.
+            strict:true,
+            state:{
+                arr:[1,2,3]
+            },
+            mutations:{
+                // 形参就是当前store的state数据
+                delList(state,i){
+                    state.arr.splice(i,1);
+                }
+            },
+            // 异步修改共享数据
+            actions:{
+                del(store,i){
+                    setTimeout(()=>{
+                        // 触发mutations内的delList方法.
+                        store.commit('delList',i);
+                    },1000)                   
+                }
+            }
+        })
+
+        const listItem = {
+            template:`
+                <li>
+                    {{item}}
+                    <button @click='fn'>删除</button>
+                </li>
+            `,
+            props:['item','i'],
+            methods:{
+                fn(){
+                    // 直接触发mutations的delList方法.
+                    // this.$store.commit("del",this.i)
+
+                    // 触发actions的del方法.
+                    this.$store.dispatch('del',this.i);
+                }
+            }
+        }
+
+        const List = {
+            template:`
+                <ul>
+                    <list-item 
+                        :item='d' 
+                        v-for='(d,i) in arr'
+                        :i='i'
+                    ></list-item>
+                </ul>
+            `,
+            components:{listItem},
+            computed:{
+                arr(){
+                    // 获取Vuex的state内的数据.
+                    return this.$store.state.arr
+                }
+            }
+        }
+
+        const App = {
+            template:`
+                <div>
+                    <List></List>
+                    <List></List>
+                </div>
+            `,
+            components:{List},
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App},
+            // 挂载store
+            store
+        })
+
+
+    </script>
+
+</body>
+</html>

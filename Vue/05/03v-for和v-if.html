@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'></div>
+	</body>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+
+	<script type="text/javascript">
+		
+        // v-for和v-if的优先级，v-for更高。它们不应该一起使用。因为性能不好
+        // 因为v-for一定会遍历插入元素.如果10000条数据里只应该显示其中一条,则有9999次v-for是浪费的.
+        // 如何解决这个问题?
+        //      可以通过计算属性把源数组过滤出只应该显示的那部分.
+
+		const App = {
+			template:`
+				<div id='app'>
+					<ul>
+                        <li v-for='d in listData' v-if='d.flag'>111111</li>
+                    </ul>
+				</div>
+			`,
+            data(){
+                return {
+                    arr:[
+                        {flag:true},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false},
+                        {flag:false}
+                    ]
+                }
+            },
+            computed:{
+                listData(){
+                    // 过滤出flag是true的元素.
+                    return this.arr.filter((item,i)=>{
+                        return item.flag
+                    })
+                }
+            }
+		}
+
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+				
+	</script>
+</html>

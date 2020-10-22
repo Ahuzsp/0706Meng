@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // this指向:哪个对象调用this所在的函数,那this就指向这个对像.
+
+        // 正常情况分析this指向：
+        //     1:确定this在哪个函数声明里。
+        //     2:确定这个函数的调用在哪里。
+        //     3:确定这个函数调用前面的对象。this就指向这个对象。没有对象指向window或者undefined
+
+        // 例子：
+        //       1：this在fn里。
+        //       2：fn的调用在show里面
+        //       3：fn()前面没有对象，则this指向window
+        
+        function show(){
+            fn();
+        }
+
+        function fn(){
+            console.log(this);
+        }
+
+        show();
+
+
+    </script>
+
+</body>
+</html>

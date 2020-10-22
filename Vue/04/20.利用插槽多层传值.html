@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // App如果需要把数据传递给listItem,如果通过最常用的props传递,
+        // 需要经过list组件这一个中间层,传递起来很麻烦? 如何解决?
+        // 1:用bus.(没有响应式)
+        // 2:用Vuex.(大材小用)
+        // 3:用插槽直接传递.
+        //     把所有子孙组件都通过插槽暴露在App的template中,这样就可以直接获取App的数据.
+        //     副作用:导致插槽和其根节点的父子关系混乱.(父子解耦).
+        //     以下的例子,listItem不再是List的子组件.只是List的插槽.
+        //     子组件作为父组件的插槽引入 -> 父子解构.
+        //     父子解构之后,父组件就无法通过props传递数据给子组件了.
+
+        const listItem = {
+            template:`<li>{{content}}</li>`,
+            props:['content']
+        }
+
+        const List = {
+            template:`
+                <ul>
+                   <slot></slot>
+                </ul>
+            `,
+            data(){
+                // 父子解耦后,无法把str通过props传递给listItem
+                return {str:'来自爸爸的礼物'}
+            }
+        }
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <ul is='List'>
+                        <li v-for='d in 3' is='listItem' :content='msg'></li>
+                    </ul>
+                </div>
+            `,
+            components:{List,listItem},
+            data(){
+                return {msg:'来自爷爷的礼物'}
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

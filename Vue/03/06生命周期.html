@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        {{msg}}
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 组件运行过程中，如果被销毁了，会触发两个钩子函数
+        // beforeDestroy (销毁前) destroyed (销毁后)
+
+        // 组件(vue实例)如何销毁(何时销毁)
+        //    1:自动销毁.(例路由如切换时)
+        //    2:手动销毁.(vm.$destroy()方法)
+
+        // 为什么要销毁.
+        //    没用的组件就应该销毁,节省内存开支,系统性能
+
+        // 组件(vue实例)销毁后又如何.
+        //      组件销毁后this是不是访问不了了?
+        //      组件销毁后视图看不见了?
+        //      组件销毁后,组件实例this还可以访问,视图也还存在,只是没有响应式了.
+
+        // beforeDestroy 辣鸡,没用
+        // destroyed -> 处理组件销毁后的善后工作.例如清除定时器,清除组件的绑定事件,等.
+
+        // 组件渲染时,开启一个定时器,定期修改msg数据.
+        // vue实例的创建阶段开启定时器.(所以定时器应该是写在创建阶段的钩子函数内)
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'1111'
+            },
+            mounted(){
+                // 这个timer不是响应式数据,不应该写在data内.
+                this.timer = setInterval(()=>{
+                    this.msg = Math.random()
+                    console.log('定时器运行');                    
+                },1000)
+            },
+            beforeDestroy(){
+                console.log('销毁前')
+            },
+            destroyed(){
+                clearInterval(this.timer);
+                console.log('销毁后')
+            }
+        })
+
+    </script>
+
+</body>
+</html>

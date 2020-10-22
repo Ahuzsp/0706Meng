@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<style type="text/css">
+			#app td{
+				text-align: center;
+				line-height: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class='container'>
+				<h2 class='text-center'>Vuex购物车</h2>
+				<h4 class='text-center'>商品信息</h4>
+				<goods></goods>
+				<h4 class='text-center'>购物车信息</h4>
+				<items></items>
+				<p>
+					<strong>总量：{{t_c}}</strong><strong>总价：{{t_p}}</strong>
+					<input type="button" class='btn btn-danger pull-right' @click='delAll' value="清空购物车" />
+				</p>
+			</div>
+		</div>
+	</body>
+	<script src="js/vue1.js" charset="utf-8"></script>
+	<script src="js/vuex@2.3.1.js" charset="utf-8"></script>
+	<script type="text/x-template" id='goods'>
+		<table class='table table-striped table-bordered'>
+			<thead>
+				<tr><td>id</td><td>名称</td><td>价格</td><td>数量</td><td>操作</td></tr>
+			</thead>
+			<tbody>
+				<tr v-for='(d,i) in items'>
+					<td v-for='w in d.info'>{{w}}</td>
+					<td v-if='d.flag'>
+						<input type="button" @click='addItem(i)' class='btn btn-success' value="加入" />
+					</td>
+					<td v-else>
+						<input type="button" @click='add(d.info.id)' class='btn btn-success' value="+" />
+						<input type="button" @click='reduce(d.info.id)' class='btn btn-danger' value="-" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</script>
+	<script type="text/x-template" id='items'>
+		<table class='table table-striped'>
+			<thead>
+				<tr><td>id</td><td>名称</td><td>价格</td><td>数量</td><td>总价</td><td>操作</td></tr>
+			</thead>
+			<tbody>
+				<tr v-for='(d,i) in items' v-if='!d.flag'>
+					<td v-for='w in d.info'>{{w}}</td>
+					<td>{{d.info.count*d.info.price}}</td>
+					<td>
+						<input type="button" @click='add(d.info.id)' class='btn btn-success' value="+" />
+						<input type="button" @click='reduce(d.info.id)' class='btn btn-warning' value="-" />
+						<input type="button" @click='del(i)' class='btn btn-danger' value="X" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</script>
+	<script type="text/javascript">
+		
+		var store=new Vuex.Store({
+			strict:true,
+			state:{
+				items:[]
+			},
+			mutations:{
+				add(state,id){
+//					state.items[i].info.count++;
+					state.items.forEach((val)=>{
+						if(val.info.id==id){
+							val.info.count++;
+						}
+					})
+				},
+				reduce(state,id){
+					state.items.forEach((val)=>{
+						if(val.info.id==id){
+							val.info.count--;
+						}
+					})
+				},
+				addItem(state,val){
+					val.flag=false;
+					state.items.push(val);
+				},
+				del(state,i){
+					state.items[i].info.count=1;
+					state.items[i].flag=true;
+					state.items.splice(i,1);
+				},
+				delAll(state){
+					state.items.forEach((val)=>{
+						val.info.count=1;
+						val.flag=true;
+					});
+					state.items.splice(0);
+				}
+			}
+		})
+		
+		
+		var items={
+			template:'#items',
+			computed:{
+				items(){
+					return this.$store.state.items;
+				}
+			},
+			methods:{
+				add(id){
+					this.$store.commit('add',id);
+				},
+				reduce(id){
+					if(this.items[i].info.count==1)return;
+					this.$store.commit('reduce',id);
+				},
+				del(i){
+					this.$store.commit('del',i);
+				}
+			}
+		}
+		
+		var goods={
+			template:'#goods',
+			data(){
+				return {
+					items:[
+						{info:{id:1,name:'杨幂',price:10,count:1},flag:true},
+						{info:{id:2,name:'范冰冰',price:20,count:1},flag:true},
+						{info:{id:3,name:'林志玲',price:5,count:1},flag:true},
+						{info:{id:4,name:'贾玲',price:50,count:1},flag:true},
+					]
+				}
+			},
+			methods:{
+				addItem(i){
+					this.$store.commit('addItem',this.items[i]);
+				},
+				add(id){
+					this.$store.commit('add',id);
+				},
+				reduce(id){
+					if(this.items[i].info.count==1)return;
+					this.$store.commit('reduce',id);
+				}
+			}
+		}
+		
+		var vm=new Vue({
+			el:'#app',
+			store,
+			components:{
+				goods,items
+			},
+			methods:{
+				delAll(){
+					this.$store.commit('delAll');
+				}
+			},
+			computed:{
+				t_c(){
+					var num=0;
+					this.$store.state.items.forEach((val)=>{
+						//如果当前的商品添加到了购物车，则取当前的商品的数量进行依次求和。
+						if(!val.flag){
+							num+=val.info.count;
+						}
+					});
+					return num;
+				},
+				t_p(){
+					var price=0;
+					this.$store.state.items.forEach((val)=>{
+						//如果当前的商品添加到了购物车，则取当前的商品的总价进行依次求和。
+						if(!val.flag){
+							price+=val.info.count*val.info.price;
+						}
+					});
+					return price;
+				},
+			}
+		})
+		
+	</script>
+</html>

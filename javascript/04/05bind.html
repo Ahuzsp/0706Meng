@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // bind -> 让某个函数内的this永远指向某个指定对象。（绑定this）
+        // bind和call，apply的区别：
+        //        1:bind的优先级比call和apply的高
+        //        2:bind不会马上调用函数。call和apply会
+        //        3:bind返回的是一个新函数。这个返回的新函数绑定了this.
+        //          call和apply返回的是源函数的返回值
+
+        // call和apply可以偷技能。经过bind绑定的技能是偷了this也不会变。
+
+        // A英雄自奶技能fn, B偷了这个技能.B使用fn技能，是奶自己，而不是奶A。
+        // 如果这个技能fn通过bind把this指向了A英雄，则这个技能偷过去释放，也是奶的A英雄。
+
+        let obj1 = {name:'张三'};
+        let obj2 = {name:'李四'};
+        
+        // 这里的函数没有经过特殊处理，this不会永远指向obj1
+        // obj1.fn = function(str){
+        //     console.log(this.name);
+        // };
+        
+        // 以下处理，把fn的this永远指向obj1
+        // obj1.fn = function(){
+        //     console.log(this.name);
+        // }.bind(obj1);
+        
+        // 以下处理，把fn的this永远指向obj1
+        obj1.fn = show.bind(obj1);
+        function show(){
+            console.log(11111);
+        }
+
+        // 因为fn的this已经绑定obj1.不管调用时，用不用band，都指向绑定的对象obj1
+        obj1.fn.call(obj2);
+
+
+    </script>
+
+</body>
+</html>

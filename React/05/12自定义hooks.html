@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        const {Component,Fragment,useState} = React;
+
+        // 自定义hooks => 把一些相同的hook逻辑封装成一个函数
+        // 约定俗成,这个函数的名字应该以use开头.
+
+        // 直接解构赋值获取父组件传递的数据
+        function Item({item,del}){
+            return (
+                <li>
+                    <span>{item}</span>
+                    <button onClick={del}>删除</button>
+                </li>
+            )
+        }
+
+        // 自定义hooks
+        function useCacheArr(list){
+            // 对数组进行进一步处理
+            let newList = list.filter(item=>item<1000);
+            // 设置成状态.
+            const [arr,setArr] = useState(newList);
+            // 返回状态
+            return [arr,setArr]
+        }
+
+        function App(){
+
+            const [arr,setArr] = useCacheArr([111,4353425,65667,234,546]);
+
+            return (
+                <ul>{
+                    arr.map((item,i)=>(
+                        <Item key={i} item={item} del={del.bind(null,i)} />
+                    ))
+                }</ul>
+            )
+
+            function del(i){
+                let newArr = arr.slice();
+                newArr.splice(i,1);
+                setArr([...newArr]);
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html> 

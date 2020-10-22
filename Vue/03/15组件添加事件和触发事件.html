@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // <Item @myevent='getData' /> 
+        // 给子组件Item绑定一个自定义事件myevent
+        // 当myevent发生了,调用getData
+
+        // @click='$emit("myevent",msg)' -> 触发组件自己的自定义事件myevent
+        // 手动触发事件myevent,并且传入子组件的msg数据给getData
+        
+        // click事件发生,调用getData
+        // 绑定click事件 (这里getData就是click的事件句柄)
+        // oBtn.onclick = getData;
+        // 手动触发click事件
+        // oBtn.click()
+
+        // 三个很重要的Vue实例方法.
+        // 某个Vue实例.$on(事件名,事件句柄) -> 绑定事件.
+        // 某个Vue实例.$emit('事件名',传递给事件句柄的参数) -> 触发事件
+        // 某个Vue实例.$off('事件名') -> 解绑事件.
+
+        // bus传值.(组件通信的比较万能的一种方式) (父传子,子传父,兄弟传兄弟)
+        // 第三方的Vue实例.
+        let bus = new Vue();
+
+        const Item = {
+            template:`
+                <div>
+                    {{msg}}
+                </div>
+            `,
+            data(){
+                return {
+                    msg:'子组件数据'
+                }
+            },
+            mounted(){
+                // 默认触发子组件的myevent事件.
+                bus.$emit('myevent',this.msg);
+            }
+        }
+        
+        const App = {
+            template:`
+                <div id='app'>
+                    <h3>{{str}}</h3>
+                    <Item />
+                </div>
+            `,
+            data(){
+                return {str:'',flag:false}
+            },
+            methods:{
+                // 父组件使用一个方法来接受子组件数据.
+                getData(msg){
+                    this.str = msg;
+                }
+            },
+            components:{Item},
+            created(){
+                // 给bus实例添加一个自定方法.
+                bus.$on('myevent',this.getData);
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

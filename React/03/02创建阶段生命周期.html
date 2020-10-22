@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="root"></div>
+
+    <script src="../js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/babel">
+
+        // React生命周期
+        //        1:创建阶段 (除了render,都只触发一次)
+        //            constructor(用于初始化数据)
+        //            render 
+        //               不能在这里调用setState
+        //               只能够做读的操作,不要做写的操作
+        //               每次视图更新,render会重新调用,返回新的虚拟节点,新的节点转换为新的视图,显示新的数据状态
+        //            componentDidmount
+        //               获取和操作更新后的视图
+        //               组件如果要默认请求参数,在componentDidmount内请求
+
+        const {Component,Fragment} = React;
+
+        class App extends Component{
+            // 做一些数据和方法的初始化.
+            constructor(props){
+                super(props);
+                // 初始化一个数据
+                this.num = 0;
+                // 初始化fn的this绑定.
+                this.fn = this.fn.bind(this);
+                // 初始化state
+                this.state = {
+                    msg:90000
+                }
+            }
+            render(){
+
+                // 不能在render函数内修改state数据,因为setState会重新触发render,导致无法停止渲染
+                // this.setState({
+                //     msg:Math.random()
+                // })
+                
+                // 解构赋值获取当前组件的数据和方法
+                let {num,fn} = this;
+
+                return (
+                    <div>
+                        <h3>{num}</h3>
+                        <button onClick={fn}>1111</button>
+                    </div>
+                )
+            }
+
+            componentDidMount(){
+                console.log('componentDidMount')
+            }
+
+            fn(){
+                this.num = Math.random();
+                this.forceUpdate();
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+</body>
+</html>

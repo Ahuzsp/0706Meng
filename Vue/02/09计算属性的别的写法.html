@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <button @click='setTotal'>按钮</button>
+        <input type="text" placeholder="数量" v-model='count'>
+        数量的两倍:<input type="text" v-model='total'>
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 计算属性可以写成函数和对象的形式.
+        // 函数形式就相当于对象的get函数.
+        // 默认情况下,函数形式的计算属性只含有get,没有set.
+
+        // 计算属性默认是不能通过v-model或者手动逻辑直接修改的.
+        // Vue认为计算属性的值总是通过其他值计算得来。不能直接修改，只能间接修改.(react也适用)
+        // 如何间接修改计算属性？
+        //   修改计算属性依赖的数据来间接修改计算属性.
+
+        // total依赖count.因此只需要修改count就能间接修改total.但是此时需要给计算属性设置setter
+
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                count:1
+            },
+            computed:{
+                total:{
+                    get(){
+                        return this.count * 2;
+                    },
+                    set(newValue){
+                        this.count = newValue/2;
+                    }
+                }
+            },
+            methods:{
+                setTotal(){
+                    this.total = 100;
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

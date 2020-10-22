@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/redux.js"></script>
+	<script type="text/babel">
+
+        const {Component,Fragment} = React;
+        
+        // redux存储数据,是存到一个自定义函数的作用域内.(闭包存)
+        function getNum(num=0){
+            return num
+        }
+
+        function getMsg(msg=100){
+            return msg
+        }
+
+        // 实例化store1对象,以后用来获取和修改num数据
+        const store1 = Redux.createStore(getNum);
+
+        // 实例化store2对象,以后用来获取和修改msg数据
+        const store2 = Redux.createStore(getMsg);
+
+        class Son extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button>Son按钮</button>
+                        <div>{store1.getState()}</div>
+                        <div>{store2.getState()}</div>
+                    </Fragment>   
+                )
+            }
+        }
+        
+        class Item extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button>Item按钮</button>
+                        <div>{store1.getState()}</div>
+                        <div>{store2.getState()}</div>
+                    </Fragment>   
+                )
+            }
+        }
+
+        class App extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button>App按钮</button>
+                        <div>{store1.getState()}</div>
+                        <div>{store2.getState()}</div>
+                        <Item />
+                        <Son />
+                    </Fragment>   
+                )
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

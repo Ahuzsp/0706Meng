@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        div{
+            height:20rem;
+            background-color: red;
+            width:320px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- rem适配需要两种插件 -->
+    <!-- 1:自动修改html字号的插件 -->
+    <!-- 2:把px换算成rem的插件 -->
+
+    <div>哈哈哈哈</div>
+
+    <script>
+
+        // 视口尺寸变化时,动态修改html的字号
+        window.addEventListener('resize',function(){
+            // 当前视口的宽
+            let currentWidth = document.body.clientWidth;
+            console.log(currentWidth);
+            document.documentElement.style.fontSize = 16*currentWidth/320 + 'px'
+        })
+
+    </script>
+
+</body>
+</html>

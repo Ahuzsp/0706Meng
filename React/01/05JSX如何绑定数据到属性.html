@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'>
+        
+    </div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        let msg = '哈哈哈';
+        let cn = 'active';
+        
+        // JSX绑定内容和绑定属性的方法是一样的.都是通过 {} 插入
+        // let Vnode = <h3 className={cn}>{msg}</h3>
+
+        // 不能直接写数组
+        // let Vnode = <h3 className={['active','box'].join(' ')}>{msg}</h3>
+
+        // 不能直接写对象
+        // let Vnode = <h3 className={{active:true,box:false}}>{msg}</h3>
+
+        // ------------------------------------------------------------
+        
+        // let data = {active:true,box:false};
+        // let arr = [];
+
+        // for(let key in data){
+        //     if(data[key]){
+        //         arr.push(data[key])
+        //     }
+        // }
+
+        // let Vnode = <h3 className={arr.join(' ')}>{msg}</h3>
+
+        // --------------------------------------------------------------------------
+        
+        let color = 'red';
+
+        // 这里style只能绑定一个对象作为值.
+        let Vnode = <h3 style={{background:color}}>{msg}</h3>
+
+        // 挂载Vnode到#root上。
+        ReactDOM.render(Vnode,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html>

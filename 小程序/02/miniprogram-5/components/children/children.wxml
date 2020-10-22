@@ -1,0 +1,7 @@
+<!--components/children/children.wxml-->
+
+<view>
+  <slot name='b' />
+  <view>children组件</view>
+  <slot name='a' />
+</view>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'></div>
+	</body>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+
+	<script type="text/javascript">
+		
+        // Vue视图的更新为什么是异步的? 为了性能.
+        // 假设数据循环修改100次,如果Vue视图更新是同步的,则也会更新100次.
+        // 我们应该更新数据最后的状态到视图上,其他的中间状态不更新到视图上.
+        // 这样Vue的视图更新只能作为异步操作.等待所有同步的数据操作结束后,更新最新的数据状态.
+        // 如果每次数据变化后面再设置一个nextTick,则每次数据变化都会单独触发一次nextTick.
+
+        // nextTick在updated之后触发的。
+
+		const App = {
+			template:`
+				<div id='app'>
+					<div>
+                        num:<div ref='num'>{{num}}</div>
+                        <button @click='setNum'>修改num</button>
+                    </div>
+				</div>
+			`,
+            data(){
+                return {num:''}
+            },
+            methods:{
+                setNum(){
+                    // for循环修改数据10次.
+                    for(let i=0;i<10;i++){
+                        this.num = Math.random();
+                        // 马上视图更新.
+                        this.$nextTick(()=>{
+                            console.log(i)
+                        })
+                    }
+                }
+            },
+            updated(){
+                console.log('视图更新了');
+            }
+		}
+
+        let num = 0;
+      
+        console.log(num);
+        setTimeout(()=>{
+            num = 10;
+        },0);
+
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+				
+	</script>
+</html>

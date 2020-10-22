@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch} = ReactRouterDOM;
+        
+        // Vue如何监听路由跳转.
+        // router-view本质就是动态组件,动态组件在切换时,组件是默认被创建和销毁的
+
+        // 如果router-view没有被缓存，则可以在组件的mounted或者created内监听路由发生了跳转
+        // 如果router-view被缓存，则可以在组件的activated或者deactivated内监听路由发生了跳转
+
+        // 万能监听:watch监听$route -> 经过变化后可以在computed内监听
+        // 非动态路由可以通过 -> beoforeRouteEnter和beforeRouteLeave来监听
+        // 动态路由的路由切换 -> beoforeRouteUpdate
+
+        // React的路由跳转,组件都会默认销毁和创建.
+        // 因此直接在render,componentDidMount这些生命周期钩子函数内都可以监听到路由跳转
+        // 动态路由：componentWillReceiveProps也可以监听.($route)
+
+        class Home extends Component{
+			render(){
+				return <h3>Home组件</h3>
+			}
+        }
+        
+        class News extends Component{
+            componentDidMount(){
+                console.log('进入News路由')
+            }
+			render(){
+				return <h3>News组件</h3>
+            }
+            componentWillUnmount(){
+                console.log('离开News路由')
+            }
+        }
+        
+        class Sport extends Component{
+			render(){
+				return <h3>Sport组件</h3>
+			}
+		}
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <HashRouter>
+                            <NavLink to='/'>首页</NavLink>
+                            <NavLink to='/news'>新闻</NavLink>
+                            <NavLink to='/sport'>体育</NavLink>
+                            <Switch>
+                                <Route path='/' exact component={Home} />                        
+                                <Route path='/news' component={News} />                        
+                                <Route path='/sport' component={Sport} />
+                            </Switch>                        
+                        </HashRouter>
+                    </Fragment>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+
+	</script>
+</html>

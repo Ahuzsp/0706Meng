@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <script>
+
+        let aDiv = document.querySelectorAll('div');
+
+        // 根据以下函数调用.封装一个函数.实现给指定的元素添加指定的样式
+        // 如果参数有innerText属性.按照innerText的值给指定元素添加内容.
+        // 如果没有innerText,给指定元素默认添加'default string'的内容
+
+        setEle({
+            // 指定的元素
+            el:aDiv[0],
+            // 指定的样式
+            styles:{
+                backgroundColor:'red',
+                width:'100px',
+                height:'100px'
+            },
+            innerText:'111111'
+        })
+
+        setEle({
+            el:aDiv[1],
+            styles:{
+                backgroundColor:'blue',
+                width:'200px',
+                height:'200px',
+                border:'3px solid #000'
+            },
+            innerText:'22222'
+        })
+
+        setEle({
+            el:aDiv[2],
+            styles:{
+                backgroundColor:'green',
+                width:'300px',
+                height:'300px'
+            }
+        })
+
+    </script>
+</body>
+</html>

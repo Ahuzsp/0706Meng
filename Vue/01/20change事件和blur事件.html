@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div>
+        <input type="text">
+
+        <select>
+            <option value="1111">1111</option>
+            <option value="2222" selected>2222</option>
+            <option value="3333">3333</option>
+        </select>
+
+        <input type="color">
+
+    </div>
+
+    <script>
+
+        let oText = document.querySelector('input');
+
+        let oSelect = document.querySelector('select');
+
+        let oColor = document.querySelector('[type="color"]');
+
+        // 表单元素的value用存储用户选择的,输入的内容.
+
+        oSelect.onchange = function(){
+            // console.log('oSelect的value改变事件');
+            console.log(this.value);
+        }
+
+        oColor.onchange = function(){
+            // console.log('oColor的value改变事件');
+            console.log(this.value);
+        }
+
+        // 失去焦点事件
+        oText.onblur = function(){
+            console.log('失焦事件');
+        }
+
+        // value变化的事件.
+        oText.onchange = function(){
+            console.log('value改变事件');
+        }
+
+    </script>
+
+</body>
+</html>

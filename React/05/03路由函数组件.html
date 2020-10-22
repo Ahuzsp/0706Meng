@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch,withRouter} = ReactRouterDOM;
+        
+        function Home({history}){
+            return (
+                <div>
+                    <h3>Home组件</h3>
+                    <button onClick={toNews}>去新闻</button>
+                </div>
+            )
+
+            function toNews(){
+                history.push({pathname:'/news',params:{msg:'9527'}})
+            }
+        }
+
+        function News({location:{params}}){
+            return <h3>{params.msg}组件</h3>
+        }
+
+        function Sport(){
+            return <h3>Sport组件</h3>
+        }
+
+        function App({history,location,match}){
+
+            return (
+                <Fragment>
+                    <button onClick={()=>{toPage('/')}}>首页</button>
+                    <button onClick={()=>{toPage('/news')}}>新闻</button>
+                    <button onClick={()=>{toPage('/sport')}}>体育</button>
+                    <Switch>
+                        <Route path='/' exact component={Home} />                        
+                        <Route path='/news' component={News} />                        
+                        <Route path='/sport' component={Sport} />
+                    </Switch>                       
+                </Fragment>
+            )
+
+            function toPage(path){
+                history.push(path);
+            }
+        }
+
+        // 让App可以使用props的history，location和match。
+        const NewApp = withRouter(App);
+
+		ReactDOM.render((
+            <HashRouter>
+                <NewApp />
+            </HashRouter>
+        ),document.getElementById('root'));
+
+
+	</script>
+</html>

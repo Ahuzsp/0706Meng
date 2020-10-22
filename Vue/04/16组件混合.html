@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 组件混合 -> mixins
+        // 可以将组件中相同的选项抽离放入一个公共的对象中.
+        // 其他组件通过mixins选项引入这个公共的选项部分.
+
+        // 如果组件中有选项和mixins中的选项冲突,以组件中的选项为准.
+
+        let mx = {
+            data(){
+                return {msg:'相同的内容'}
+            },
+            methods:{
+                fn(){
+                    alert(this.msg)
+                }
+            }
+        }
+
+        const Item = {
+            template:`<div>{{msg}}</div>`,
+            mixins:[mx],
+            data(){
+                return {msg:'我牛逼一点'}
+            }
+        }
+
+        const Son = {
+            template:`<p>{{msg}}</p>`,
+            mixins:[mx]
+        }
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <div is='Item'></div>
+                    <p is='Son'></p>
+                </div>
+            `,
+            components:{Item,Son}
+        }
+
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

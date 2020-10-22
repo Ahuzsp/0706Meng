@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="root"></div>
+
+    <script src="../js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/babel">
+
+        // Vue的生命周期：
+        //     1：创建阶段
+        //         beforeCreate，created，beforeMount，mounted
+        //     2：运行阶段
+        //         beforeUpdate，Updated，beforeDestroy，destroyed
+
+        // React生命周期 (除了render,都只触发一次)
+        //        1:创建阶段
+        //            constructor(构造函数,类似于created)(用于初始化数据)
+        //            componentWillMount(类似于Vue的beoforeMount)(辣鸡)
+        //            render (更新虚拟节点)(读一些数据,做一些渲染前的准备)
+        //            componentDidmount(类似于Vue的mounted)(用于请求数据)
+
+        const {Component,Fragment} = React;
+
+        class App extends Component{
+            constructor(props){
+                super(props);
+                console.log('constructor')
+            }
+            componentWillMount(){
+                console.log('componentWillMount')
+            }
+            render(){
+                let msg = Math.random();
+                console.log('render');
+                return (
+                    <div>
+                        <h3>{msg}</h3>
+                    </div>
+                )
+            }
+            componentDidMount(){
+                console.log('componentDidMount')
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+</body>
+</html>

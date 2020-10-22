@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="root"></div>
+
+    <script src="../js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/babel">
+
+        //React运行阶段的生命周期
+        //    1:componentWillReceiveProps (组件即将接收props)(处理父组件传递的props)
+        //    2:shouldComponentUpdate (组件应该更新吗) (性能相关) (不能setState)
+        //    3:componentWillUpdate (组件更新前,类似Vue的beoforeUpdate) (辣鸡) (不能setState)
+        //    4:render (更新中...只能读,不能写) 
+        //    5:componentDidUpdate (组件更新后,类似Vue的updated)(获取和处理更新后视图) (不能setState)
+        //    6:componentWillUnmount (组件即将卸载)
+
+        const {Component,Fragment} = React;
+
+        class Item extends Component{
+            constructor(props){
+                super(props);
+                this.state = {
+                    num:0
+                }
+            }
+            componentWillReceiveProps(){
+                this.setState({
+                    num:Math.random()
+                })                
+                console.log('componentWillReceiveProps')
+            }
+            shouldComponentUpdate(){
+                // this.setState({
+                //     num:Math.random()
+                // })
+                console.log('shouldComponentUpdate')
+                return true
+            }           
+            componentWillUpdate(){
+                // this.setState({
+                //     num:Math.random()
+                // })
+                console.log('componentWillUpdate')
+            }
+            render(){
+                console.log('子render')
+                return (
+                    <div>
+                        <h3>Item组件</h3>
+                    </div>
+                )
+            }
+            componentDidUpdate(){
+                // this.setState({
+                //     num:Math.random()
+                // })
+                console.log('componentDidUpdate')
+            }
+        }
+
+        class App extends Component{
+            constructor(props){
+                super(props);
+            }
+            render(){
+                return (
+                    <div>
+                        <button onClick={()=>{this.forceUpdate()}}>刷新父组件</button>
+                        <Item />
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+</body>
+</html>

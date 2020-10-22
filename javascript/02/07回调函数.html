@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='wrap'></div>
+    <script>
+
+        // 回调函数 -> 作为实参的函数。
+        // 回调函数的调用时机依赖别的函数的调用。
+
+        // 定时器的第一个参数是一个函数，它就是回调函数。
+
+        // 在某段时间之后做一些事情。
+
+        // 时间可以用number来提供。
+        // '一些事情'用什么数据类型来提供？
+        // '一些事情'可能需要10000行代码
+        // 如何把这10000行代码作为实参？
+        // 只能把这10000行代码封装到一个函数里，打包传入setTimeout内去执行。
+
+        // 第一个参数的值是console.log(1000)的返回值undefined
+        // 第二个参数的值是1000的返回值
+        // setTimeout(function(){
+        //     console.log(1000)
+        // },1000);
+
+        let arr = [1,2,3];
+        // 遍历某个数组，每遍历一个元素，就做一些事情。
+        // arr.forEach(function(item,i){
+        //     console.log(item)
+        // });
+
+        // 自定义函数，何时会用回调函数？
+        // 封装一个函数，功能是判断任意两个数的乘积，如果大于100，就打印这个乘积。
+        // 封装一个函数，功能是判断任意两个数的乘积，如果大于100，就做一些事情。
+        
+        fn(10,20,function(res){
+            console.log(res); // 匿名函数 -> 全局
+        });
+
+        fn(6,90,function(res){
+            alert(res);
+        });
+
+        fn(5,30,function(res){
+            let oDiv = document.getElementById('wrap');
+            oDiv.innerText = res;
+        });
+
+        function fn(x,y,fun){
+            let res = x*y;
+            if(res > 100){
+                fun(res); // if -> fn -> 全局
+            }
+        }
+
+    </script>
+
+</body>
+</html>

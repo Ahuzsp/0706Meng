@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    class App extends Component{
+
+        state = {
+            num:0
+        }
+
+        render(){
+            console.log('render');          
+            return (
+                <Fragment>
+                    <button onClick={this.fn.bind(this)}>按钮</button>
+                    <div>{this.state.num}</div>
+                </Fragment>
+            )
+        }
+        fn(){
+
+            // 每次数据变化,依赖于上一次的数据的值，这时参数不应该写成对象
+            // this.setState({
+            //     num:this.state.num + 2
+            // });
+            
+            // setState修改数据时,参数可以写成函数形式
+            // 新的state对象需要return出来
+            // 函数的参数就是上一次的state的数据状态
+            
+            this.setState((state)=>{
+                return {
+                    num:state.num + 2
+                }
+            });
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // 视图更新需要的数据,应该越少越好.(为了性能)
+    // 什么数据应该是state数据
+    // 1:该数据是否是由父组件通过 props 传递而来的？如果是，那它应该不是 state。
+    // 2:该数据是否随时间的推移而保持不变？如果是，那它应该也不是 state。
+    // 3:你能否根据其他 state 或 props 计算出该数据的值？如果是，那它也不是 state。
+
+    class App extends Component{
+
+        count = 1
+        price = 10
+
+        state = {
+            total:10
+        }
+
+        render(){         
+            return (
+                <Fragment>
+                    <input type='text' onInput={this.fn.bind(this,'count')} />
+                    <input type='text' onInput={this.fn.bind(this,'price')} />
+                    <div>总价:{this.state.total}</div>
+                </Fragment>
+            )
+        }
+
+        fn(key,ev){
+
+            // 修改对应数据                 
+            this[key] = ev.target.value;
+
+            // 设置total并且更新视图
+            this.setState({
+                total:this.count * this.price
+            })
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

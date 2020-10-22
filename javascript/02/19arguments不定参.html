@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 实参的个数不固定，如何写形参？
+
+        // let max1 = Math.max(1,2,4345,56,658,67,8769,890,980);
+        // let max2 = Math.max(658,67,8769,890,980);
+
+        // 封装一个函数打印实参，传多少个实参，就批量打印。
+
+        log('你','我','她','禽兽','畜生');
+        log('禽兽','畜生');
+
+        // function log(){
+        //     arguments -> 实参列表.伪数组.length可以表示实参个数
+        //     console.log(arguments);
+        //     for(let i=0;i<arguments.length;i++){
+        //         console.log(arguments[i])
+        //     }
+        // }
+        
+        // es6的rest参数。
+        // 这样写，就可以把args当成arguments来使用。
+        function log(...args){
+            console.log(args);
+            for(let i=0;i<args.length;i++){
+                console.log(args[i])
+            }
+        }
+
+    </script>
+
+</body>
+</html>

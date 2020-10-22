@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <p>我是一个段落</p>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+
+        // 生命周期
+        // 虚拟节点(vNode)
+        // 虚拟节点相对于真实的DOM节点而言.
+
+        // 为什么需要虚拟节点? 为了性能.
+        // 操作虚拟节点比操作真实节点性能更好.为什么?
+
+        // Vue通过数据驱动更新视图,没有DOM操作.(编程时不需要DOM操作)
+        // Vue的源码里有DOM操作吗? 有
+        // Vue就以最小的代价进行DOM操作.(能不用绝对不用,实际上是在更新的最后一步才DOM操作)
+        // 为什么频繁DOM操作性能不好? 涉及浏览器的重绘,频繁重绘自然性能不好.
+        // 如何减少DOM操作,提高性能,我们编程不需要考虑,Vue的源码已经处理好了.
+        // Vue是如何做到减少DOM操作的? 利用虚拟节点.
+
+        // 什么是虚拟节点? 虚拟节点就是真实节点的描述.虚拟节点就是一个json对象.
+
+        // 真实节点
+        <div id='app'>
+            <p>{{msg}}</p>
+        </div>
+
+        // 虚拟节点 (描述真实节点的标签名,子节点列表,属性节点列表)
+        /* 
+            {
+                tag:'div',
+                attrs:[属性节点id]
+                children:[text,{
+                    tag:'p'
+                    attrs:null
+                    children:[msg]
+                },text]         
+            } 
+        */
+        
+        // 回去可以尝试一下,把真是节点转换成虚拟节点,或者把虚拟节点转换为真实节点.
+
+        // 虚拟节点是如何减少DOM操作的?
+        // 例如以上模板,需要修改p的内容.Vue不会一开始就DOM操作修改.而是先修改虚拟节点.
+
+        // oDiv.innerText ='11111' (浏览器重回，非常复杂) (DOM操作)
+        // children[0] = '111111' (只是操作js的一个数据,消耗非常低) (虚拟节点操作)
+
+        // 总结:
+        //        Vue劫持了数据.数据变化时,
+        //        Vue会先修改虚拟节点,然后通过一个最核心的算法diff算法.
+        //        以最小的代价把虚拟节点转换为真实节点,最后通过DOM操作更新到视图上.
+        
+        // diff算法:
+        //    拿更新前和更新后的虚拟节点做同级对比,只更新需要更新的部分.
+
+        let vm = new Vue({
+            el:'#app'
+        })
+
+
+    </script>
+
+</body>
+</html>

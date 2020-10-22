@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 取一个随机数1000-10000的随机数,大于5000算成功,小于5000算失败.
+        // 用这个随机数构成定时器打印响应的信息
+        // 如果成功打印随机数字和'成功了'三个字
+        // 如果成功打印随机数字和'失败了'三个字
+
+        // new Promise((resolve,reject)=>{
+        //     取随机数1000-10000
+        //     let randomNum = Math.floor(Math.random()*9000 + 1001);
+        //     console.log(randomNum);
+        //     setTimeout(()=>{
+        //         if(randomNum > 5000){
+        //             resolve(randomNum+'成功了');
+        //         }else{
+        //             reject(randomNum+'失败了');
+        //         }
+        //     },randomNum)
+        // }).then((num)=>{
+        //     console.log(num)
+        // }).catch((num)=>{
+        //     console.log(num)
+        // })
+
+        // new Promise((resolve,reject)=>{
+        //     let xhr = new XMLHttpRequest();
+        //     xhr.open('get','http://localhost:8080/0525ajax03/php/1.get.php?username=111&age=23');
+        //     xhr.send();
+        //     xhr.onreadystatechange = function(){
+        //         if(xhr.readyState == 4){
+        //             if(xhr.status == 200){
+        //                 resolve(xhr.responseText);
+        //             }else{
+        //                 reject(xhr.status)
+        //             }
+        //         }
+        //     }
+        // }).then((res)=>{
+        //     console.log(res)
+        // }).catch((err)=>{
+        //     console.log('err',err)
+        // })
+
+        function axios(config){
+            // 解构赋值.
+            let {method,url,params} = config;
+            // 返回一个promise实例.
+            return new Promise((resolve,reject)=>{
+                let xhr = new XMLHttpRequest();
+                xhr.open(method,url+'?'+params);
+                xhr.send();
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState == 4){
+                        if(xhr.status == 200){
+                            resolve(xhr.responseText);
+                        }else{
+                            reject(xhr.status)
+                        }
+                    }
+                }
+            })
+        }
+
+        axios({
+            url:'http://localhost:8080/0525ajax03/php/1.get.php',
+            method:'get',
+            params:'username=111&age=32'
+        }).then((res)=>{
+            console.log(res)
+        }).catch((err)=>{
+            console.log('err',err)
+        })
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        
+        // 解构赋值获取Fragment抽象组件.
+        let {Fragment} = React;
+
+        // 原生js,事件传参的方法?
+        // 1:写匿名函数,匿名函数内调用传参.
+        // 2:闭包返回函数.
+        // 3:通过bind传参.(React中最常用)
+
+        // React事件句柄内的this默认指向undefined.(不会默认指向组件,更不会指向按钮)
+
+        function fn(x){
+            alert('fn'+x);
+        }
+
+        function show(x){
+            return function(){
+                alert('show'+x)
+            }
+        }
+
+        // bind处理后，事件对象自动是最后一个参数。
+        function handler(str,ev){
+            console.log(str);
+            console.log('this',this);//undefined
+            console.log('ev',ev.target);
+        }
+
+        let Vnode = ( 
+            <Fragment>
+                {/* <button onClick={fn}>没括号</button>  */}
+                {/* <button onClick={fn()}>有括号</button>  */}
+                <button onClick={function(){fn('hello React')}}>包裹匿名函数</button> 
+                <button onClick={()=>{fn('hello React')}}>包裹匿名箭头函数</button> 
+                <button onClick={show('hello React')}>闭包返回函数传参</button> 
+                <button onClick={fn.bind(null,'hello React')}>bind传参</button> 
+                <button onClick={true?fn:show}>三目返回对应的事件句柄</button> 
+                <button onClick={handler}>事件对象和this</button> 
+                <button onClick={handler.bind(null,'hello React')}>又传参又使用事件对象,推荐bind处理</button> 
+            </Fragment>         
+        );
+
+        // 挂载Vnode到#root上。
+        ReactDOM.render(Vnode,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html>

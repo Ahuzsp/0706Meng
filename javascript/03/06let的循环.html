@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div>
+        <button>1111</button>0
+        <button>2222</button>1
+        <button>3333</button>2
+    </div>
+
+    <script>
+
+        let aBtn = document.querySelectorAll('button');
+
+        // 3个按钮需要3个不同的变量来表示下标
+        // 循环的i，用let声明，就是局部变量
+        // 循环3次，产生3个块级作用，3个块级作用域内的i是各不相同的。
+        for(let i=0;i<aBtn.length;i++){
+            aBtn[i].onclick = function(){
+                aBtn[i].style.background = 'red'
+            }
+        }
+
+        {
+            let i=0;
+            aBtn[i].onclick = function(){
+                aBtn[i].style.background = 'red'
+            } 
+        }
+
+        {
+            let i=1;
+            aBtn[i].onclick = function(){
+                aBtn[i].style.background = 'red'
+            } 
+        }
+
+        {
+            let i=2;
+            aBtn[i].onclick = function(){
+                aBtn[i].style.background = 'red'
+            } 
+        }
+
+        // var i=0;
+        // aBtn[i].onclick = function(){
+        //     aBtn[i].style.background = 'red'
+        // }
+
+        // var j=1;
+        // aBtn[j].onclick = function(){
+        //     aBtn[j].style.background = 'red'
+        // }
+
+        // var y=2;
+        // aBtn[y].onclick = function(){
+        //     aBtn[y].style.background = 'red'
+        // }
+
+
+
+    </script>
+
+</body>
+</html>

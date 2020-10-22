@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let a = 30;
+        let arr = [50,30,20];
+
+        function fn(a,newArr){
+            a = 20;
+            // 形参newArr和实参arr是同一个数组。
+            // 修改newArr的元素，实际上就是在修改arr的元素
+            newArr[0] = 100;
+        }
+
+        // 函数调用时，系统自动进行 newArr = arr的操作。
+        fn(a,arr);  
+
+        console.log(a); // 30
+        console.log(arr[0]); // 100
+
+    </script>
+
+</body>
+</html>

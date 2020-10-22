@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 1：es5的类
+
+        // es5的一个类就是一个函数。这个函数一般叫构造函数，首字母习惯大写。
+
+        // new 做了什么事情.(实例化时发生了什么)
+
+        // 1:让this指向实例.
+        // 2:让构造函数返回实例.
+        // 3:让实例默认继承类的原型 (prototype)
+
+        // 类
+        function Person(){
+            this.name = name
+        }
+
+        Person.prototype.fn = function(){
+            console.log(this.name);
+        }
+
+        // 类的实例化.
+        let p1 = new Person('坤坤');
+
+        // 可以调用
+        p1.fn();
+
+        // p1的原型链:
+        //     p1 -> Person.prototype -> Object.prototype
+
+       
+    </script>
+
+</body>
+</html>

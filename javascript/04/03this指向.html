@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        var num = 200;
+        let obj = {num:100};
+        obj.fn = show;
+
+        // 正常情况分析this指向：
+        //     1:确定this在哪个函数声明里。
+        //     2:确定这个函数的调用在哪里。
+        //     3:确定这个函数调用前面的对象。this就指向这个对象。没有对象指向window
+
+        // 这里的this指向：
+        //       1:这里的this在show函数内
+        //       2:show的调用其实obj.fn();
+        //       3:obj.fn()前面的对象是obj，因此这里的this指向obj
+        
+        function show(){
+            fn(this);
+        }
+        
+        // 这里的this指向
+        //       1:this写在fn里
+        //       2:fn的调用fn(obj)
+        //       3:fn(obj)的前面没有对象,因此这里的this指向window
+        function fn(o){
+            console.log(this.num + o.num);
+        }
+
+        obj.fn();
+
+        // 1:num = 200; (var 声明的，num是window的属性)
+        // 2:obj = {num:100}
+        // 3:obj.fn = show (引用赋值,obj.fn和show引用同一个函数)
+        // 4:obj.fn() (实际上也是show在调用)
+        //        调用fn(obj);
+        //            console.log(this.num + o.num);
+        //            console.log(this.num + obj.num);
+        //            console.log(window.num + obj.num);
+        //            console.log(200 + 100);
+
+	
+    </script>
+
+</body>
+</html>

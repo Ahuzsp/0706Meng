@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch} = ReactRouterDOM;
+        
+        // 路由的各种路由数据(path,params,push)和方法都可以通过props获取
+        // props内的3个常用数据:
+        // 1:hisory
+        // 2:location
+        // 3:match
+
+        // 路由传参后,可以通过location获取.
+
+        class Home extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <h3>Home组件</h3>
+                        <button onClick={this.toNews.bind(this)}>跳转到News</button>
+                    </Fragment>
+                )
+            }
+            toNews(){
+                // 只跳转,不传参,可以直接写path
+                // this.props.history.push('/news');
+
+                // 跳转的同时传参,需要写对象
+                // this.props.history.push({pathname:'/news',params:{msg:'来自Home的礼物'}});
+
+                // 传参时用的参数名,是可以自定义的,不是固定叫params
+                this.props.history.push({pathname:'/sport',abc:{msg:'来自Home的礼物'}});
+            }
+        }
+        
+        class News extends Component{
+			render(){
+                // let {location} = this.props;
+                let {params} = this.props.location;
+                console.log(this.props);
+				return <h3>News组件-{params && params.msg}</h3>
+			}
+        }
+        
+        class Sport extends Component{
+			render(){
+                let {abc} = this.props.location;
+				return <h3>Sport组件-{abc && abc.msg}</h3>
+			}
+		}
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <HashRouter>
+                            <NavLink to='/'>首页</NavLink>
+                            <NavLink to='/news'>新闻</NavLink>
+                            <NavLink to='/sport'>体育</NavLink>
+                            <Switch>
+                                <Route path='/' exact component={Home} />                        
+                                <Route path='/news' component={News} />                        
+                                <Route path='/sport' component={Sport} />
+                            </Switch>                        
+                        </HashRouter>
+                    </Fragment>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+	</script>
+</html>

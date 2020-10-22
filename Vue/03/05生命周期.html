@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        {{msg}}
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // mounted之后,Vue实例创建成功.生命周期进入了运行阶段.
+        // 在运行阶段中,每当响应式数据发生了改变,就会触发两个钩子函数
+        // beforeUpdate(更新前)和updated.(更新后)
+        // 以上两个钩子函数会重复触发
+        // beforeCreate,created,beforeMount,mounted这4个钩子实例化一次只触发一次.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'hello vue'
+            },
+            created(){
+                console.log('created')
+            },
+            mounted(){
+                console.log('新视图')
+            },
+            beforeUpdate(){
+                console.log('更新前')
+            },
+            updated(){
+                console.log('更新后')
+            }
+        })
+
+    </script>
+
+</body>
+</html>

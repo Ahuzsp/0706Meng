@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <!-- <script src='js/vue-router.js'></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.3/vue-router.js"></script>
+    <script>
+
+        // 路由守卫写在路由组件的子组件中,是不会触发的.
+
+        const Home = {
+            template:`
+                <div>
+                    <h3>首页</h3>
+                    <button @click='toNews'>Home里面的按钮</button>
+                    <input type='text' v-model='msg' />
+                </div>
+            `,
+            methods:{
+                toNews(){
+                    this.$router.push({
+                        name:'news',
+                        params:{
+                            msg:this.msg
+                        }
+                    })
+                }
+            },
+            data(){
+                return {msg:''}
+            }
+        }
+
+        const Item = {
+            template:`<div>item子组件</div>`,
+            beforeRouteEnter(to,from,next){
+                console.log('item的beforeRouteEnter');
+                next();
+            }
+        }
+
+        const News = {
+            template:`
+                <div>
+                    <h3>新闻</h3>
+                    <div>9999999</div>
+                    <Item />
+                </div>
+            `,
+            components:{Item}
+        }
+
+        const Sport = {
+            template:`
+                <div>体育</div>
+            `
+        }
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/',
+                    component:Home,
+                    name:'home'
+                },{
+                    path:'/news',
+                    component:News,
+                    name:'news'
+                },{
+                    path:'/sport',
+                    component:Sport,
+                    name:'sport'
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>                   
+                    <button @click='toPage("/")'>首页</button>
+                    <button @click='toPage("/news")'>新闻</button>
+                    <button @click='toPage("/sport")'>体育</button>
+                    <keep-alive>
+                        <router-view />
+                    </keep-alive>
+                </div>
+            `,
+            methods:{
+                toPage(hash){
+                    this.$router.push({path:hash});
+                }
+            }
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

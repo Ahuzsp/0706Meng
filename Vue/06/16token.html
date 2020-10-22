@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // token -> 一个奇怪的字符串。
+        // token -> 用于验证用户的.
+        // 为什么要验证用户?
+        // 因为http协议是无状态的.
+        // 什么是无状态的?
+        // 无状态的就是无记忆的.
+        // 无记忆的是啥意思?
+
+        // 客户端和服务器进行通信,通信结束之后,再次通信,
+        // 服务器无法得知当前的客户端是不是之前刚刚通信的那个客户端.
+
+        // 如果让服务器记住当前的客户端的一些基本信息,例如登录状态,权限等.
+        // 可以使用token字符串来进行用户验证.
+
+        // 但凡涉及登录功能的应用,基本都需要使用token来进行用户验证.
+        // 因此每次请求都需要把token发送给服务器,服务器会对token进行检查,如果是无效的token是拒绝访问.
+        // 服务器每次做检查时,都会检查当前token是不是已经过期.如果过期了,需要发送一个新的token给前端.
+        // 后期前端再次请求服务器需要携带新的token.
+
+        // 如何存储token.
+        //      1:用cookie.
+        //      2:用本地存储localStorage.
+
+        // 如何发送token.
+        //        1:在请求头中设置token.例如:Authorization:token字符串
+        //        2:axios的全局拦截器中批量设置这个请求头.
+
+    </script>
+
+</body>
+</html>

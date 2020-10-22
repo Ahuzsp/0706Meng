@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="js/axios.js"></script>
+
+    <script>    
+
+        axios.defaults.baseURL = 'http://localhost:8080/0525ajax03/php';
+        
+        // 全局的请求拦截.
+        axios.interceptors.request.use(function (config) {
+            // 在发送请求之前做些什么
+            // 这里的config就是请求时填写的请求配置对象.
+            console.log('config',config);
+
+            // 给所有请求的config都统一配置一个abc的请求头.
+            // config.headers.Authorization = 'asjdfjdhjadja213122';
+
+            // 一定需要把configreturn 出去,否则请求会失败.
+            return config;
+        }, function (error) {
+            // 对请求错误做些什么
+            return Promise.reject(error);
+        });
+
+        axios({
+            url:'/1.get.php',
+            params:{
+                username:'kunkun',
+                age:23
+            },
+            method:'GET'
+
+        }).then((res)=>{
+            console.log(res.data);
+        })
+
+
+
+    </script>
+
+</body>
+</html>

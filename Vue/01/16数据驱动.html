@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div>div{
+            float: left;
+            width: 100px;
+            height: 100px;
+            border:1px solid #000;
+            margin-left:1px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='app'>
+        <button 
+            v-for='(num,i) in 3' 
+            :style='{background:index==i?"red":""}'
+            @click='toRed(i)'
+        >按钮</button>
+        <div></div>                            
+        <div></div>                            
+        <div></div>                            
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // let aDiv = document.querySelectorAll('div>div');
+
+        // 被点击的div的下标.
+        // let index = null;
+        
+        /* 
+        for(let i=0;i<aDiv.length;i++){
+            aDiv[i].onclick = function(){
+                // 把index赋值为当前被点击的div的下标.
+                index = i;
+                // 循环判断所有的div,看哪个div的下标是index.是就变红,否则便白.
+                for(let j=0;j<aDiv.length;j++){
+                    aDiv[j].style.background = (index==j?'red':'')
+                }
+            }
+        } */
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+               // 当前被点击的按钮的下标
+               index:null,
+            },
+            methods:{
+                toRed(i){
+                    this.index = i;
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

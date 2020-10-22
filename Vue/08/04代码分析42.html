@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let x = 10;
+
+        function show(x){
+            fn(x);
+            return x*2
+        }
+
+        function fn(y){
+            x = y + 6
+        }
+
+        let y = show(5);
+
+        // 1: x=10;(全局x)
+        // 2: y = show(5) (全局y)
+        //    fn(x);(x是局部形参x,是5)
+        //        x = y + 6 (y是形参,值就是5)(x是全局的x)
+        //    return x*2 (x是形参5,因此返回的是10)
+                 
+
+    </script>
+
+</body>
+</html>

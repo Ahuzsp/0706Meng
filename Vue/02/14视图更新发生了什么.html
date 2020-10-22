@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id='app'>
+        <button @click='fn'>按钮</button>
+        <div>{{name}}</div>
+        <div>{{show()}}</div>
+    </div>
+    
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 视图更新时,show会重新调用吗.会
+        // 视图更新时,视图内的所有表达式,指令,都会重新执行,以显示新的状态.
+        // data里的数据必须出现在视图上,才会有响应式视图更新.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                name:'幂幂',
+                str:'hhhh',
+            },
+            methods:{
+                fn(){
+                    // this.name = Math.random();
+                    this.str = Math.random();
+                    console.log(this.str);
+                },
+                show(){
+                    console.log('show调用了')
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

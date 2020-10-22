@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id='app'>
+        <ul v-for='item in arr'>
+            <li v-for='value in item'>{{value}}</li>
+        </ul>
+        <div v-for='value in item'>{{item}}</div>
+    </div>
+    
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 嵌套v-for的item,只能在后代v-for内可见(可用).
+        
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                arr:[
+                    {name:'坤坤',age:23,height:178},
+                    {name:'幂幂',age:33,height:168},
+                    {name:'玥玥',age:18,height:166}
+                ],
+            }
+        })
+
+    </script>
+
+</body>
+</html>

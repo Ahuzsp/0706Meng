@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='app'>   
+        <div v-bind:class='cn'>{{cn}}</div>
+        <div :class='cn'>{{cn}}</div>
+        <div :class='true?cn:"box"'>{{cn}}</div>
+        <div :id='cn'>{{cn}}</div>
+        <hr>
+        <!-- 同时具备两个类 -->
+        <div :class='[cn,"box"]'>{{cn}}</div>
+        <!-- 同时具备两个类,但是,根据条件来渲染对应的类 -->
+        <div :class='{[cn]:true,"box":false}'>{{cn}}</div>
+        <hr>
+        <div :class='arr'>{{cn}}</div>
+        <div :class='obj'>{{cn}}</div>
+        <hr>
+        <!-- style属性的特殊绑定写法 -->
+        <div :style='{background:"red",width:"100px"}'>{{cn}}</div>
+        <div :style='{background:color,width:w}'>{{cn}}</div>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // vue是通过数据驱动来进行视图渲染.
+        // {{}} 插值表达式就是渲染内容.
+        // 如何通过数据来渲染属性? v-bind指令
+
+        // 指令 -> 封装了DOM操作。vue没有DOM操作，就通过指令来代替DOM操作。
+
+        // v-bind -> 把数据渲染到任何属性上。
+        // v-bind指令的简写是 :
+        // 如果你希望属性值是js表达式(变量),你就需要在属性前+冒号(:)
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                cn:'active',
+                arr:['active',"box"],
+                obj:{active:true,box:false},
+                color:'red',
+                w:'200px'
+            }
+        })
+
+    </script>
+
+</body>
+</html>

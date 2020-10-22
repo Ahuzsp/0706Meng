@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div>div{
+            width: 200px;
+            height: 200px;
+            position: absolute;
+        }
+        body>div{
+            position: relative;
+        }
+        #box1{
+            z-index:5
+        }
+        #box2{
+            z-index:8
+        }
+        .top{
+            background: red;
+            z-index:100000000000000
+        }
+        .bottom{
+            background: green;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 层级比较：
+        父级元素的层级，如果比较出大小了，就不再比较子级的层级 -->
+
+    <div id='box1'>
+        <div class='top'></div>
+    </div>
+    <div id='box2'>
+        <div class='bottom'></div>
+    </div>
+
+</body>
+</html>

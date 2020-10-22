@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 反向数据流。
+        //      如果多个组件A集合需要使用相同的数据。(需要同步状态)
+        //      这种情况下,都可以使用反向数据流.
+        //          1:数据和修改数据的方法放到A集合的共同祖先组件上。
+        //          2:把数据和方法通过父传子的方式分发给A集合内的所有组件.
+
+        const listItem = {
+            template:`
+                <li>
+                    {{item}}
+                    <button @click='$emit("myevent")'>删除</button>
+                </li>
+            `,
+            props:['item']
+        }
+
+        const List = {
+            template:`
+                <ul>
+                    <list-item 
+                        :item='d' 
+                        v-for='(d,i) in arr'
+                        @myevent = '()=>{del(i)}'
+                    ></list-item>
+                </ul>
+            `,
+            props:['arr','del'],
+            components:{listItem}
+        }
+
+        const App = {
+            template:`
+                <div>
+                    <List :arr='arr' :del='del'></List>
+                    <List :arr='arr' :del='del'></List>
+                </div>
+            `,
+            components:{List},
+            // 操作数组的方法del
+            methods:{
+                del(i){
+                    this.arr.splice(i,1);
+                }
+            },
+            // 两个list和多个Item组件共享的数据。
+            data(){
+                return {arr:[1,2,3]}
+            },
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+
+    </script>
+
+</body>
+</html>

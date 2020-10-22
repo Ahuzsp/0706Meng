@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+
+        ul{
+            border:10px solid #000;
+        }
+        /* ul:after{
+            content:'';
+            display: block;
+            clear:both;            
+        } */
+        div{
+            clear:both;  
+        }
+        li{
+            width: 100px;
+            height: 100px;
+            background:red;
+            margin-left:1px;
+            list-style: none;
+        }
+        /* li:nth-child(1){
+            background: blue;
+        } */
+        /* li:nth-child(1)~li{
+            float: left;
+        } */
+        li:not(:nth-child(5)){
+            float: left;
+        }
+
+        li:nth-child(5){
+            background: blue;
+            clear: both;
+            height:0;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <!-- 伪元素通过DOM操作可以获取吗？ -->
+    <!-- 伪元素本质上还是样式，不存在于DOM树中 -->
+    <!-- 伪元素不是节点 -->
+
+    <ul>
+        <li>111111111</li>
+        <li>222222222</li>
+        <li>333333333</li>
+        <li>444444444</li>
+        <li></li>
+    </ul>
+    
+</body>
+</html>

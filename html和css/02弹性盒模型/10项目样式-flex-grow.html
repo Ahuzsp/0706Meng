@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body><!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            
+            ul{
+                /* 弹性盒模型声明 */
+                display:flex;
+                
+                flex-flow:column wrap;
+                
+                list-style: none;
+                border:5px solid #000;
+                height:600px;
+                width: 800px;
+                padding: 0;
+                margin: 0;
+            }
+    
+            li{
+                width:100px;
+                /* height: 100px; */
+                border:1px solid #000;
+                margin-left: 1px;
+                /* width: 0; */
+
+                /* 怪异盒模型：width样式的数值包括padding和border */
+                /* 标准盒模型：width样式的数值只包含content内容的宽 */
+                /* box-sizing: border-box; */
+                /* width: 20%; */
+            }
+
+            /* 设置了flex-grow样式的项目，会得到一个额外的宽 */
+            /* 这个额外的宽 = 父元素剩余的宽*grow的比例 */
+
+            li{
+                flex-grow:1;
+                /* width: calc(20% - 3px); */
+            }
+
+            li:nth-child(1){
+                flex-grow:2;
+            }
+    
+        </style>
+    </head>
+    <body>
+
+        <ul>
+            <li>111</li>
+            <li>222</li>
+            <li>333</li>
+            <li>444</li>
+            <li>555</li>
+        </ul>
+    
+    </body>
+    </html>
+    
+</body>
+</html>

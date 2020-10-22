@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // add调用时，如何能打印fn的x。
+        // 在fn内调用add，并且传入fn的局部变量x。
+
+        function fn(){
+            let x = 10;
+            add(x);
+        }
+
+        function add(x){
+            console.log(x);
+        }
+
+        fn();
+        
+
+
+    </script>
+
+</body>
+</html>

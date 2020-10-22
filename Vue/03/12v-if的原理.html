@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // v-if的原理:
+        // 组件编译模板时,如果检测到有v-if指令,获取v-if的指令值,
+        // 如果值是false,就不把当前的标签编译到虚拟节点列表。
+        // 没有编译到虚拟节点的标签，最后一定是不显示到视图上的。
+
+        // 最终的视图 -> 虚拟节点生成 -> 编译template生成.
+
+        const App = {
+            template: `
+                <div>
+                    <h3>111111</h3>
+                    <div v-if='flag'>222222</div>
+                </div>
+            `,
+            data(){
+                return {
+                    flag:false
+                }
+            }
+        }
+
+        new Vue({
+            el: '#app',
+            template: `<App />`,
+            components: { App }
+        })
+
+    </script>
+
+</body>
+
+</html>

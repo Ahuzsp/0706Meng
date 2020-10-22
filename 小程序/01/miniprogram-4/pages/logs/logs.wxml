@@ -1,0 +1,16 @@
+<!--logs.wxml-->
+<view class="container log-list">
+  <block wx:for="{{arr}}" wx:for-item="log" wx:key='*this'>
+    <text class="log-item">{{index + 1}}. {{log}}</text>
+    <input type='text' />
+    <button bindtap="up" data-index='{{index}}'>上移</button>
+  </block>
+</view>
+
+<view class="container log-list">
+  <block wx:for="{{list}}" wx:for-item="log" wx:key='content'>
+    <text class="log-item">{{index + 1}}. {{log.content}}</text>
+    <input type='text' />
+    <button bindtap="up" data-index='{{index}}'>上移</button>
+  </block>
+</view>

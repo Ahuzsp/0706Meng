@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 父子组件的创建阶段的钩子顺序是什么?
+        // 父beforeCreate
+        // 父created
+        // 父beforeMount
+        // 子beforeCreate
+        // 子created
+        // 子beforeMount
+        // 子mounted
+        // 父mounted
+
+        // Vue解析(编译)template时,也是从上往下编译的。
+        // 如果编译父组件的template时,遇到了子组件的标签,则暂停父组件的创建,转而去创建子组件
+
+        // 为什么?
+        // 父组件解析template时,遇到子组件标签,会立即进行子组件的创建.
+        // 子组件创建成功后,才会继续父组件为完成的template编译工作.
+
+        const Item = {
+            template: `<h3>Item组件</h3>`,
+            beforeCreate() {
+                console.log('子beforeCreate')
+            },
+            created() {
+                console.log('子created')
+            },
+            beforeMount() {
+                console.log('子beforeMount')
+            },
+            mounted() {
+                console.log('子mounted')
+            }
+        }
+
+        const App = {
+            template: `
+                <div>
+                    <Item />
+                    <h3>111111</h3>
+                </div>
+            `,
+            components: { Item },
+            beforeCreate() {
+                console.log('父beforeCreate')
+            },
+            created() {
+                console.log('父created')
+            },
+            beforeMount() {
+                console.log('父beforeMount')
+            },
+            mounted() {
+                console.log('父mounted')
+            }
+        }
+
+        new Vue({
+            el: '#app',
+            template: `<App />`,
+            components: { App }
+        })
+
+        // function App(){
+        //     console.log('父beforeCreate');
+        //     console.log('父created');
+        //     console.log('父beforeMount');
+        //     //开始编译模板
+        //     Item();
+        //     console.log('父mounted');
+        // }
+
+        // function Item(){
+        //     console.log('子beforeCreate');
+        //     console.log('子created');
+        //     console.log('子beforeMount');
+        //     console.log('子mounted');
+        // }
+
+    </script>
+
+</body>
+
+</html>

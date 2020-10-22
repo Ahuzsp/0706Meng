@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'>
+			<div>
+				<h3>商品信息</h3>
+				<table cellspacing='20' cellpadding='20' border='1'>
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>名称</th>
+							<th>价格</th>
+							<th>数量</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr></tr>
+					</tbody>
+				</table>
+			</div>
+			<div>
+				<h3>购物车信息</h3>
+				<table>
+
+				</table>
+			</div>
+			<div>
+
+			</div>
+		</div>
+	</body>
+
+	<script src="js/vue.js"></script>
+
+	<script type="text/javascript">
+		
+		//商品信息，购物车信息，清除构购物车做成3个不同的组件。
+		//这3个组件应该共享以下的商品数据。
+		// 根据incart的值,判断相应的商品是否显示在购物车内.(index有什么用吗?不知道你可以先不管)
+		
+		// 假设Vuex不用
+
+		let arr = [
+			{name:'超越妹妹',count:1,price:100,inCart:false,index:1},
+			{name:'奶茶妹妹',count:1,price:200,inCart:false,index:2},
+			{name:'志林奶奶',count:1,price:300,inCart:false,index:3},
+			{name:'刘涛姐姐',count:1,price:400,inCart:false,index:4}
+		]
+
+		const Goods = {
+			template:`
+				<div>
+					<h3>商品信息</h3>
+					<table cellspacing='20' cellpadding='20' border='1'>
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>名称</th>
+								<th>价格</th>
+								<th>数量</th>
+								<slot name='th'></slot>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for='(d,i) in arr' v-if='flag||d.inCart' :key='d.index'>
+								<td>{{d.index}}</td>
+								<td>{{d.name}}</td>
+								<td>{{d.price}}</td>
+								<td>{{d.count}}</td>
+								<slot name='total' :total='d.count * d.price'></slot>								
+								<td v-if='d.inCart'>
+									<button @click='handlers.plus(i)'>++</button>	
+									<button @click='handlers.reduce(i)'>--</button>
+									<slot name='btn' :i='i'></slot>	
+								</td>
+								<td v-else>
+									<button @click='handlers.setInCart(i)'>加入购物车</button>	
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			`,
+			props:['arr','handlers','flag']
+		}
+
+		const Pay = {
+			template:`
+				<div>
+					<span>总价:{{t_p}}</span>
+					<span>总数量:{{t_c}}</span>
+					<button @click='delall'>清空购物车</button>
+				</div>
+			`,
+			props:['t_c','t_p','delall']
+		}
+
+		const App = {
+			template:`
+				<div id='app'>
+					<h3>Vuex购物车练习</h3>
+
+					<div is='Goods' 
+						:arr='goods'
+						:handlers='{setInCart,plus,reduce}'
+						flag='true'
+					></div>
+
+					<div is='Goods'
+						:arr='goods'
+						:handlers='{setInCart,plus,reduce}'						
+					>
+						<template v-slot:total='slotProps'>
+							<td slot='total'>{{slotProps.total}}</td>
+						</template>
+						<template v-slot:btn='slotProps'>
+							<button slot='btn' @click='del(slotProps.i)'>XX</button>
+						</template>
+						<th slot='th'>总价</th>
+					</div>
+
+					<div is='Pay' :t_c='t_c' :t_p='t_p' :delall='delall'></div>
+
+				</div>
+			`,
+			components:{Goods,Pay},
+			data(){
+				return {
+					goods:arr
+				}
+			},
+			computed:{
+				// 总数量
+				t_c(){
+					let num = 0;
+					this.goods.forEach((item,i)=>{
+						if(item.inCart){
+							num += item.count
+						}
+					})
+					return num
+				},
+				// 总价格
+				t_p(){
+					let num = 0;
+					this.goods.forEach((item,i)=>{
+						if(item.inCart){
+							num += item.count * item.price
+						}
+					});
+					return num
+				}
+			},
+			methods:{
+				// 清空购物车
+				delall(){
+					this.goods.forEach((item)=>{
+						item.inCart = false
+					})
+				},
+				setInCart(i){
+					// 放入购物车
+					this.goods[i].inCart = true;
+				},
+				plus(i){
+					// 数量加
+					this.goods[i].count++
+				},
+				reduce(i){
+					// 数量减
+					if(this.goods[i].count>1){
+						this.goods[i].count--
+					}
+				},
+				del(i){
+					// 移出购物车
+					this.goods[i].inCart = false;
+				}
+			}
+		}
+
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+				
+	</script>
+</html>

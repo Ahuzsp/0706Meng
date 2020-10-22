@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 展开运算符 -> 一次性把所有数组元素输出。
+        // 能展开数组，伪数组，字符串，对象。。。
+
+        let arr = [1,3,53,6,67,89,9];
+        // 如何找出这个数组内的最大值？
+
+        // let num = Math.max(1,3,53,6,67,89,9);
+        // let num = Math.max(arr);
+        
+        // let num = Math.max(...arr);
+
+        let arr1 = [66,77,88];
+        // let newArr = arr.concat(arr1);
+        let newArr = [...arr,...arr1];
+
+        // 展开字符串
+        let str = 'abcdefg';
+        // 把字符串的每一个字符放入一个新数组
+        let arr2 = [...str];
+
+        // 展开对象
+        let obj1 = {name:'kk',age:23,height:150};
+        let obj2 = {gf:'cy',wf:'ym'};
+        // 展开所有的对象属性，放入一个新的对象内。
+        let obj3 = {
+            ...obj1,
+            ...obj2,
+            food:'米粉'
+        };
+
+    </script>
+
+</body>
+</html>

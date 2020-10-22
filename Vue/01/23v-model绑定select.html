@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <h3>请选择你的生日</h3>
+        <select v-model = 'dateTime'>
+            <option value="1998">1998</option>
+            <option value="1997">1997</option>
+            <option value="1996">1996</option>
+            <option value="1995">1995</option>
+        </select>
+        <div>你的生日:{{dateTime}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // v-model可以绑定input输入框,textarea
+        // 还可以绑定checkbox,radio,select
+
+        // v-model绑定select切换时,可以直接将option的value更新到vue数据上.
+
+        new Vue({
+            el:'#app',
+            data:{
+                dateTime:'1995'
+            }
+        })
+
+    </script>
+
+</body>
+</html>

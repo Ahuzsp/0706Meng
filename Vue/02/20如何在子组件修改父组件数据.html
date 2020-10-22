@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <ul>
+            <li>
+                11111
+                <button>删除</button>
+            </li>
+            <li>
+                11111
+                <button>删除</button>
+            </li>
+            <li>
+                11111
+                <button>删除</button>
+            </li>
+        </ul>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 父组件如果是引用类型,可以直接把这个数据传递给子组件修改.
+        // 但是注意,不能把这个引用类型变成新的对象,否则报错.
+
+        let listItem = {
+            template:`
+                <li>
+                    {{item}}
+                    <button @click='deleteItem'>删除</button>
+                </li>
+            `,
+            props:['item','arr','i'],
+            methods:{
+                deleteItem(){
+                    this.arr.splice(this.i,1);
+                }
+            }
+        }
+
+        let App = {
+            template:`
+                <div id='app'>
+                    <ul>
+                        <list-item 
+                            v-for='(item,i) in arr'
+                            :arr='arr'  
+                            :item='item'
+                            :i = 'i'  
+                        />
+                    </ul>
+                </div>
+            `,
+            components:{listItem},
+            data(){
+                return {
+                    arr:[1111,22222,33333]
+                }
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

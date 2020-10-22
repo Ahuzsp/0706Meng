@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id='btn'>哈哈哈哈</button>
+
+    <script>
+
+        // 直接量 -> 复杂数据类型的'常量'
+
+        // 直接量创建数组。[1,2,3] -> 数组直接量 (不需要构造，写出来就能用)
+        let arr1 = [1,2,3];
+        // 构造实例化数组。
+        // let arr2 = new Array(1,2,3);
+
+        // 对象直接量
+        let oBj = {name:'1111'};
+
+        // 函数直接量
+        let fn = function(){};
+
+        let oBtn = document.getElementById('btn');
+
+        // 直接量返回值赋值函数给click
+        // oBtn.onclick = function(){
+        //     alert(1111)
+        // }
+
+        // 把show的返回值赋值给click
+        // oBtn.onclick = show;
+        function show(){
+            alert(1111)
+        }
+
+        // 没有return的函数调用表达式返回undefined
+        // 把show()的返回值赋值给click
+        // click必须赋值函数才有用。
+        oBtn.onclick = show();
+
+    </script>
+
+</body>
+</html>

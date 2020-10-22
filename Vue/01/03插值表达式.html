@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        {{str}}
+        {{1>2}}
+        {{fn()}}
+        {{0?100:200}}
+        {{alert(111)}}
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+        
+        // {{}} -> 插值表达式,内部可以写任意表达式.
+        // 最终渲染的是表达式的返回值.
+        // 插值表达式的变量,一定需要是Vue的数据才可以.否则报错.
+        // 插值表达式内的变量都需要在vm的配置项里声明.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                str:'hello Vue'
+            },
+            methods:{
+                fn(){
+                    return 1000
+                },
+                alert(num){
+                    alert(num);
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

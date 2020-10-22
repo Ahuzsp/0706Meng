@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='wrap'>
+        <button>按钮</button>
+        我是你爸爸
+    </div>
+
+    <script>
+
+        // 什么是DOM树，什么是节点
+
+        let oWrap = document.getElementById('wrap');
+        let oBtn = document.querySelectorAll('button')[0];
+
+        oBtn.onclick = function(){
+            alert('我是你爸爸');
+        }
+
+        // 把一个新的按钮和文字放入pWrap内。因为是新的按钮，导致点击事件消失了
+        // 如何只修改文字，而不修改按钮呢？
+        // oWrap.innerHTML = '<button>按钮</button>我是你爷爷';
+
+        // 通过节点树获取纯文本，再通过nodeValue修改文本内容。
+        oWrap.childNodes[2].nodeValue = '我是你爷爷';
+
+
+    </script>
+
+</body>
+</html>

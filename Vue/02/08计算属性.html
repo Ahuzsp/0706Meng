@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <input type="text" placeholder="数量" v-model='count'>
+        <input type="text" placeholder="单价" v-model='price'>
+        <div>总价:{{count*price}}</div>
+        <div>总价:{{total}}</div>
+        <div>{{num}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 某些数据是通过其他已知数据计算得到的.如果用watch实现,则代码比较冗余和繁琐
+        // 对于某个数据是通过其他已知数据计算得到的.应该使用计算属性.
+        // 计算属性是一个数据,但是记得可以写成函数形式,数据的值,需要return出来.
+        
+        // watch监听的数据的监听函数什么时候触发?
+        //    数据改变就触发
+        // 计算属性可以写成函数形式,那这个函数什么时候触发(计算属性什么时候重新求值)
+        //    计算属性相当于设置了immediate的watch,会默认触发一次.
+        //    计算属性内部的响应式数据变化时,都会触发计算属性的函数.
+        //    计算属性内包含了count和price,则在count和price变化时,都会重新触发函数.(同时监听两个数据的效果)
+        //    计算属性total内部所有的响应式数据变化时,total都会触发.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                count:1,
+                price:10,
+                num:50
+            },
+            computed:{
+                total(){
+                    console.log(this.num);
+                    console.log('total');
+                    return this.count * this.price
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

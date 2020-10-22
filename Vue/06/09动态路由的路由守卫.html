@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'>
+			<div id='routerView'>
+				<h3>请选择一种水果，然后点击下一步</h3>
+				<input type='radio' name='fruit1' value='苹果' />苹果<br  />
+				<input type='radio' name='fruit1' value='香蕉' />香蕉<br  />
+				<input type='radio' name='fruit1' value='雪梨' />雪梨<br  />
+				<hr />
+				<input type='button' value='上一步'/>
+				<input type='button' value='下一步'/>
+			</div>
+			<div id='result'>
+				<h3>选择结果页:</h3>
+				<div>你之前选择的3种水果是:</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.0.4/vue-router.js"></script>
+	<script type="text/javascript">
+				
+        // 动态路由中fruit1切换到fruit2,fruit3,路由选项没改变,
+        // 不会触发beforeRouteEnter和beforeRouteLeave
+
+        // 如何检测动态路由发生了切换?
+        //      watch检测$route
+        //      动态组件的两个生命钩子
+        //      beforeRouteUpdate
+		
+		const fruit = {
+			template:`
+				<div id='routerView'>
+					<h3>请选择一种水果，然后点击下一步</h3>
+					<div v-for='item in fruits' :key='item'>						
+						<input type='radio' 
+							name='fruit' 
+							:value='item' 
+							v-model='allFruit[$route.path.slice(1)]'
+						/>{{item}}
+					</div>
+					<hr />
+					<input type='button' value='上一步' @click='$router.back()' />
+					<input type='button' value='下一步' @click = 'nextStep'/>
+				</div>
+            `,
+            beforeRouteUpdate(to,from,next){ 
+                console.log('beforeRouteUpdate'); 
+                // 获取当前路径名.              
+                let path = from.path.slice(1);
+                // 如果没有选水果,就不能进行下一步
+                // 不是0就正常跳转
+                if(this.allFruit[path]){
+                    next();
+                }else{
+                    next(false);
+                }
+            },
+			computed:{
+				fruits(){
+					// 当前路由路径
+					let path = this.$route.path.slice(1);
+					// 返回对应的水果数组
+					return this.arr[path]
+				}
+			},
+			methods:{
+				nextStep(){
+
+					let path = this.$route.path;
+					let num = path.slice(-1);
+
+					if(num != 3){
+						this.$router.push({path:'/fruit'+(num*1+1)});
+					}else{
+						this.$router.push({
+							path:'/result',
+							query:{
+								fruit:Object.values(this.allFruit).join()
+							}
+						});
+					}					
+				}
+			},
+			data(){
+				return {
+					arr:{
+						fruit1:['苹果','香蕉','雪梨'],
+						fruit2:['山竹','西瓜','草莓'],
+						fruit3:['橘子','橙子','柚子']
+					},
+					// 选中的水果
+					allFruit:{
+                        fruit1:'',
+                        fruit2:'',
+                        fruit3:''
+                    },
+				}
+			}
+		}
+
+		const result = {
+			template:`
+				<div id='result'>
+					<h3>选择结果页:</h3>
+					<div>你之前选择的3种水果是:{{result}}</div>
+				</div>
+			`,
+			computed:{
+				result(){
+					return this.$route.query.fruit
+				}
+            },
+            // 进入结果页时，必须选好了水果，否则不允许跳转
+            beforeRouteEnter(to,from,next){
+                if(to.query.fruit.length < 8){
+                    next(false);
+                }else{
+                    next();
+                }
+            }
+		}
+
+		const router = new VueRouter({
+				routes:[
+                    {
+                        path:'/result',
+                        component:result
+                    },{
+                        path:'/:path',
+                        component:fruit
+                    },{
+                        path:'/',
+                        redirect:'/fruit1'
+                    }
+                ]
+		})
+
+		const App = {
+			template:`
+				<div id='app'>
+					<keep-alive>
+						<router-view />
+					</keep-alive>
+				</div>
+			`
+		}
+
+		new Vue({
+			el:'#app',
+			template:"<App />",
+			components:{App},
+			router
+		})
+
+		
+		
+	</script>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+	<script src="js/redux.js"></script>
+	<script src="js/react-redux.js"></script>
+
+	<script type="text/babel">
+		
+		//商品信息，购物车信息，清除构购物车做成3个不同的组件。
+		//这3个组件应该共享以下的商品数据。
+		// 根据incart的值,判断相应的商品是否显示在购物车内.(index有什么用吗?不知道你可以先不管)        
+
+		const {Component,Fragment} = React;
+		const {createStore,combineReducers} = Redux;
+		const {connect,Provider} = ReactRedux;
+
+		const arr = [
+			{name:'超越妹妹',count:1,price:100,inCart:false,index:1},
+			{name:'奶茶妹妹',count:1,price:200,inCart:false,index:2},
+			{name:'志林奶奶',count:1,price:300,inCart:false,index:3},
+			{name:'刘涛姐姐',count:1,price:400,inCart:false,index:4}
+		]
+
+		function reducer(goods=arr,action){
+			// 深拷贝goods数据
+			let arr = JSON.parse(JSON.stringify(goods));
+			switch(action.type){
+				case 'SETIN':					
+					arr[action.i].inCart = true;
+					return [...arr]
+				case 'DEL':
+					arr[action.i].count = 1;					
+					arr[action.i].inCart = false;
+					return [...arr]
+				case 'PLUS':
+					arr[action.i].count++
+					return [...arr]
+				case 'REDUCE':
+				    arr[action.i].count>0 && arr[action.i].count--
+					return [...arr]
+				case 'DELALL':
+				    arr.forEach((item)=>{item.inCart = false;item.count = 1});
+					return [...arr]
+				default:
+					return goods
+			}
+			
+		}
+
+		// 实例化
+		const store = createStore(combineReducers({reducer}));
+
+		class Goods extends Component{
+			render(){
+				let {goods,setIncart,plus,reduce,children,del} = this.props;
+				return (
+					<div>
+						<h3>商品信息</h3>
+						<table cellSpacing='20' cellPadding='20' border='1'>
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>名称</th>
+									<th>价格</th>
+									<th>数量</th>
+									{children}
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							{
+								(children ? goods.filter(item=>item.inCart) : goods)
+								.map((item,i)=>(
+									<tr key={item.index}>
+										<td>{item.index}</td>
+										<td>{item.name}</td>
+										<td>{item.price}</td>
+										<td>{item.count}</td>
+										{children && <th>{item.count * item.price}</th>}
+										<td>{
+											item.inCart?(
+												<Fragment>
+													<button onClick={()=>{plus(i)}}>++</button>	
+													<button onClick={()=>{reduce(i)}}>--</button>
+													{children && <button onClick={()=>{del(item.index)}}>XX</button>}	
+												</Fragment>
+											):(
+												<button onClick={()=>{setIncart(i)}}>加入购物车</button>	
+											)
+										}</td>						
+									</tr>
+								))
+							}
+							</tbody>
+						</table>
+					</div>
+				)
+			}
+		}
+
+		class Total extends Component{
+			constructor(props){
+				super(props);
+				this.t_p = 0;
+				this.t_c = 0;
+			}
+			render(){
+				let {delAll} = this.props;
+				let {t_p,t_c} = this;
+				return (
+					<div>
+						<span>总价:{t_p}</span>
+						<span>总数量:{t_c}</span>
+						<button onClick={delAll}>清空购物车</button>
+					</div>
+				)
+			}
+			componentWillReceiveProps(nextProps){
+				let c = 0;
+				let p = 0;
+				// 遍历商品,如果在购物车中,计算出总价个总数量
+				nextProps.goods.forEach((item,i)=>{
+					if(item.inCart){
+						c += item.count * 1;
+						p += item.count * item.price
+					}
+				})
+				this.t_c = c;
+				this.t_p = p;
+			}
+		}
+
+		function mapDispatchToProps(dispatch){
+			return {
+				// 加入购物车
+				setIncart(i){
+					dispatch({
+						type:'SETIN',i
+					})
+				},
+				// 移出购物车
+				del(i){
+					dispatch({
+						type:'DEL',i
+					})
+				},
+				// 数量+1
+				plus(i){
+					dispatch({
+						type:"PLUS",i
+					})
+				},
+				// 数量-1
+				reduce(i){
+					dispatch({
+						type:"REDUCE",i
+					})
+				},
+				delAll(){
+					dispatch({
+						type:"DELALL"
+					})
+				}
+			}
+		}
+
+		function mapStateToProps(state){
+			return {
+				goods:state.reducer
+			}
+		}
+
+		const NewGoods = connect(mapStateToProps,mapDispatchToProps)(Goods);
+		const NewTotal = connect(mapStateToProps,mapDispatchToProps)(Total);
+
+		class App extends Component{
+			render(){
+				return (
+					<Provider store={store}>
+						<Fragment>
+							<NewGoods />
+							<NewGoods>
+								<th>总价</th>
+							</NewGoods>
+							<NewTotal />
+						</Fragment>
+					</Provider>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+
+	</script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // async和await是终极的异步编程解决方案.他们是Generator函数的语法糖.
+        // async和await的原理是把await后面的代码变成异步操作.实际上就是排队的then.
+
+        function fn(msg,timer){
+            return new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    resolve(msg)
+                },timer)
+            }).then((str)=>{
+                console.log(str);
+            })
+        }
+        
+        async function getTime(){
+            await fn('定时器1',1000);
+            console.log('第一个定时器结束');
+        }        
+        getTime();       
+        console.log('getTime后面的打印');
+
+        // 
+        // async function show(){
+        //     let y = 20;
+        //     let x = 10;
+        //     x = await (y = 20);
+        //     await( x = y = 20);
+        //     console.log(x);
+        // }
+
+    </script>
+
+</body>
+</html>

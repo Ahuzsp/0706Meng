@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        var x = 5;
+
+        let oP = {
+            x:10,
+            fn(o){
+                return this.x + o.x
+            }
+        }
+
+        let oS = {
+            x:20,
+            fn(o){
+                return this.x - o.x
+            }
+        }
+
+        function fn(o){
+            return this.x + o.fn(o)
+        }
+
+        oS.fn = fn = fn.bind(oP);
+
+        let num = oP.fn(oS) + oS.fn.call(window,oP) + fn.call(oS,oP);
+
+        // 打印什么
+        console.log(num);
+
+        /* 
+            1:x = 5; （window.x是5）
+            2:oP对象。oP.x = 10
+            3:oS对象。oS.x = 20
+            4:oS.fn = fn = fn.bind(oP); (oS.fn和fn在后续调用中,this永远指向oP)
+            5:num = oP.fn(oS) + oS.fn.call(window,oP) + fn.call(oS,oP);
+                    oP.fn(oS);
+                        return oP.x + oS.x
+                        return 10 + 20
+
+                    oS.fn.call(window,oP)
+                        return oP.x + oP.fn(oP)     
+                        return 10 + oP.fn(oP) 
+                            oP.fn(oP):return this.x + o.x
+                            oP.fn(oP):return oP.x + oP.x
+                            oP.fn(oP):return 10 + 10
+                        return 10 + 20
+                        
+                    fn.call(oS,oP)
+                        return oP.x + oP.fn(oP)
+                        return 10 + oP.fn(oP)
+                            oP.fn(oP):return this.x + o.x
+                            oP.fn(oP):return oP.x + oP.x
+                            oP.fn(oP):return 10 + 10
+                        return 10 + 20
+            6:打印num 90
+         */
+
+    </script>
+
+</body>
+</html>

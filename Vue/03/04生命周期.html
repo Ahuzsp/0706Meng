@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>老视图</div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 渲染视图阶段.(created之后.)
+        //    判断有没有el选项.
+        //    如果有el,选项,再判断有没有template选项
+        //      如果没有template选项
+        //            编译el的outerHTML作为template.(虚拟节点的原材料)
+        //      如果有template选项
+        //            就直接编译当前template
+
+        //    触发beforeMoute函数
+        //    创建vm.$el并且使用它来替换el (挂载)
+        //    触发mounted钩子函数  
+        //    (mounted触发后就可以看到响应式的新视图了.created看到的还是老视图)
+        
+        //    创建vm.$el: $el就是 -> 通过template生成的虚拟节点转换成的真实节点.(最后我们看见页面)
+        //    el -> 老视图 (最终会被删掉)(挂载点)
+        //    $el -> 新视图 (用户看见的视图)(这个视图具备响应式效果)
+
+        //    beforeMount 辣鸡，没用
+        //    mounted -> 处理新视图。进行数据请求。
+
+        let App = {
+            template:`<div id='app'>新视图</div>`
+        }
+
+        // 挂载根组件。
+        let vm = new Vue({
+            el:'#app',
+            template:'<App />',
+            components:{App},
+            created(){
+                console.log('created');
+            },
+            mounted(){
+                console.log('mounted');
+            }
+        })
+
+    </script>
+
+</body>
+</html>

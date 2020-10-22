@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        var x = 5;
+
+        let obj1 = {x:10};
+        let obj2 = {x:20};
+
+        obj2.fn = function(o){
+            return this.x + o.x
+        }
+
+        obj1.fn = obj2.fn.bind(obj2);
+
+        let y = obj1.fn(obj1) + obj2.fn(obj2);
+        
+        // obj1.fn(obj1) 返回30
+        //     this.x -> obj2.x (20)
+        //     o.x -> obj1.x (10)
+        // obj2.fn(obj2) 返回40
+        //     this.x -> obj2.x (20)
+        //     o.x -> obj2.x (20)
+
+
+    </script>
+
+</body>
+</html>

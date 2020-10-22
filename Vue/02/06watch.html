@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <input type="text" placeholder="数量" v-model='count'>
+        <input type="text" placeholder="单价" v-model='price'>
+        <div>总价:{{count*price}}</div>
+        <div>总价:{{total}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 简单的数据逻辑,可以直接写在视图上. (不推荐)
+        // 假设这个数据的换算逻辑,有100行代码,如何写在视图上?
+
+        // 需要在count和price变化时,重新修改total的值.
+        // 如何知道count和price发生变化? 用watch.
+        // watch可以监听Vue的数据变化,方便实现一些额外逻辑.
+
+        // 推荐watch监听的数据名都应该加''.
+        // watch监听的数据,在数据没有变化时,是不触发监听函数的.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                count:1,
+                price:10,
+                total:10,
+                obj:{
+                    name:'幂幂'
+                }
+            },
+            watch:{
+                // count变化时触发
+
+                // 'count'(){
+                //     this.total = this.count * this.price
+                // },
+                // 'price'(){
+                //     this.total = this.count * this.price
+                // },
+
+                'count':"setData",
+                'price':"setData",
+                'obj.name'(){
+                    console.log('obj.name变化了');
+                }
+            },
+            methods:{
+                setData(){
+                    this.total = this.count * this.price
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'>
+			<div id='routerView'>
+				<h3>请选择一种水果，然后点击下一步</h3>
+				<input type='radio' name='fruit1' value='苹果' />苹果<br  />
+				<input type='radio' name='fruit1' value='香蕉' />香蕉<br  />
+				<input type='radio' name='fruit1' value='雪梨' />雪梨<br  />
+				<hr />
+				<input type='button' value='上一步'/>
+				<input type='button' value='下一步'/>
+			</div>
+			<div id='result'>
+				<h3>选择结果页:</h3>
+				<div>你之前选择的3种水果是:</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script src="js/vue-router.js"></script>
+	<script type="text/javascript">
+		
+		// 通过以下数据渲染单选框.
+		// #routerView所在div做成动态路由组件.(有3个path,对应以下3个数组)
+		// 每一个动态路由视图内只显示一个数组内的数据.第一个路由显示fruit1,第二个显示fruit2...
+		// 通过点击下一步上一步跳转动态路由.
+		// 在3个路由视图内选择好3个水果后,点击下一步,路由跳转到#result所在div的结果页视图.
+		 		
+		// let arr = {
+		// 	fruit1:['苹果','香蕉','雪梨'],
+		// 	fruit2:['山竹','西瓜','草莓'],
+		// 	fruit3:['橘子','橙子','柚子']
+		// }
+		
+		//提示:路由选项大概设置如下
+		
+		const fruit = {
+			template:`
+				<div id='routerView'>
+					<h3>请选择一种水果，然后点击下一步</h3>
+					<div v-for='item in fruits' :key='item'>						
+						<input type='radio' 
+							name='fruit' 
+							:value='item' 
+							v-model='allFruit[$route.path.slice(-1)-1]'
+						/>{{item}}
+					</div>
+					<hr />
+					<input type='button' value='上一步' @click='$router.back()' />
+					<input type='button' value='下一步' @click = 'nextStep'/>
+				</div>
+			`,
+			computed:{
+				fruits(){
+					// 当前路由路径
+					let path = this.$route.path.slice(1);
+					// 返回对应的水果数组
+					return this.arr[path]
+				}
+			},
+			methods:{
+				nextStep(){
+
+					let path = this.$route.path;
+					let num = path.slice(-1);
+
+					if(num != 3){
+						this.$router.push({path:'/fruit'+(num*1+1)});
+					}else{
+						this.$router.push({
+							path:'/result',
+							query:{
+								fruit:this.allFruit.join()
+							}
+						});
+					}					
+				}
+			},
+			data(){
+				return {
+					arr:{
+						fruit1:['苹果','香蕉','雪梨'],
+						fruit2:['山竹','西瓜','草莓'],
+						fruit3:['橘子','橙子','柚子']
+					},
+					// 选中的水果
+					allFruit:[],
+				}
+			}
+		}
+
+		const result = {
+			template:`
+				<div id='result'>
+					<h3>选择结果页:</h3>
+					<div>你之前选择的3种水果是:{{result}}</div>
+				</div>
+			`,
+			computed:{
+				result(){
+					return this.$route.query.fruit
+				}
+			}
+		}
+
+		const router = new VueRouter({
+				routes:[
+				{
+					path:'/fruit1',
+					component:fruit
+				},{
+					path:'/fruit2',
+					component:fruit
+				},{
+					path:'/fruit3',
+					component:fruit
+				},{
+					path:'/result',
+					component:result
+				},{
+					path:'/',
+					redirect:'/fruit1'
+				}
+			]
+		})
+
+		const App = {
+			template:`
+				<div id='app'>
+					<keep-alive>
+						<router-view />
+					</keep-alive>
+				</div>
+			`
+		}
+
+		new Vue({
+			el:'#app',
+			template:"<App />",
+			components:{App},
+			router
+		})
+
+		
+		
+	</script>
+</html>

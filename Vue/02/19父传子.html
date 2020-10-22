@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 组件通信 -> 组件复用时，需要渲染不同的内容，数据。
+        // 这些内容是通过别的组件传递过来的，这种组件给组件传递数据的过程就叫组件通信。
+
+        // 最常见的组件通信就是父传子.
+        // 子组件通过props声明父组件传递的数据.
+        // 在组件的自定义标签上进行父传子的赋值.哪个变量是子组件的,哪个是父组件的?
+        // 记得:前子后父.
+
+        // props简写是数组的形式.
+        // 完全写法是对象的形式.(验证写法)
+        // 父组件传递的props是不能直接在子组件内修改的.
+        // 如果传递的是引用类型，则不能修改这个引用，但是可以修改这个引用背后的对象。
+            
+        let Item = {
+            template:`
+                <div>
+                    <button @click='fn'>修改props</button>
+                    <h3>{{title}}</h3>
+                    <p>{{content}}</p>
+                </div>
+            `,
+            // props:['title','content']
+            methods:{
+                fn(){
+
+                    // 这里title是基本类型.不能直接修改title的值,否则报错.
+                    // this.title = '我是新来的标题'
+
+                    // this.news是引用类型.不能修改news的值.但是可以修改news背后的对象
+                    // this.news.title = '我是新来的标题';
+
+                    // 这样修改,news的值(引用)被修改了,会报错.
+                    this.news = {title:'我是新来的标题'}
+                }
+            },
+            props:{
+                news:Object,
+                title:{
+                    // 规定父传子的数据类型
+                    type:String,
+                    // props数据的默认值
+                    default:'title的默认值',
+                    // 必须有传值.
+                    required: true,
+                    // 自定义验证器.
+                    validator(val){
+                        return typeof val == 'string'
+                    }
+                },
+                content:{
+                    type:String,
+                    default:'content的默认值'
+                }
+            }
+        }
+
+        let App = {
+            template:`
+                <div id='app'>
+                    <Item :news='news1' :title='news1.title' :content='news1.content'></Item>
+                    <Item :title='news2.title' :content='news2.content'></Item>
+                </div>
+            `,
+            data(){
+                return {
+                    news1:{
+                        title:'即时新闻',
+                        content:'我要秋天的第一杯奶茶'
+                    },
+                    news2:{
+                        title:'生活消费',
+                        content:'房租太贵,买不起奶茶'
+                    }
+                }
+            },
+            components:{Item}
+
+        }
+
+        // 挂载根组件.
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+        // function Item(title,content){
+        //     return `
+        //         <div>
+        //             <h3>{{title}}</h3>
+        //             <p>{{content}}</p>
+        //         </div>
+        //     `
+        // }
+
+        // Item('即时新闻','我要秋天的第一杯奶茶');
+        // Item('生活消费','房租太贵,买不起奶茶');
+
+    </script>
+
+</body>
+</html>

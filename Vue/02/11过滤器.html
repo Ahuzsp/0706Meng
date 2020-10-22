@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <input type="text" v-model='str'>
+        <div>{{str | upperCase}}</div>
+        <div>{{num | reverse}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 过滤器:如果一个数据显示时数据没有丢失,但是格式不一,客户使用过滤器来实现.
+        // | -> 管道符 (模仿angular)
+        // 数据1 | 过滤器 -> 数据1通过过滤器规则处理后显示到视图上.
+
+        // 翻转过滤器
+        // 全局过滤器.
+        // 所有组件都可以使用.
+        Vue.filter('reverse',function(val){
+            return val.split('').reverse().join('').toUpperCase()
+        })
+
+        new Vue({
+            el:'#app',
+            data:{
+                str:'',
+                num:'abcd'
+            },
+            // 局部过滤器.只能某个组件内用
+            filters:{
+                // 形参val就是过滤器前面的数据
+                // 过滤处理之后的新的数据需要return出来
+                upperCase(val){
+                    return val.toUpperCase()
+                }
+            }
+        })
+
+        // 计算属性实现
+        // new Vue({
+        //     el:'#app',
+        //     data:{
+        //         str:''
+        //     },
+        //     computed:{
+        //         msg(){
+        //             return this.str.toUpperCase()
+        //         }
+        //     }
+        // })
+
+        // watch实现
+        // new Vue({
+        //     el:'#app',
+        //     data:{
+        //         str:'',
+        //         msg:''
+        //     },
+        //     watch:{
+        //         str(){
+        //             this.msg = this.str.toUpperCase();
+        //         }
+        //     }
+        // })
+
+    </script>
+
+</body>
+</html>

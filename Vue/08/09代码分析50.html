@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // let声明的x不是window的属性
+        let x = 10;
+
+        function fn(){
+            // 这里this是window.
+            // window.x是undifined
+            // 因此返回的是x+4
+            return this.x ? x+3 : x+4
+        }
+
+        let y = fn(x);
+
+        console.log(y);
+
+
+    </script>
+
+</body>
+</html>

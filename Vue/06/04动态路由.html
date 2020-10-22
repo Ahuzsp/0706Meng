@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src='js/vue-router.js'></script>
+    <script>
+
+        // 如果多个路由组件的模板一致,内容不一样.
+        // 可以进行组件复用,但是需要在路由切换时,显示对应的内容.
+        // 使用了相同组件的路由选项,也可以合成一个选项.
+        // 不同的路径,可以使用一个路由参数来代替.path:'/:abc',这里abc就是路由参数.
+        // 如何获取路由参数.(怎么获取abc的值.就是$route.path没有 '/' 的值)
+        // 配置了路由参数的路由选项,需要放在routes的最后面,否则该选项后面的其他选项都无法得到匹配.
+
+        const Home = {
+            template:`
+                <div>{{content}}</div>
+            `,
+            props:['content']
+        }
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/:abc',
+                    component:Home
+                },{
+                    path:'/',
+                    redirect:'/home'
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <router-link to='/home'>首页</router-link>
+                    <router-link to='/news'>新闻</router-link>
+                    <router-link to='/sport'>体育</router-link>
+                    <router-view :content='content' />
+                </div>
+            `,
+            data(){
+                return {
+                    arr:{
+                        'home':'首页的内容',
+                        'news':'新闻的内容',
+                        'sport':'湖人要夺冠'
+                    }
+                }
+            },
+            computed:{
+                content(){
+                    // 路由参数.(动态的路径名)
+                    let path = this.$route.params.abc;
+                    return this.arr[path]
+                }
+            }
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

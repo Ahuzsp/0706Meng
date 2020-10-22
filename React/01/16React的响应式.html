@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        let {Fragment} = React;
+        let msg = 'hello React';
+
+        // 默认挂载一次视图.
+        render();
+
+        function fn(){
+            // 1:数据变化了
+            msg = Math.random();
+            // 2:更新视图
+            render();
+        }
+
+        // 更新视图封装
+        function render(){
+            // 创建虚拟节点
+            let Vnode = ( 
+                <Fragment>
+                    <button onClick={fn}>按钮</button>
+                    <div>{msg}</div>
+                </Fragment>         
+            );
+            // 重新挂载新的Vnode.
+            ReactDOM.render(Vnode,document.getElementById('root'));
+        }
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+<!--components/observes/observes.wxml-->
+
+<view>
+  <text>{{num}}</text>
+  <button bindtap='fn'>修改num</button>
+  <input type='text' bindinput='saveCount' value='{{count}}' />
+  <input type='text' bindinput='savePrice' value='{{price}}' />
+  <view>总价:{{total}}</view>
+</view>
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // bus解决任意两个组件间的数据通信.
+
+        // 例如组件B传递数据给组件A.(组件A使用组件B数据)
+        //   在A组件内给bus添加事件.在B组件内触发bus的事件,并传入B组件数据.
+
+        // 在哪个组件内给bus添加事件? (谁用数据谁添加)(Son用数据，Son内给bus添加事件)
+
+        const bus = new Vue();
+
+        const Item = {
+            template:`<div>Item子组件:{{name}}</div>`,
+            data(){
+                return {name:'Item'}
+            },
+            mounted(){
+                // 这里触发bus的事件.
+                bus.$emit('myevent',this.name);
+            }
+        }
+
+        const Son = {
+            template:`<div>SON子组件:{{name}}</div>`,
+            data(){
+                return {name:''}
+            },
+            // 这里给bus添加事件
+            created(){
+                bus.$on('myevent',(res)=>{
+                    this.name = res;
+                })
+            }
+        }
+
+        const App = {
+            template:`
+                <div>
+                    <Item />
+                    <Son />
+                </div>`,
+            components:{Item,Son}
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='wrap'>
+        我想上车
+        <p>我已经上车</p>
+        <div>我早上车了</div> 
+        <!-- 老司机等待我，我会喊666 -->
+        <div>已经睡着</div>
+        <div>偷偷跑进来的div</div>
+        <h3>我头大</h3>
+        <h3>我头疼</h3>
+        我在拉车
+    </div>
+    <hr>
+    <div id='div'></div>
+    <hr>
+    <div id='h3'></div>
+    <div id='p'></div>
+
+    <script>
+
+        // 标签名，标签属性，标签内容，标签样式
+
+        // DOM操作标签：
+        //     1：修改内容
+        //           元素.innerText (不能插入标签)
+        //           元素.innerHTML (可以插入标签)
+
+        //     2：修改样式
+        //     3：修改属性
+
+        // outerHTML,cloneNode (方法和手段)
+        // 目的做导向
+        //    1：先知道我要做什么
+        //    2：要实现这个目的，应该用什么方法
+
+        // 原生js程序的思路 -> 
+        //        DOM操作:
+        //            1:获取节点(标签)
+        //            2:操作节点(标签)
+
+        // vue框架的程序思路 -> ?
+
+        // 简单需求：
+        // 把wrap内的所有div子元素放入 #div内 （遍历节点实现）
+        // 把wrap内的所有h3标签，放入 #h3内 （遍历节点实现）
+
+        // 如果wrap内有p标签，则放入#p内。如果没有p标签。#p内显示。wrap内没有p标签。
+
+        // 给div通过innerHTML修改内容
+
+        let oContent = document.getElementById('div');
+        let oH3 = document.getElementById('h3');
+        let oWrap = document.getElementById('wrap');
+
+        // let oDiv1 = oWrap.children[1];
+        // let oDiv2 = oWrap.children[2];
+
+        // oContent.innerHTML = '<div>我早上车了</div><div>已经睡着</div>';
+        // oContent.innerHTML = oDiv1.outerHTML + oDiv2.outerHTML;
+
+        for(let i=0;i<oWrap.children.length;i++){
+            if(oWrap.children[i].nodeName == 'DIV'){
+                // oContent.innerHTML += oWrap.children[i].outerHTML;
+                let oEl = oWrap.children[i].cloneNode(true);
+                // console.log(oEl);
+                // appendChild的参数必须是节点对象。
+                oContent.appendChild(oEl);
+            }
+            if(oWrap.children[i].nodeName == 'H3'){
+                let oEl = oWrap.children[i].cloneNode(true);
+                oH3.appendChild(oEl);
+            }
+        }
+
+        // if(oWrap.children[0].nodeName == 'DIV'){
+        //     oContent.innerHTML += oWrap.children[0].outerHTML;
+        // }
+
+        // if(oWrap.children[1].nodeName == 'DIV'){
+        //     oContent.innerHTML += oWrap.children[1].outerHTML;
+        // }
+
+        // if(oWrap.children[2].nodeName == 'DIV'){
+        //     oContent.innerHTML += oWrap.children[2].outerHTML;
+        // }
+
+
+    </script>
+
+</body>
+</html>

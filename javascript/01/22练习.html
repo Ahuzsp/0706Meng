@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <p>8888</p>
+        <div>77777</div>
+        <h3>666666</h3>
+    </div>
+
+    <script>
+
+        // 给app的3个子元素添加事件。
+        // 点击对应的元素，实现对应的需求
+        // 如果点击的是p元素，背景变红
+        // 如果点击的是div元素，背景变绿
+        // 如果点击的是h3标签，背景变蓝
+
+        let oApp = document.querySelector('#app');
+
+        for(let i=0;i<oApp.children.length;i++){
+            oApp.children[i].onclick = function(){
+                // 通过nodeName来判断当前点击的是哪个标签。
+                if(this.nodeName === 'P'){
+                    this.style.background = 'red';
+                }else if(this.nodeName === 'DIV'){
+                    this.style.background = 'green';
+                }else{
+                    this.style.background = 'blue';
+                }                
+            }
+        }
+
+        // oApp.children[0].onclick = function(){
+        //     this.style.background = 'red';
+        // }
+
+        // oApp.children[1].onclick = function(){
+        //     this.style.background = 'green';
+        // }
+
+        // oApp.children[2].onclick = function(){
+        //     this.style.background = 'blue';
+        // }
+
+    </script>
+
+</body>
+</html>

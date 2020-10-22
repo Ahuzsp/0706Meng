@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 同步:[console.log(1), console.log(8)]
+        // 微:[console.log(4)]
+        // 宏:[console.log(7),console.log(5)]
+        // 1,8,4,7,5
+
+        // 1:new Promise
+        //     console.log(1);
+        //     resolve()
+        // 2:定时器
+        // 3:console.log(8)
+
+        new Promise((resolve,reject)=>{
+            console.log(1);
+            resolve(()=>{
+                console.log(2);
+            });
+            reject(()=>{
+                console.log(3);
+            });
+        }).then(()=>{
+            console.log(4);
+            setTimeout(()=>{
+                console.log(5);
+            },1000)
+        }).catch(()=>{
+            console.log(6);
+        })
+
+        setTimeout(()=>{
+            console.log(7);
+        },0)
+
+        console.log(8);
+
+    </script>
+
+</body>
+</html>

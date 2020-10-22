@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button onclick='show()'>按钮</button>
+
+    <script>
+
+        // 原生js给一个标签添加事件有多少种方式？
+
+        // 1:通过事件属性添加 (辣鸡,过时了)
+
+        // 2:on+事件名 = 事件句柄
+           let oBtn = document.querySelector('button');
+        //    oBtn.onclick = show;
+        //    oBtn.onclick = add;
+        
+        // 3:通过addEventListener('事件名',事件句柄);
+
+        //  给oBtn的click事件添加了2个事件句柄.
+            oBtn.addEventListener('click',show);
+            oBtn.addEventListener('click',add);
+
+        function show(){
+            alert(1000)
+        }
+
+        function add(){
+            alert(8000)
+        }
+
+
+    </script>
+    
+</body>
+</html>

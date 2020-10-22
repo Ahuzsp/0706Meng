@@ -1,0 +1,36 @@
+
+<view>
+  <swiper
+    indicator-dots
+    indicator-color='rgb(255,255,0,0.5)'
+    indicator-active-color='yellow'
+    autoplay
+    interval='2000'
+    circular
+    vertical
+  >
+    <swiper-item class='red'>1</swiper-item>
+    <swiper-item class='blue'>2</swiper-item>
+    <swiper-item class='green'>3</swiper-item>
+  </swiper>
+</view>
+
+<view>{{msg}}</view>
+<view>{{obj}}</view>
+<view>{{arr}}</view>
+<view>{{0 ? 200 : 300}}</view>
+<view>{{0 && '你好'}}</view>
+<view class='{{cn}}'>11111111</view>
+<button bindtap='fn'>我是一個按鈕</button>
+<button bindtap='()=>{console.log(999999)}'>我是一個按鈕</button>
+<button bindtap='fn' data-num='888'>事件传参</button>
+<view wx:if='{{flag}}'>1111111111111111111111111</view>
+<view hidden='{{!flag}}'>2222222222222222222222222</view>
+
+<view wx:for='{{arr}}'>{{index}}-{{item}}</view>
+<view wx:for='{{arr}}' wx:for-index='i' wx:for-item='d'>
+  {{i}}-{{d}}
+</view>
+<view wx:for='{{obj}}'>
+  {{index}}-{{item}}
+</view>

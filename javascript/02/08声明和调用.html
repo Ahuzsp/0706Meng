@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // 1：声明和调用的关系
+        // 2：形参和实参的关系
+        // 3：不同作用域内变量的关系。
+
+        // 声明和调用的关系 -> 函数声明内的代码，只有到函数调用时才执行。
+
+        // 代码从上往下执行的。
+        // 代码的书写顺序不一定时程序执行顺序。
+
+        let x = 10;
+
+        function fn(){
+            x = 20;
+        }
+
+        console.log(x); // 10;
+
+        fn();
+
+        // 如何看代码？（看到函数声明要跳过去不看，看到调用后再回过头来看）
+        // 1：x = 10；
+        // 2：打印x (10)
+        // 3：调用fn
+        //     x = 20
+
+
+    </script>
+</body>
+</html>

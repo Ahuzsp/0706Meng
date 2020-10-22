@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id='btn'>哈哈哈哈</button>
+
+    <script>
+
+        let oBtn = document.getElementById('btn');
+
+        function show(x){
+            return function(){
+               alert(x)
+            }
+        }
+
+        // show()返回undefined，导致点击无效
+        // 假设show()返回一个函数，那点击不就生效了？
+        // 点击按钮，触发的是show，还是触发show的子函数？触发子函数。
+        // onclick 得到的返回值是子函数,点击触发的就是子函数。
+        // oBtn.onclick = show(99999);
+
+        // 点击按钮，触发的是匿名函数，还是触发fn函数？触发子函数。
+        // click得到的返回值是匿名函数，因此点击按钮触发的就是匿名函数
+
+        // 点击按钮，触发匿名函数，匿名函数触发fn，并且传入99999
+        oBtn.onclick = function(){
+            fn(99999);
+        }
+
+        function fn(x){
+            alert(x)
+        }
+
+    </script>
+
+</body>
+</html>

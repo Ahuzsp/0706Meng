@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // 插槽可以复用组件,并且可以快速实现多层传值.
+
+    class Item extends Component{
+        msg = 'Item的数据'
+        render(){
+            let {data,render} = this.props;
+            return (
+                <div>
+                    <h3>Item子组件</h3>
+                    <hr />
+                    {data}
+                    {render && render(this.msg)}
+                </div>
+            )
+        }
+    }
+
+    function Box (props){
+        return <div>{props && props.msg}</div>
+    }
+
+    class App extends Component{
+        str = 'App的数据'
+        render(){          
+            return (
+                <Fragment>
+                    <Item data='8888' />
+                    <Item data={1+1} />
+                    <Item data={<h3>propsh3</h3>} />
+                    <Item data={<Box />} />
+                    <Item render={()=>{return 9999}} />
+                    <Item render={(msg)=><Box msg={msg} />} />
+                </Fragment>
+            )
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

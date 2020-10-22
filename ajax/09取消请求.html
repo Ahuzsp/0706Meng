@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="js/axios.js"></script>
+
+    <script>
+
+        // 通过axios获取一个静态属性CancelToke
+        const CancelToken = axios.CancelToken;
+        // 通过CancelToken.source()获取source对象.
+        const source = CancelToken.source();
+
+        // 请求1
+        axios.get('url1111111',{
+            cancelToken: source.token
+        }).then((res)=>{
+            console.log(res.data)
+        });
+
+        // 请求2
+        axios.get('url222222',{}).then((res)=>{
+            console.log(res.data)
+        });
+
+        // 在某个时候调用cancel从而取消某个请求.
+        // 这里请求1配置了参数cancelToken: source.token,因此会被cancel中断
+        // 请求二没有配置cancelToken: source.token,因此不会被中断.
+        source.cancel();
+
+    </script>
+
+</body>
+</html>

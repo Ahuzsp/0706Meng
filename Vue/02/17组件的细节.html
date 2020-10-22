@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        {{msg}}
+        <content-list-item @click.native='show' v-for='d in arr'></content-list-item>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 组件的模板,一定需要一个根节点.
+        // 数据，方法，到底在哪里注册？
+        //       它们写在哪个组件的template里，就在哪个组件内注册声明。
+        // 给组件的自定义标签添加事件，需要加native修饰符。
+        // 如果组件需要使用v-for.应该在组件的自定义标签上使用,而不是在组件模板的跟节点上用.
+
+        let contentListItem = {
+            // 组件的html模板
+            template:`
+                <div @click='fn'>
+                    <h3>即时新闻</h3>
+                    <p>{{msg}}</p>
+                </div>
+            `,
+            data(){
+                return {
+                    msg:'contentListItem组件内容',
+                    arr:[1,2,3]
+                }
+            },
+            methods:{
+                fn(){
+                    console.log(1000)
+                }
+            }
+        }
+        
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'App内的数据',
+                arr:[1,2,3,4]
+            },
+            components:{contentListItem},
+            methods:{
+                show(){
+                    console.log(2000);
+                }
+            }
+        })
+
+
+    </script>
+
+</body>
+</html>

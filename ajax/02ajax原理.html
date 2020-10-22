@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // ajax的原理 (ajax用原生js怎么实现的)
+
+        // ajax进行网络请求,依赖一个原生js的对象.
+        // 这个对象需要通过构造函数XMLHttpRequest构造.
+        let xhr = new XMLHttpRequest();
+
+        // 通过open指定请求类型和请求地址,以及请求是否异步.
+        xhr.open('post','http://localhost:8080/0525ajax03/php/1.post.php');
+        // 修改请求头的参数类型.设置为FormData格式。
+        xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        // 通过send发送请求.
+        xhr.send('username=999&age=88');
+
+        // 因为ajax请求是异步的.
+        // 因此需要通过onreadystatechange事件监听请求的完成阶段.
+        // 在请求成功和请求失败时,可以监听到并且做不同的事情.
+
+        // xhr.readyState -> 当前请求进行到了哪个阶段.0-4的数字
+        // 0 -> open还没调用
+        // 1 -> send还没调用
+        // 2 -> 请求已发送,正在处理
+        // 3 -> 服务器已经收到请求,正在处理.
+        // 4 -> 请求已经完成
+
+        // xhr.status(http状态码) -> 获取当前的服务器响应状态.三位数字.
+        // 1XX -> 请求正在进行.
+        // 2XX -> 请求成功
+        // 3XX -> 重定向
+        // 4XX -> 客户端错误
+        // 5XX -> 服务端错误
+
+        // 客户端请求服务端:
+        //     类似于现实生活中的搭讪行为. 
+        //         男(客户端)搭讪女(服务端).
+        //         男的行为过程:
+        //             1:确定目标和搭讪方式.get(问要电话),post(送你一辆玛莎拉蒂)
+        //             2:执行计划.(发送请求)
+        //             3:等待美女回应.
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                if(xhr.status == 200){
+                    console.log(xhr.responseText);
+                }else{
+                    console.log('请求错误',xhr.status);
+                }
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>

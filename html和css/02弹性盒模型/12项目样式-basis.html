@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body><!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            
+            ul{
+                /* 弹性盒模型声明 */
+                display:flex;
+                
+                flex-flow:column nowrap;
+                
+                list-style: none;
+                border:5px solid #000;
+                height:600px;
+                width: 800px;
+                padding: 0;
+                margin: 0;
+            }
+    
+            li{               
+                flex-basis: 100px;
+                height: 200px;
+                border:1px solid #000;
+                margin-left: 1px;
+            }  
+        </style>
+    </head>
+    <body>
+
+        <!-- flex-basis -> 设置项目在当前方向上的尺寸 -->
+        <!-- flex-basis比width和height的优先级更高 -->
+
+        <!-- 项目默认会填满容器另一个方向上的尺寸 （假设没有默认值） -->
+        <!-- 项目填满当前方向的容器尺寸，需要设置flex-grow -->
+
+        <ul>
+            <li>111</li>
+            <li>222</li>
+            <li>333</li>
+            <li>444</li>
+            <li>555</li>
+        </ul>
+    
+    </body>
+    </html>
+    
+</body>
+</html>

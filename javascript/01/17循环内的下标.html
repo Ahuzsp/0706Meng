@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button>1111</button>
+    <button>2222</button>
+    <button>3333</button>
+
+    <script>
+
+        let aBtn = document.querySelectorAll('button');
+
+        for(let i=0;i<aBtn.length;i++){
+            aBtn[i].onclick = function(){
+                // aBtn[i]是undefined
+                // aBtn[i]是undefined,是因为i变成了3
+                // 为什么i变成了3？
+                // 为什么点第一个按钮i不是0，点第二个按钮i不是1，第三个不是2？
+                console.log(i);
+                aBtn[i].style.background = 'red';
+            }
+        }
+
+        // 点第一个按钮吧第一个按钮变红
+        // aBtn[0].onclick = function(){
+        //     aBtn[0].style.background = 'red';
+        // }
+
+        // aBtn[1].onclick = function(){
+        //     aBtn[1].style.background = 'red';
+        // }
+
+        // aBtn[2].onclick = function(){
+        //     aBtn[2].style.background = 'red';
+        // }
+
+    </script>
+
+</body>
+</html>

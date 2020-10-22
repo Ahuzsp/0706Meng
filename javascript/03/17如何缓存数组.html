@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button>获取1-10的随机数</button>
+
+    <script>
+
+        let oBtn = document.querySelector('button');
+
+        // 如何获取不重复的随机数 1-10;
+
+        // 随机获取这个数组里面的一个数，取到后把它删了。防止下次去到。
+        let arr = [1,2,3,4,5,6,7,8,9,10];
+
+        // 不能这样做
+        // let newArr = arr;
+
+        // 利用...arr缓存。(low)
+        // let newArr = [...arr];
+
+        // 利用concat返回新数组。(正常)
+        // let newArr = arr.concat([]);
+
+        // 利用slice截取元素缓存。(最优);
+        // let newArr = arr.slice();
+
+        oBtn.onclick = function(){
+            // 用于存放10个随机数。
+            let nums = [];
+            // 缓存arr数据。
+            let newArr = arr.slice();
+            // 循环取随机数。
+            for(let i=0;i<10;i++){
+                // 随机下标
+                let index =  Math.floor(Math.random()*newArr.length);
+                // 根据随机下标，随机选取一个数组元素放入nums
+                nums.push(newArr[index]);
+                // 把随机取到的元素从arr中删除。
+                newArr.splice(index,1);
+            }
+            console.log(nums);
+        }
+
+        
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // react的组件状态用state声明
+    // 如何获取state数据:this.state.数据名
+    // 如何修改state数据:this.setState({新的数据});
+
+    class App extends Component{
+        // num = 0
+        state = {
+            num:0
+        }
+        render(){          
+            return (
+                <Fragment>
+                    <button onClick={this.fn.bind(this)}>按钮</button>
+                    <div>{this.state.num}</div>
+                </Fragment>
+            )
+        }
+        fn(){
+            // state数据只能使用setState来修改.
+            this.setState({
+                num:Math.random()
+            })
+            
+            // 这样修改state数据是没有用的
+            // this.state.num = Math.random()
+
+            // this.num = Math.random();
+            // this.forceUpdate();
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

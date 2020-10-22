@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // es6的解构赋值。方便声明变量和赋值.
+
+        // 1:数组的解构赋值
+
+        // 如果希望3个元素存储到3个变量内;
+        let arr = [1,2,3];
+        // let x = arr[0];
+        // let y = arr[1];
+        // let z = arr[2];
+
+        // 按位置获取对应的元素赋值到对应变量上.
+        // let [x,y,z] = [1,2,3];
+        // let [x,y,z] = arr;
+
+        // 2:对象解构赋值
+
+        // let obj = {name:'幂幂',age:34,heigth:168};
+
+        // 获取obj的name属性存储到x变量上.
+        // let {"name":x,"age":y,"height":z} = obj;
+        // console.log('x',x);
+
+        // let {"name":name,"age":age,"height":height} = obj;
+        // console.log('name',name);
+
+        // 以上写法简写成
+        // let {name,age,height} = obj;
+
+        // 不报错.n是undefined
+        // 从[1,2,3]的原型链上查找n属性,赋值给n变量.
+        // let {n} = [1,2,3];
+
+        // 报错       
+        // let [x,y,z] = {x:1,y:2,z:3};
+
+        // 把字符串当前数组处理.
+        // let [x,y] = '我的奶茶呢';
+
+        // 获取100的toString属性存储到toString变量内.
+        // let {toString} = 100;
+
+        // 看解构赋值:
+        //     左边是什么,右边就当成什么.
+        //     如果无法转换,就报错
+
+        // js中所有具备默认赋值过程的地方都可以使用解构赋值.
+
+        // 例如:函数调用,实参给形参赋值.(函数形参上使用解构赋值)
+
+        let arr = [{name:'幂幂',age:32},{name:'坤坤',age:23}]
+
+        // let item = {name:'幂幂',age:32};
+        // {name,age} = {name:'幂幂',age:32}
+        
+        arr.forEach(({name,age},i)=>{
+            console.log(name);
+            console.log(age);
+        })
+
+
+    </script>   
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script>
+
+        // Vue视图,其实都会被解析成函数.
+        // 视图更新,就是重新调用这个函数.
+
+        // Vue视图.封装成一个函数.
+        function Item(msg,fn){
+            return `
+                <div>
+                    <div>${msg}</div>
+                    <div>${fn()||""}</div>
+                </div>
+            `
+        }
+
+        function Vue(config){
+
+            // 获取视图挂载点.
+            this.$el = document.querySelector(config.el);
+
+            // 获取当前的config内配置的data数据.
+            this.$data = config.data;
+            // 默认显示数据到组件视图
+            this.$el.innerHTML = config.components.Item(
+                config.data.name,
+                config.methods.show
+            );
+
+            // 缓存实例.
+            let that = this;
+
+            for(let key in this.$data){
+                // 获取每一个字段的初始值.
+                let val = this.$data[key]
+
+                // 给没一个字段设置数据监听.
+                Object.defineProperty(this.$data,key,{
+                    get(){
+                        return val
+                    },
+                    set(newValue){
+                        val = newValue;
+                        // 每次数据变化,把新的数据值传入Item组件中,使之更新对应的视图.
+                        that.$el.innerHTML = config.components.Item(
+                            newValue,
+                            config.methods.show
+                        );
+                    }
+                })
+            }
+        }
+        
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                name:'幂幂'
+            },
+            components:{Item},
+            methods:{
+                show(){
+                    console.log('show调用了,视图更新了')
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

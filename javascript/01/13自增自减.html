@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let x = 10;
+
+        // ++,--是单目运算符。!，typeof都是单目运算符
+        // x++ 就是一个表达式。
+        // ++写在后面的，返回+1之前的值。
+        // ++写在前面的，返回+1之后的值。
+
+        // y被x++的返回值赋值。
+        let y = x++;
+        console.log(y);//10
+        console.log(x);//11
+        
+        let z = ++x;
+        console.log(z);//12
+
+        // t的值是？
+        function fn(t){
+            // 把t++的值赋值给t
+            t = t++;
+            console.log('t',t);//11
+        }
+
+        fn(10);
+
+    </script>
+
+</body>
+</html>

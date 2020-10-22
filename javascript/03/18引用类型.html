@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 简单类型(基本类型) 
+        // 复杂类型(引用类型) 
+
+        // 基本类型的变量，是直接存的值本身。
+        // 引用类型的变量，是存的值的引用(地址)。
+
+        let x = 10;
+        let y = 20;
+
+        // 基本类型的赋值,把20复制一份，赋值给x。
+        x = y;
+        // 这是两个不同的变量。修改其中一个，另一个不会变。
+        x = 30;
+
+        console.log(x); // 30
+        console.log(y); // 20
+
+        let oYm = {
+            name:'杨幂'
+        }
+
+        let oCy = {
+            name:'超越'
+        }
+
+        // 引用赋值。会导致oYm和oCy变成同一个对象。
+        oYm = oCy;
+        // 操作oYm也可以在oCy上看到变化。
+        oYm.name = '力霸';
+
+        console.log(oYm.name);//力霸
+        console.log(oCy.name);//力霸
+
+        console.log(oYm == oCy); // true
+
+        oYm = {name:'迪丽热巴'};
+
+        console.log(oYm.name);//迪丽热巴
+        console.log(oCy.name);//力霸
+
+    </script>
+
+</body>
+</html>

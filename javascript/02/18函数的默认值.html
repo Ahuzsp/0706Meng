@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 如果形参没有得到实参赋值，默认就是undefined。
+        // 形参如何在没有实参赋值的情况下，得到一个默认值。
+
+        // function fn(x){
+        //     if(x === undefined){
+        //         x = 10;
+        //     }
+        //     console.log(x);
+        // }
+
+        // fn();
+        // fn(200);
+
+        // --------------------------------------------------------------------
+        
+        // es6的默认参数的写法。
+        function add(x=10){
+            console.log(x);
+        }
+
+        add();
+        add(200);
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+#div1{ width:58px; border:1px #000000 solid; float:left;}
+#div1 input{ margin:5px;}
+#div1 input.active{ background:red;}
+.box1{ width:300px; height:300px; border:1px #000000 solid; float:left; margin-left:10px; display:none;}
+.box2{ width:250px; height:250px; background:#666666; margin:10px auto; color:#FFFFFF; display:none;}
+.box1 .active{ background:blue;}
+</style>
+</head>
+
+<body>
+<div id="div1">
+	<input class="active" type="button" value="tab1" />
+    <input type="button" value="tab2" />
+    <input type="button" value="tab3" />
+    <input type="button" value="tab4" />
+    <input type="button" value="tab5" />
+</div>
+<div class="box1" style="display:block;">
+	<div class="box2" style="display:block;">
+    	tab1-1
+    </div>
+    <div class="box2">
+    	tab1-2
+    </div>
+    <div class="box2">
+    	tab1-3
+    </div>
+    <input class="active" type="button" value="tab1-1" />
+    <input type="button" value="tab1-2" />
+    <input type="button" value="tab1-3" />
+</div>
+<div class="box1">
+	<div class="box2" style="display:block;">
+    	tab2-1
+    </div>
+    <div class="box2">
+    	tab2-2
+    </div>
+    <div class="box2">
+    	tab2-3
+    </div>
+    <input class="active" type="button" value="tab2-1" />
+    <input type="button" value="tab2-2" />
+    <input type="button" value="tab2-3" />
+</div>
+<div class="box1">
+	<div class="box2" style="display:block;">
+    	tab3-1
+    </div>
+    <div class="box2">
+    	tab3-2
+    </div>
+    <div class="box2">
+    	tab3-3
+    </div>
+    <input class="active" type="button" value="tab3-1" />
+    <input type="button" value="tab3-2" />
+    <input type="button" value="tab3-3" />
+</div>
+<div class="box1">
+	<div class="box2" style="display:block;">
+    	tab4-1
+    </div>
+    <div class="box2">
+    	tab4-2
+    </div>
+    <div class="box2">
+    	tab4-3
+    </div>
+    <input class="active" type="button" value="tab4-1" />
+    <input type="button" value="tab4-2" />
+    <input type="button" value="tab4-3" />
+</div>
+<div class="box1">
+	<div class="box2" style="display:block;">
+    	tab5-1
+    </div>
+    <div class="box2">
+    	tab5-2
+    </div>
+    <div class="box2">
+    	tab5-3
+    </div>
+    <input class="active" type="button" value="tab5-1" />
+    <input type="button" value="tab5-2" />
+    <input type="button" value="tab5-3" />
+</div>
+
+<script>
+
+    let aRed = document.querySelectorAll('#div1>input');
+    let aBox1 = document.querySelectorAll('.box1');
+
+    // 点击对应aRed中的按钮，显示aBox1中的div
+    // 利用tab函数给aRed和aBox1添加选修卡逻辑
+    tab(aRed,aBox1);
+    
+    for(let i=0;i<aBox1.length;i++){
+
+        let aBox2 = aBox1[i].querySelectorAll('.box2');
+        let aBlue = aBox1[i].querySelectorAll('input');
+
+        // 点击对应aBlue中的按钮，显示aBox2中的div
+        // 利用tab函数给aBlue和aBox2添加选修卡逻辑
+        tab(aBlue,aBox2);
+    }
+
+    // 封装选修卡逻辑
+    function tab(btn,div){
+        for(let j=0;j<btn.length;j++ ){
+            btn[j].onclick = function(){
+                for(let i=0;i<div.length;i++){
+                    // 隐藏所有div
+                    div[i].style.display = 'none';
+                    // 让所有按钮变白
+                    btn[i].className = '';
+                }
+                // 显示div
+                div[j].style.display = 'block';
+                // 被点的div变红
+                this.className = 'active';
+            }
+        }
+    }
+   
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        {{msg}}
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 你描述一下Vue的生命周期.(面试题)
+
+        // 1:智障版 -> 哈?
+        // 2:学渣版 -> 8个钩子函数.(可用中文描述)
+        // 3:学霸版 -> 把Vue生命周期图示说一遍.
+        // 4:学神版 -> 源码回答.
+
+        // 如果没有el选项,可以通过$mount来挂载视图.
+        let vm = new Vue({
+            data:{
+                msg:10000
+            }
+        }).$mount('#app')
+
+        // let vm = new Vue({
+        //     data:{
+        //         msg:10000
+        //     }
+        // })
+        
+        // 把vm的template挂载到id为app的元素上.
+        // vm.$mount('#app');
+
+    </script>
+
+</body>
+</html>

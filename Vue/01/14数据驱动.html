@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div>div{
+            float: left;
+            width: 100px;
+            height: 100px;
+            border:1px solid #000;
+            margin-left:1px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='app'>
+        <button 
+            v-for='(color,i) in arr' 
+            :style='{background:color}'
+            @click='toRed(i)'
+        >按钮</button>                            
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+               arr:['','','']
+            },
+            methods:{
+                toRed(i){
+                    // 先清空所有的颜色。
+                    this.arr = this.arr.map((item)=>{return ''});
+                    // 被点击的按钮对应的数组元素变红.从而驱动视图更新.
+                    this.arr.splice(i,1,'red');
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

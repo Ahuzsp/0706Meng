@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 把alert(100)改成面向对象.
+        // 抽象出什么是类,什么是私有属性,什么是公有方法.
+
+        function Show(num){
+            this.num = num;
+        }
+
+        Show.prototype.alert = function(){
+            alert(this.num)
+        }
+
+        let s1 = new Show(100).alert();
+
+        // alert(100);
+        // alert(200);
+        // alert(300);
+
+        // 类是总称,看不见的.是抽象的
+        // 对象是个体,看得见.
+
+        // 人(类),坤坤(对象)
+        // 马(类),赤兔(对象)
+
+        // 世界上没有马  -> 拉一匹马过来给我看 -> 只能拉过来一匹具体的马.
+        // 世界上没有水果 
+
+    </script>
+
+</body>
+</html>

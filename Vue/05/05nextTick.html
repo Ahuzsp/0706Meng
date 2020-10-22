@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'></div>
+	</body>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+
+	<script type="text/javascript">
+		
+        // updated可用于监听视图更新。如果需要获取更新之后的视图状态,可以使用updated
+        // updated无法知道数据变化是因为那个数据变化导致的.(辣鸡的原因)
+        // 如果不同的数据变化导致的视图更新需要区别对待,不能用updated的.
+        // 用nextTick做单次的视图更新监听,执行对应的逻辑.
+        // nextTick就是单次触发的updated.
+
+		const App = {
+			template:`
+				<div id='app'>
+					<div>
+                        num:<div ref='num'>{{num}}</div>
+                        str:<div>{{str}}</div>
+                        <button @click='setNum'>修改num</button>
+                        <button @click='setStr'>修改str</button>
+                    </div>
+				</div>
+			`,
+            data(){
+                return {
+                    num:'',
+                    str:''
+                }
+            },
+            methods:{
+                setNum(){
+                    this.num = Math.random();
+                    // console.log(this.num);
+                    // 因为视图更新是异步操作。因此这里打印的是视图更新前的内容。
+                    // console.log(this.$refs.num.innerText);
+                    // 打印后才开始视图更新。
+
+                    // 这里的nextTick只会监听因为本次点击事件导致的视图更新.
+                    // 当前的视图更新完成后,nextTick的回调函数会自动触发
+                    this.$nextTick(()=>{
+                        console.log('num更新导致的视图更新',this.$refs.num.innerText);
+                    })
+                },
+                setStr(){
+                    this.str = Math.random();
+                    // 这里的nextTick只会监听因为本次点击事件导致的视图更新.
+                    // 当前的视图更新完成后,nextTick的回调函数会自动触发
+                    this.$nextTick(()=>{
+                        console.log('str更新导致的视图更新',this.$refs.num.innerText);
+                    })
+                }
+            },
+            updated(){
+                // console.log('视图更新了');
+                // console.log('updated',this.$refs.num.innerText);
+            }
+		}
+
+        let num = 0;
+      
+        console.log(num);
+        setTimeout(()=>{
+            num = 10;
+        },0);
+
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+				
+	</script>
+</html>

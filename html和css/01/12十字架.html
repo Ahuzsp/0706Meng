@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body>div{
+            width: 200px;
+            height: 200px;
+            border:1px solid #000;
+            position: relative;
+        }
+        /* div>div{
+            position: absolute;
+            background: red;
+        } */
+        #wrap:before{
+            position: absolute;
+            background: red;
+            content:'';
+            display: block;
+            width:200px;
+            height: 30px;
+            top:85px;
+        }
+        #wrap:after{
+            position: absolute;
+            background: red;
+            content:'';
+            display: block;
+            width: 30px;
+            height: 200px;
+            left:85px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='wrap'>
+        <!-- <div class='before'></div>
+        <div class='after'></div> -->
+    </div>
+
+</body>
+</html>

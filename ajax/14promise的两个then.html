@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        function getP(msg,timer){
+            return new Promise((success,error)=>{
+                setTimeout(()=>{
+                    success(msg);
+                },timer);
+            })
+        }
+       
+        // then默认返回当前的promise实例.
+        // then的回调函数可以return另一个promise实例.then的就返回这个promise实例.
+        // 这样就可以then后面接then,形成'从上往下'类似同步代码的编程风格.
+        
+        getP('定时器1',1000)
+        .then((msg)=>{
+            console.log(msg);
+            return getP('定时器2',2000)
+        }).then((msg)=>{
+            console.log(msg);
+            return getP('定时器3',3000)
+        }).then((msg)=>{
+            console.log(msg);
+        })
+
+    </script>
+
+</body>
+</html>

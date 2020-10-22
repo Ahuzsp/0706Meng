@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='wrap'>
+        我想上车
+        <p>我已经上车1111</p>
+        <p>我已经上车2222</p>
+        <div>我早上车了</div> 
+        <!-- 老司机等待我，我会喊666 -->
+        <div>已经睡着</div>
+        <div>偷偷跑进来的div</div>
+        <h3>我头大</h3>
+        <h3>我头疼</h3>
+        我在拉车
+    </div>
+    <hr>
+    <div id='div'></div>
+    <hr>
+    <div id='h3'></div>
+    <div id='p'>
+    </div>
+
+    <script>
+
+        // 简单需求：
+        // 把wrap内的所有div子元素放入 #div内 （遍历节点实现）
+        // 把wrap内的所有h3标签，放入 #h3内 （遍历节点实现）
+
+        // 如果wrap内有p标签，则放入#p内。如果没有p标签。#p内显示。wrap内没有p标签。
+
+        let oContent = document.getElementById('div');
+        let oH3 = document.getElementById('h3');
+        let oP = document.getElementById('p');
+        let oWrap = document.getElementById('wrap');
+
+        for(let i=0;i<oWrap.children.length;i++){
+            if(oWrap.children[i].nodeName == 'DIV'){
+                let oEl = oWrap.children[i].cloneNode(true);
+                oContent.appendChild(oEl);
+            }
+            if(oWrap.children[i].nodeName == 'H3'){
+                let oEl = oWrap.children[i].cloneNode(true);
+                oH3.appendChild(oEl);
+            }
+        }
+
+        // let child = document.querySelectorAll('#wrap>p');
+
+        // 遍历所有子元素，判断是否存在p子元素。
+        // 表示默认没有p子元素。（标志位）
+        let flag = false;
+
+        // 遍历所有子节点，如果有其中一个子节点是P元素，把flag设置为true，并且跳出循环。
+        for(let i=0;i<oWrap.children.length;i++){
+            // 判断当前子元素是不是p元素。
+            if(oWrap.children[i].nodeName == 'P'){
+                // 找到了其中一个p元素，就把flag变成true表示有p元素。
+                flag = true;
+                break;
+            }
+        }
+
+        // 如果存在p子元素
+        if(flag){  
+            // 就循环遍历所有子元素，把所有子元素p放入oP中。          
+            for(let i=0;i<oWrap.children.length;i++){
+                if(oWrap.children[i].nodeName == 'P'){
+                    oP.innerHTML += oWrap.children[i].outerHTML;
+                }
+            }
+        }else{
+            oP.innerText = 'wrap内没有p标签';
+        }
+        
+
+
+    </script>
+
+</body>
+</html>

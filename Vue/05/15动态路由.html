@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src='js/vue-router.js'></script>
+    <script>
+
+        // 如果多个路由组件的模板一致,内容不一样.
+        // 可以进行组件复用,但是需要在路由切换时,显示对应的内容.
+
+        const Home = {
+            template:`
+                <div>{{content}}</div>
+            `,
+            props:['content']
+        }
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/',
+                    component:Home
+                },{
+                    path:'/news',
+                    component:Home
+                },{
+                    path:'/sport',
+                    component:Home
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <router-link to='/'>首页</router-link>
+                    <router-link to='/news'>新闻</router-link>
+                    <router-link to='/sport'>体育</router-link>
+                    <router-view :content='content' />
+                </div>
+            `,
+            data(){
+                return {
+                    // arr:['首页的内容','新闻的内容','湖人要夺冠']
+                    arr:{
+                        '/':'首页的内容',
+                        '/news':'新闻的内容',
+                        '/sport':'湖人要夺冠'
+                    }
+                }
+            },
+            computed:{
+                content(){
+                    
+                    // if(this.$route.path == '/'){
+                    //     return this.arr[0]
+                    // }else if(this.$route.path == '/news'){
+                    //     return this.arr[1]
+                    // }else if(this.$route.path == '/sport'){
+                    //     return this.arr[2]
+                    // }
+
+                    let path = this.$route.path;
+                    return this.arr[path]
+                }
+            }
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

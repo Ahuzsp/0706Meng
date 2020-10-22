@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <ul>
+            <li>
+                11111
+                <button>删除</button>
+            </li>
+            <li>
+                11111
+                <button>删除</button>
+            </li>
+            <li>
+                11111
+                <button>删除</button>
+            </li>
+        </ul>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 我们经常遇到需求,就是子组件修改父组件数据.
+        // 可以使用反向数据流来实现.
+        // 反向数据流具体逻辑:
+        //  1:数据放在父组件上.
+        //  2:修改数据的逻辑也放在父组件上.
+        //  3:把这个修改数据的逻辑(方法)通过父传子的方式传递给子组件触发。
+
+        // 父组件如何传递方法给子组件？
+        // 1:通过props传递.
+        // 2:通过自定义事件传递.
+
+        let listItem = {
+            template:`
+                <li>
+                    {{item}}
+                    <button @click='$emit("myevent")'>删除</button>
+                </li>
+            `,
+            props:['item']
+        }
+
+        let App = {
+            template:`
+                <div id='app'>
+                    <ul>
+                        <!--把父组件的修改逻辑传递给子组件触发-->
+                        <list-item 
+                            v-for='(item,i) in arr'
+                            :item='item'                          
+                            @myevent = '()=>{deleteItem(i)}'
+                        />
+                    </ul>
+                </div>
+            `,
+            components:{listItem},
+            data(){
+                return {
+                    arr:[1111,22222,33333]
+                }
+            },
+            methods:{
+                // 修改父组件的数据的逻辑声明写在父组件上.
+                deleteItem(i){
+                    this.arr.splice(i,1);
+                }
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

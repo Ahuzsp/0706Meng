@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body>div{
+            width: 200px;
+            height:200px;
+            border:1px solid #000;
+            left:300px;
+        }
+        p{
+            width: 100px;
+            height: 100px;
+            border:1px solid red;
+            left:200px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div style="position:relative">
+        <div>
+            <p style='position: absolute;'>111</p>
+        </div>
+    </div>
+
+    <!-- 
+        定位：
+        position:5种
+        fixed
+        absolute
+        relative
+        static（标准文档流）
+        sticky （有兼容性问题） 
+    -->
+    
+    fixed定位的left，top，right，bottom -> 视口的4条边
+    absolute定位的left，top，right，bottom -> 相对于最近的具有定位样式的祖先元素的4条边。
+    relative定位的left，top，right，bottom -> 相对于自身在标准文档流中的位置的4条边。
+
+</body>
+</html>

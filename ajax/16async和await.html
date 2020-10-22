@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // async和await是终极的异步编程解决方案.他们是Generator函数的语法糖.
+
+        function fn(msg,timer){
+            return new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    resolve(msg)
+                },timer)
+            }).then((str)=>{
+                console.log(str);
+            })
+        }
+
+        // 三个定时器,封装在3个promise内.然后按顺序从上往下写定时器.
+        // 但是fn前必须写await关键字.
+        // await关键字必须使用在函数内.而且这个函数声明时必须有async关键字.
+        
+        async function getTime(){
+            await fn('定时器1',1000);
+            await fn('定时器2',2000);
+            await fn('定时器3',3000);
+        }
+        
+        getTime();
+
+    </script>
+
+</body>
+</html>

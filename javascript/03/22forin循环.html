@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 对象没有length表示对象的属性个数，因此无法通过for循环来遍历
+        let oYm = {
+            name:'1111',
+            age:32,
+            height:666,
+            foods:'海鲜'
+        };
+
+        // for in 循环用于遍历对象。
+        // 有多少个属性就遍历多少次。
+        // key就是每次遍历的属性名（键名）
+        // for(let key in oYm){
+        //     console.log('key',key);
+        //     console.log('value',oYm[key]);
+        // }
+
+        let arr = ['坤坤','幂幂','玥玥','贝贝'];
+        
+        arr.lover = '超越';
+
+        // 不要用for in来遍历数组。
+        // 因为会把数组的自定义属性也一起遍历.
+        for(let i in arr){
+            console.log('下标',i);
+            console.log('元素',arr[i]);
+        }
+        
+
+    </script>
+
+</body>
+</html>

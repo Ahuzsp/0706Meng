@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // promise -> 用于封装异步操作.为了提供一些更加直观的异步编程代码.
+        // promise的三种状态.
+        //     pendding(等待中),resolve(成功了),reject(失败了)
+        // promise实例的状态一旦确认就再也不会发生改变.(解决了一些异步插件的信任问题).
+
+        // setTimeout(()=>{
+        //     console.log('定时器3')
+        // },3000);
+
+        // p是promise的实例。
+        let p = new Promise((success,error)=>{
+            setTimeout(()=>{
+                // success -> 可以认为就是then的回调函数。
+                // 表示异步操作成功之后需要做的事情。
+                // 把当前的promise状态切换为resolve.
+                success('定时器3');
+
+                // error -> 可以认为是catch的回调函数.
+                // 表示异步操作失败时要做的事情.
+                // 把当前的promise状态切换为reject.
+                error('莫名奇妙失败了');
+            },3000);
+        })
+
+        // 成功的回调
+        p.then((msg)=>{
+            console.log(msg);
+        });
+
+        // 失败的回调
+        p.catch((err)=>{
+            console.log(err);
+        })
+
+        // 无需声明实例的简写
+        // new Promise((success,error)=>{
+        //     setTimeout(()=>{
+        //         success('定时器3');
+        //     },3000);
+        // }).then((msg)=>{
+        //     console.log(msg);
+        // }).catch((err)=>{
+        //     console.log(err);
+        // })
+
+
+    </script>
+
+</body>
+</html>

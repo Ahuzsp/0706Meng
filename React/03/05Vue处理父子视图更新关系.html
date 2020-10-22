@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.0/vue.js"></script>
+    <script>
+
+        const listItem = {
+            template:`<div>item</div>`,
+            updated(){
+                console.log('子updated')
+            }
+        }
+
+        const App = {
+            template:`
+                <div>
+                    <button @click='$forceUpdate()'>1111111</button>
+                    <list-item />
+                </div>
+            `,
+            components:{listItem},
+            updated(){
+                console.log('父updated')
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            template:'<App />',
+            components:{App}
+        })
+
+    </script>
+</body>
+</html>

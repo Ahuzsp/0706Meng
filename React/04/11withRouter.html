@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch,withRouter} = ReactRouterDOM;
+        
+        // 路由的各种路由数据(path,params,push)和方法都可以通过props获取
+        // props内的3个常用属性:
+        //  1:hisory
+        //  2:location
+        //  3:match
+
+        // 以上3个属性是通过Route组件传递给路由组件Home,News,Sport的
+        // 在App内的props获取不到以上三个属性，那是因为App不是Route的子组件。
+
+        // 任何组件想要使用props内的history,location和match属性,都可以通过withRouter来处理
+
+        class Home extends Component{
+			render(){
+				return <h3>Home组件</h3>
+            }
+        }
+        
+        class News extends Component{
+			render(){
+				return <h3>News组件</h3>
+			}
+        }
+        
+        class Sport extends Component{
+			render(){
+				return <h3>Sport组件</h3>
+			}
+		}
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <button onClick={this.toPage.bind(this,'/')}>首页</button>
+                        <button onClick={this.toPage.bind(this,'/news')}>新闻</button>
+                        <button onClick={this.toPage.bind(this,'/sport')}>体育</button>
+                        <Switch>
+                            <Route path='/' exact component={Home} />                        
+                            <Route path='/news' component={News} />                        
+                            <Route path='/sport' component={Sport} />
+                        </Switch>                       
+                    </Fragment>
+				)
+            }
+            
+            toPage(path){
+                console.log(this.props);
+                this.props.history.push(path);
+            }
+		}
+
+        // 让App可以使用props的history，location和match。
+        const NewApp = withRouter(App);
+
+		ReactDOM.render((
+            <HashRouter>
+                <NewApp />
+            </HashRouter>
+        ),document.getElementById('root'));
+
+
+	</script>
+</html>

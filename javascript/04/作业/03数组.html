@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // 已知数组
+        let arr = [true,111,'你好',222,[],333,false];
+
+        // 目标数组
+        ['<li>111</li>','<li>222</li>','<li>333</li>']
+
+        // 封装一个函数,输入已知数组,得到目标数组
+        let newArr = setArr(arr);
+
+        function setArr(arr){
+            return arr.filter((item,i)=>{
+                return typeof item === 'number'
+            }).map((item,i)=>{
+                return `<li>${item}</li>`
+            });
+        }
+
+        /* function setArr(arr){
+
+            过滤出数字元素，组成新数组
+            let arr1 = arr.filter((item,i)=>{
+                return typeof item === 'number'
+            })
+
+            console.log(arr1);
+
+            把新数组加工成带li的元素
+            let arr2 = arr1.map((item,i)=>{
+                return `<li>${item}</li>`
+            });
+
+            return arr2
+        } */
+
+
+    </script>
+</body>
+</html>

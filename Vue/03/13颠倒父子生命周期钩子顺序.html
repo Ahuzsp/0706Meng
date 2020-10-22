@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        //如何让子组件的生命周期钩子函数在父组件的生命周期钩子函数之后？
+
+        // 父子组件的创建阶段的钩子顺序
+        // 父beforeCreate
+        // 父created
+        // 父beforeMount
+        // 父mounted
+        // 子beforeCreate
+        // 子created
+        // 子beforeMount
+        // 子mounted
+
+        // 如果希望子组件的所有钩子落后于父组件的钩子,可以给子组件添加v-if='flag',flag为false.
+        // 在父组件mounted之后,再把flag设置为true.
+
+        const Item = {
+            template: `<h3>Item组件</h3>`,
+            beforeCreate() {
+                console.log('子beforeCreate')
+            },
+            created() {
+                console.log('子created')
+            },
+            beforeMount() {
+                console.log('子beforeMount')
+            },
+            mounted() {
+                console.log('子mounted')
+            }
+        }
+
+        const App = {
+            template: `
+                <div>
+                    <Item v-if='flag' />
+                    <h3>111111</h3>
+                </div>
+            `,
+            data(){
+                return {flag:false}
+            },
+            components: { Item },
+            beforeCreate() {
+                console.log('父beforeCreate')
+            },
+            created() {
+                console.log('父created')
+            },
+            beforeMount() {
+                console.log('父beforeMount')
+            },
+            mounted() {
+                // 父组件mounted之后,才可以子组件的创建.
+                this.flag = true;
+                console.log('父mounted')
+            }
+        }
+
+        new Vue({
+            el: '#app',
+            template: `<App />`,
+            components: { App }
+        })
+
+    </script>
+
+</body>
+
+</html>

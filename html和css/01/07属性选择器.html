@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* [abc]{
+            background:red;
+        } */
+        body>[abc]{
+            background:green;
+        }  
+        .active{
+            background:blue;
+        }           
+        [style='www']{
+            border:10px solid #000;
+        }
+    </style>
+</head>
+<body>
+    
+    属性选择器的优先级和类选择器的优先级的权重是一样的
+
+    优先级：
+        只有一个选择器：
+            important > 行内 > id > 类(属性) > 标签 > 通配符 > 默认样式 > 继承样式
+            如果优先级相同,写在下面的优先级高.
+            内部样式 > 外部样式
+        多个选择器:
+            先数id选择器个数,然后数类（属性）选择器个数,最后数标签选择器个数.
+            如果以上3个选择器的个数都一样,则写在下面的选择器优先级高.
+
+    <div abc style='www' class='active'>11111111</div>
+
+</body>
+</html>

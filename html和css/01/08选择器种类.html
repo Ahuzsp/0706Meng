@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        #li2+li{
+            background: red;
+        }
+
+        #li2~*{
+            background: red;
+        }
+
+        /* 所有元素的所有后代元素 */
+        /* 是所有元素并且是所以标签 */
+        /* *{
+            background: blue;
+        } */
+
+        /* 是li并且是.box */
+        li.box{
+            background: brown;
+        }
+
+    </style>
+</head>
+<body>
+    
+    选择器分类：
+        1：基本选择器 （可以直接选中元素）
+            id，类，属性，标签，通配符
+
+        2：关系选择器 （A基本选择器+B基本选择器）
+            后代选择器，子选择器，
+            兄弟选择器 (+，~)
+
+            + -> 后面的兄弟
+            ~ -> 后面的兄弟们
+
+            交集选择器，并集选择器（并列选择器）
+            
+    <ul>
+        <li>1</li>
+        <li id='li2' class='box'>2</li>
+        <li>3</li>
+        <li>4</li>
+        <p>888888888888</p>
+    </ul>
+
+</body>
+</html>

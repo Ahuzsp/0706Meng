@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch} = ReactRouterDOM;
+        
+        // Route设置与path匹配的组件,可以有以下方式:
+        //  1:component = {类/函数}
+        //  2:render= {()=>路由组件}
+        //  3:children= {路由组件}
+        //  4:<Route>路由组件</Route>
+
+        class Home extends Component{
+			render(){
+				return <h3>Home组件</h3>
+			}
+        }
+        
+        class News extends Component{
+			render(){
+				return <h3>News组件</h3>
+			}
+        }
+        
+        class Sport extends Component{
+			render(){
+				return <h3>Sport组件</h3>
+			}
+		}
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <HashRouter>
+                            <NavLink to='/'>首页</NavLink>
+                            <NavLink to='/news'>新闻</NavLink>
+                            <NavLink to='/sport'>体育</NavLink>
+                            <Switch>
+                                <Route path='/' exact component={Home} />                        
+                                <Route path='/news' render={()=><News />} />                        
+                                {/* <Route path='/sport' children={<Sport />} /> */}
+                                <Route path='/sport'><Sport /></Route>
+                            </Switch>                        
+                        </HashRouter>
+                    </Fragment>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+
+	</script>
+</html>

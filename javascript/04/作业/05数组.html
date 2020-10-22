@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type="text">
+    </div>
+    <div>
+        <input type="text">
+    </div>
+    <div>
+        <input type="text">
+    </div>
+    <div>
+        <input type="text">
+    </div>
+    <div>
+        <input type="text">
+    </div>
+    <div>
+        <input type="button" value='检测'>
+    </div>
+    <p>这批货:</p>
+    <script>
+
+        // 点击按钮检测:
+        //     给文本框的value随机设置'正品'或者'废品'
+        //     如果5个文本框中至少有一个'废品'但不全是'废品',p内显示:这批货有瑕疵;
+        //     如果5个文本框中全是'正品',p内显示:这批货完全合格;
+        //     如果5个文本框中全是'废品',p内显示:这批货全是辣鸡;
+
+        let oBtn = document.querySelector('[value="检测"]');
+        let aText = document.querySelectorAll('input:not([type="button"])');
+        let oP = document.querySelector('p');
+
+        oBtn.onclick = function(){
+
+            let values = ['正品','废品'];
+            
+            for(let i=0;i<aText.length;i++){
+                // 随机下标。
+                let index = Math.floor(Math.random()*values.length);
+                // 随机正品或废品。
+                aText[i].value = values[index];
+            }
+            
+            // 全是正品
+            let allGood = Array.from(aText).every((item,i)=>{
+                return item.value === '正品'
+            })
+
+            // 全是废品
+            let allBad = Array.from(aText).every((item,i)=>{
+                return item.value === '废品'
+            })
+
+            if(allGood){
+                oP.innerText = '这批货完全合格';
+            }else if(allBad){
+                oP.innerText = '这批货全是废品';
+            }else{
+                oP.innerText = '这批货有瑕疵';
+            }
+
+        }
+
+    </script>
+</body>
+</html>

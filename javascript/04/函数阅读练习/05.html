@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let y = 20;
+
+        function fn(x){
+            return add(x + y)
+        }
+
+        function add(x){
+            return arguments[1] ? (x * 3) : arguments[0] + x
+        }
+
+        function show(x){
+            return y = x % y
+        }
+
+        let num = show(y) ? fn(y*2) : fn(y+2);
+
+        // 打印什么
+        console.log(num); 
+
+        /*  
+            1：y = 20; (全局)
+            2: num = show(y) ? fn(y*2) : fn(y+2);
+                调用show(20);
+                    return y = 20 % 20 (y是全局,x是形参)(y变成了0)
+                    return 0
+                show(20)的返回值是0,0是false,因此调用fn(0+2);
+                    return add(2 + 0)
+                        return arguments[1] ? (x * 3) : arguments[0] + x
+                        return false ? (x * 3) : arguments[0] + x
+                        return arguments[0] + x
+                        return 2 + 2                        
+            3:打印num 4
+        */
+
+    </script>
+
+</body>
+</html>

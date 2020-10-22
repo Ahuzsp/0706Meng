@@ -1,0 +1,26 @@
+<!--logs.wxml-->
+<view class="container log-list">
+  <input type='text' bindinput="fn" value='{{msg}}' />
+  <view>{{msg}}</view>
+  <checkbox-group bindchange='choose'>
+    <checkbox value='香蕉' /><text>香蕉</text>
+    <checkbox value='苹果' /><text>苹果</text>
+    <checkbox value='山竹' /><text>山竹</text>
+  </checkbox-group>
+  <view>你喜欢的水果:{{fruits}}</view>
+  <radio-group bindchange='selectSet'>
+    <radio value='男' /><text>男</text>
+    <radio value='女' /><text>女</text>
+    <view>你的性别是：{{sex}}</view>
+  </radio-group>
+  <view>
+    <switch type='checkbox' bindchange="show" checked='{{flag}}' />
+    <view wx:if='{{flag}}'>条件渲染条件渲染</view>
+  </view>
+  <!-- 引入list-item组件 -->
+  <list-item bindmyevent='getMsg' str='{{msg}}' />
+  <view>
+    子组件传递的数据:{{str}}
+  </view>
+
+</view>

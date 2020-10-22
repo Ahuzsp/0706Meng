@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // Vue会尽可能的减少DOM操作。
+        // Vue会尽可能的原地复用标签.
+
+        // Vue更新视图时,是否采用就地更新(原地更新),需要做两个判断
+        //      1:同级比较标签名是否一样.
+        //      2:同级比较key是否一样.
+
+        // 以上两个条件都一样，则Vue认为更新前后的两个标签是同一个标签，则采用就地更新策略。
+        
+        // 更新前
+        /*  
+            <div>
+                <h3>vip信息</h3>
+                <input type="text">
+            </div> 
+        */
+
+        // 更新后
+        /* 
+            <div>
+                <p>普通用户信息</p>
+                <input type="text">
+            </div>
+        */
+        
+        const App = {
+            template:`
+                <div id='app'>
+                    <input type="button" value='切换' @click='flag=!flag'>
+                    <div v-if='flag'>
+                        <h3>vip信息</h3>
+                        <input type="text" key='a'>
+                    </div>
+                    <div v-else>
+                        <p>普通用户信息</p>
+                        <input type="text" key='b'>
+                    </div>
+                </div>
+            `,
+            data(){
+                return {
+                    flag:true
+                }
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

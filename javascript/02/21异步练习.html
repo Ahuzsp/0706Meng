@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 请说出一下程序的打印顺序。
+        // 3 2 1
+        // 同样是异步，谁先谁后，看时间。时间少的先执行。
+
+        setTimeout(()=>{
+            console.log(1)
+        },100);
+
+        setTimeout(()=>{
+            console.log(2)
+        },0);
+
+        console.log(3);
+
+        // ---------------------------------------------------------------
+        let x = 5;
+
+        // 如果x--的返回值是true，就继续打印x。
+        while(x--){
+            // 定时器是异步，会在循环完成了才执行。
+            // 循环5次，创建一个定时器
+            // 循环结束之后。5个定时器才打印循环之后x的值-1;
+            setTimeout(()=>{
+                console.log(x);// 5个-1
+            },0);
+        }
+
+    </script>
+
+</body>
+</html>

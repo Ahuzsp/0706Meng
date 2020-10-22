@@ -1,0 +1,7 @@
+<!--components/item/item.wxml-->
+<view>
+  <text>{{item}}</text>
+  <button bindtap='del'>删除</button>
+  <slot />
+</view>
+

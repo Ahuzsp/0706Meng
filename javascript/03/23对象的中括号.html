@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 访问对象的属性有两种方式：
+
+        // 1:用. (.后面只能接固定的字符串，不能是表达式)
+        // 2:用[] ([]内可以写任意表达式)(键名通过变量获取，用[])
+
+        let str = 'name';
+        let msg = 'age';
+        let num = 'height'
+
+        let oYm = {
+            "name":'幂幂',
+            "age":34,
+            [num]:168
+        }
+
+        console.log(oYm.name);
+        console.log(oYm['name']);
+        console.log(oYm[str]);
+        console.log(oYm[str ? msg : str]);
+
+    </script>
+
+</body>
+</html>

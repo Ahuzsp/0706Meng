@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <input type="text" placeholder="数量" v-model='count'>
+        <input type="text" placeholder="单价" v-model='price'>
+        <div>总价:{{count*price}}</div>
+        <div>总价:{{total}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 简单的数据逻辑,可以直接写在视图上. (不推荐)
+        // 假设这个数据的换算逻辑,有100行代码,如何写在视图上?
+
+        // 需要在count和price变化时,重新修改total的值.
+        // 如何知道count和price发生变化? 用watch.
+        // watch可以监听Vue的数据变化,方便实现一些额外逻辑.
+
+        // 推荐watch监听的数据名都应该加''.
+        // watch监听的数据,在数据没有变化时,是不触发监听函数的.
+
+        // watch监听的数据,可以写成函数也可以写成对象.
+        // watch监听的数据,如果写成了对象,则数据变化时触发的就是handler方法.
+        // 如何让watch监听的数据的监听函数默认触发一次.需要配置immediate:true选项.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                count:1,
+                price:10,
+                total:0,
+                obj:{
+                    name:'幂幂',
+                    obj:{
+                        age:32,
+                        obj:{
+                            name:'哈哈哈'
+                        }
+                    }
+                }
+            },
+            watch:{
+                'count':{
+                    // 为了根据count和price的默认值计算出total的默认值.
+                    immediate:true,
+                    handler(){
+                        this.total = this.count * this.price
+                    }
+                },
+                'price':{
+                    immediate:true,
+                    handler(){
+                        this.total = this.count * this.price
+                    }
+                },
+                'obj':{
+                    // 深度监听.(obj的所有子孙字段)
+                    // 是哪个字段在变化是不知道的.
+                    deep:true,
+                    handler(){
+                        console.log('obj的某个子字段变化了');
+                    }                    
+                }
+
+                // 'obj.obj.age'(){
+                //     console.log('obj.name变化了');
+                // },
+                // 'obj.obj.obj.name'(){
+                //     console.log('obj.name变化了');
+                // }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

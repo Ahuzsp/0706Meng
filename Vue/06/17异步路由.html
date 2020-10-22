@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <a href="#">首页</a>
+        <a href="#">新闻</a>
+        <a href="#">攻略</a>
+        <div>
+            <h3>首页</h3>
+            <p>首页的内容..<span>2018-07-22</span></p>
+        </div>
+        <div>
+            <h3新闻</h3>
+            <p>新闻的内容..<span>2018-07-23</span></p>
+        </div>
+        <div>
+            <h3>攻略</h3>
+            <p>攻略的内容..<span>2018-07-24</span></p>
+        </div>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script src="../js/vue-router.js"></script>
+<script>
+
+    // 异步路由:动态加载路由选项.例如一开始2个选项,后面根据需求动态加载额外的3个路由选项.
+    // 如何在配置好的路由选项后再额外添加路由选项.核心方法:router.addRoutes
+
+    const Home = {
+        template:`
+            <div>
+                <h3>首页</h3>
+                <p>首页的内容..<span>2018-07-22</span></p>
+            </div>
+        `
+    }
+
+    const News = {
+        template:`
+            <div>
+                <h3>新闻</h3>
+                <p>新闻的内容..<span>2018-07-23</span></p>
+            </div>
+        `
+    }
+    
+    const Guide = {
+        template:`
+            <div>
+                <h3>攻略</h3>
+                <p>攻略的内容..<span>2018-07-24</span></p>
+            </div>
+        `
+    }
+
+    const Sport = {
+        template:`
+            <div>
+                <h3>体育</h3>
+                <p>体育的内容..<span>2018-07-24</span></p>
+            </div>
+        `
+    }
+
+    // 路由选项配置
+    const routes = [
+        {
+            path:'/',
+            component:Home
+        },{
+            path:'/news',
+            component:News
+        },{
+            path:'/guide',
+            component:Guide
+        }
+    ]
+
+    const router = new VueRouter({routes})
+
+    const App = {
+        template:`
+            <div id='app'>
+                <button @click='addRoute'>路由加一项</button>
+                <router-link to='/'>首页</router-link>
+                <router-link to='/news'>新闻</router-link>
+                <router-link to='/guide'>攻略</router-link>
+                <router-view />
+            </div>
+        `,
+        methods:{
+            addRoute(){
+                // 点击按钮后动态添加一个sport路由选项
+                routes.push({
+                    path:'/sport',
+                    component:Sport
+                });
+                // addRoutes的参数需要的是一个新的数组.
+                this.$router.addRoutes([...routes]);
+                // 添加之后,路由选项变成了4个
+                console.log(this.$router);
+            }
+        },
+        mounted(){
+            // 添加之前路由选项只有3个
+            console.log(this.$router);
+        }
+    }
+
+    new Vue({
+        router,
+        render:h=>h(App),
+        components:{App}
+    }).$mount('#app')
+    
+    
+</script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // ajax请求1得到的数据作为ajax请求2的参数.
+        // 请求1成功了再开始请求2.
+
+        // axios.get('url1')
+        // .then((res)=>{
+        //     // 第二次请求的参数就是第一次请求的结果.
+        //     axios.get('url2',res).then((res)=>{
+        //         console.log(res)
+        //     })  
+        // })
+        
+        // 请求封装.
+        function getUrl(url){
+            return axios.get(url)
+        }
+
+        async function getData(){
+            // 请求1
+            let res = await getUrl('url1');
+            // 请求2
+            getUrl('url2').then((res)=>{
+                console.log(res.data)
+            })
+        }
+
+    </script>
+
+
+</body>
+</html>

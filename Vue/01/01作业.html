@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="text" placeholder="关键字">
+    <input type="button" value='搜索音乐'>
+    <ul></ul>
+    <ul></ul>
+
+    <script src="js/axios.js"></script>
+    <script>
+
+        // 点击按钮后,根据输入的关键字进行音乐搜索.
+        // 第一个ul内显示音乐列表.li内显示音乐的名字
+        // 请求到音乐列表后,根据第一首歌的id请求该歌曲的评论内容,放入第二个ul内.
+        // ps:必须用async和await.
+
+        // 最终目的:
+        //    给两个ul插入若干个li,li的插入内容.
+        
+        // 获取两个ul
+        let aUl = document.getElementsByTagName('ul');
+        let oText = document.getElementsByTagName('input')[0];
+        let oBtn = document.getElementsByTagName('input')[1];
+        
+        // 点击按钮请求数据渲染页面. 
+        oBtn.onclick = getDataToRender;
+
+        // 请求数据封装
+        function getDate({url,key,value}){
+            return axios.get(url,{
+                params:{[key]:value}
+            })
+        }
+
+        async function getDataToRender(){
+
+            // 请求歌曲数据
+            let songsData = await getDate({
+                url:'https://apimusic.linweiqin.com/search',
+                key:'keywords',
+                value:oText.value
+            })
+
+            // 请求评论数据.
+            let commentData = await getDate({
+                url:'https://apimusic.linweiqin.com/comment/hot?type=0',
+                key:'id',
+                value:songsData.data.result.songs[0].id
+            })
+
+            // 渲染歌曲列表
+            let songs = songsData.data.result.songs;
+            for(let i=0;i<songs.length;i++){
+                aUl[0].innerHTML += `<li>${songs[i].name}</li>`
+            };
+
+            // 渲染评论列表
+            let comments = commentData.data.hotComments;
+            for(let i=0;i<comments.length;i++){
+                aUl[1].innerHTML += `
+                    <li>
+                        <h3>${comments[i].user.nickname}</h3>
+                        <p>${comments[i].content}</p>
+                    </li>
+                `
+            }
+        }
+        
+        // oBtn.onclick = function(){
+        //     axios.get('https://apimusic.linweiqin.com/search',{
+        //         params:{keywords:oText.value}
+        //     }).then((res)=>{
+
+        //         let songs = res.data.result.songs
+        //         for(let i=0;i<songs.length;i++){
+        //             aUl[0].innerHTML += `<li>${songs[i].name}</li>`
+        //         };
+
+        //         axios.get('https://apimusic.linweiqin.com/comment/hot?type=0',{
+        //             params:{id:songs[0].id}
+        //         }).then(res=>{
+        //             console.log(res.data);
+        //             let conments = res.data.hotComments
+        //             for(let i=0;i<conments.length;i++){
+        //                 aUl[1].innerHTML += `
+        //                     <li>
+        //                         <h3>${conments[i].user.nickname}</h3>
+        //                         <p>${conments[i].content}</p>
+        //                     </li>
+        //                 `
+        //             }
+        //         })
+        //     })
+        // }
+
+
+    </script>
+
+</body>
+</html>

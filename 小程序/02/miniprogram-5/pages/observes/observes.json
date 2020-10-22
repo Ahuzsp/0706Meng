@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "observes":"../../components/observes/observes"
+  }
+}

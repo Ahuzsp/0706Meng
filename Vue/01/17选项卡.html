@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div>div{
+            float: left;
+            width: 200px;
+            height: 200px;
+            border:1px solid #000;
+            margin-left:1px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='app'>
+        <button 
+            v-for='(num,i) in arr' 
+            :style='{background:index==i?"red":""}'
+            @click='toRed(i)'
+        >{{num}}</button><br>
+        <div 
+            v-for='(num,i) in arr'
+            :style='{display:index==i?"block":"none"}'
+        >{{num}}</div>                                                      
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+               // 当前被点击的按钮的下标
+               index:0,
+               arr:[111,2222,3333]
+            },
+            methods:{
+                toRed(i){
+                    this.index = i;
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

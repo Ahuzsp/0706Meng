@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        //     子组件作为父组件的插槽引入 -> 父子解耦.
+        //     父子解耦之后,父组件就无法通过props传递数据给子组件了. 如何解决?
+        //     利用作用域插槽.解决上述问题.
+
+        //     通过v-slot指令,可以获取slot组件上的所有的属性值,给slot指令值起任意一个名字
+        //     这个名字是一个对象,这个对象内就存储了所有slot组件上的所有属性数据.
+        //     v-slot:具名插槽的名字 -> 用于指定获取哪个插槽的数据。
+
+        const listItem = {
+            template:`<li>{{content}}:{{str}}</li>`,
+            props:['content','str']
+        }
+
+        const List = {
+            template:`
+                <ul>
+                   <slot :str='str'></slot>
+                   <slot :str='str' name='other'></slot>
+                </ul>
+            `,
+            data(){
+                return {str:'来自爸爸的礼物'}
+            }
+        }
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <ul is='List' v-slot:default='abc'>
+                        <li 
+                            v-for='d in 3' 
+                            is='listItem' 
+                            :content='msg'
+                            :str = 'abc.str'
+                        ></li>
+                    </ul>
+                </div>
+            `,
+            components:{List,listItem},
+            data(){
+                return {msg:'来自爷爷的礼物'}
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

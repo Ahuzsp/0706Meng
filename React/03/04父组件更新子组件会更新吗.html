@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="root"></div>
+
+    <script src="../js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/babel">
+
+        // React父组件视图更新,会导致子组件的视图更新吗? 会
+        // 父组件更新,父组件的render重新触发,render触发会重新挂载子组件
+        // 这样会导致子组件重新render
+
+        // 为什么数据变了,视图不变.
+        // Vue在父组件更新时,不一定更新子组件.(自诩智能判断).
+        // Vue会自动判断是不是应该更新子组件。
+        // 例如如果子组件根本没有响应式数据，则子组件根本不会更新。因为没必要.
+
+        const {Component,Fragment} = React;
+
+        class Item extends Component{
+            render(){
+                console.log('子render')
+                return (
+                    <div>
+                        <h3>Item组件</h3>
+                    </div>
+                )
+            }
+        }
+
+        class App extends Component{
+            constructor(props){
+                super(props);
+            }
+            render(){
+                console.log('父render')
+                return (
+                    <div>
+                        <button onClick={()=>{this.forceUpdate()}}>刷新父组件</button>
+                        <Item />
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+</body>
+</html>

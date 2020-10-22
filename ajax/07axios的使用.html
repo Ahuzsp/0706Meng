@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="js/axios.js"></script>
+    <script>
+
+        // axios -> 第三方http库.封装了原生js的基本的ajax过程.也封装promise
+
+        // 全写.
+        // 参数是一个json对象.这种参数一般教配置选项.config
+        // axios({
+        //     url:'',
+        //     methods:'GET',
+        //     params:{a:10},
+        //     data:{b:20},
+        //     headers:{},
+        //     timeout:1000
+        // }).then((res)=>{
+        //     console.log(res.data)
+        // })
+
+        // 简写get请求
+        // axios.get('url',{
+        //     params:{a:10}
+        // })
+        // .then((res)=>{
+        //     console.log(res.data)
+        // })
+
+        // 简写post请求
+        // axios.post('url',{})
+        // axios.post('url','')
+        // axios.post('url',formData对象)
+        // .then((res)=>{
+        //     console.log(res.data)
+        // })
+
+        //把json字符串转换成json对象 (纯对象,数组)
+        // JSON.parse();
+
+        // 把纯对象,数组转换成json字符串.
+        // JSON.stringify();
+
+        // json字符串的格式有规定吗.
+        // 必须完全复合json文件的格式.
+        // 1:键名必须都是双引号
+        // 2:属性值是字符串时,必须是双引号
+        // 3:最后一个属性后面不能有,
+        // 4:不能有任何的注释.
+
+        // SyntaxError: Unexpected token n in JSON at position 1
+        // let obj = JSON.parse('{name:90}');
+
+        let obj = JSON.parse('{"name":90}');
+
+    </script>
+
+</body>
+</html>

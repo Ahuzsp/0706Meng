@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #div1{
+            border:2px solid #000;
+            height: 100px;
+        }
+        #div2{
+            background: red;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text">
+        <div id='div1'></div>
+        <div id='div2'></div>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+
+    //在文本框内输入数字，根据数字可以改变div1的宽
+    //保证div2的宽始终是div1宽的一半.
+    //如果div2的宽度小于300,其内容显示:不要再小了
+
+    let App = {
+        template:`
+            <div id="app">
+                <input type="text" v-model='num'>
+                <div id='div1' :style='{width:num+"px"}'></div>
+                <div id='div2' :style='{width:w2+"px"}'>{{content}}</div>
+            </div>
+        `,
+        data(){
+            return {
+                num:0,
+                content:'不要再小了'
+            }
+        },
+        watch:{
+            w2(){
+
+                // if(this.w2 < 300){
+                //     this.content = '不要再小了'
+                // }else{
+                //     this.content = ''
+                // }
+
+                this.content = this.w2<300?"不要再小了":""
+            }
+        },
+        computed:{
+            w2(){
+                return this.num / 2; 
+            },
+            // content(){
+            //     return this.w2<300?"不要再小了":""
+            // }
+        }
+    }
+
+    new Vue({
+        el:'#app',
+        template:`<App />`,
+        components:{App}
+    })
+
+</script>
+</html>

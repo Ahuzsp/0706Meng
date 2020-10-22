@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // 如果受控组件是一个单选框,应该控制checked属性.但是状态不应该是布尔值
+
+    class App extends Component{
+
+        state = {
+            sex:'男'
+        }
+
+        render(){     
+            return (
+                <Fragment>
+                    <input 
+                        type='radio' 
+                        name='sex' 
+                        onChange={this.fn.bind(this)} 
+                        checked={this.state.sex == '男'}
+                        value='男' 
+                    />男
+                    <input 
+                        type='radio' 
+                        name='sex' 
+                        onChange={this.fn.bind(this)} 
+                        checked={this.state.sex == '女'}
+                        value='女' 
+                    />女
+                    <div>性别:{this.state.sex}</div>
+                </Fragment>
+            )
+        }
+
+        fn(ev){
+            // 设置sex并且更新视图
+            this.setState({
+                sex:ev.target.value
+            })
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

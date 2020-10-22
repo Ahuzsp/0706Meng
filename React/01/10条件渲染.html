@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        let {Fragment} = React;
+        let flag = true;
+
+        // React可以通过三目运算符来实现条件渲染。需要包裹到{}内
+        // React可以通过逻辑与运算符来实只有一个标签的条件渲染。需要包裹到{}内
+        let Vnode = ( 
+            <Fragment>
+                {
+                    flag ? <div>111111</div> : <div>222222</div>
+                }
+                {
+                    flag && <div>33333</div>
+                }
+                {
+                    flag || <div>44444</div>
+                }
+            </Fragment>         
+        );
+
+        // 挂载Vnode到#root上。
+        ReactDOM.render(Vnode,document.getElementById('root'));
+
+    </script>
+
+</body>
+</html>

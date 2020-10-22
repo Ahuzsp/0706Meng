@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id='app'>
+        <div v-if='flag'>99999999999</div>
+        <div v-else-if='flag'>77777777</div>
+        <div v-else>88888888</div>
+
+        <div v-if='1<2'>111111222222222</div>
+        <div v-show='flag'>99999999999</div>
+    </div>
+    
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 数据驱动 -> js的那些数据可以驱动视图更新.
+        // js数据类型:number,string,boolean,undefined,null,array,object,function
+        // 可以驱动视图更新的是number,string,boolean,array,object
+        // v-if就是利用布尔值驱动视图
+        // v-for就是利用array和object驱动视图.
+
+        // v-if和v-show叫条件渲染。利用布尔值的真和假来显示和隐藏视图。
+        // v-if根据初始条件决定渲染不渲染视图
+        // v-show无论如何都会渲染视图，只不过根据指令值来设置样式隐藏或显示。
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                flag:true
+            }
+        })
+
+    </script>
+
+</body>
+</html>

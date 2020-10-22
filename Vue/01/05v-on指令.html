@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <button v-on:click='show'>按钮</button>
+        <button @click='fn'>按钮</button>
+        <button @click='msg = "hello React"'>修改msg</button>
+        <hr>
+        <button @click='fn(1000,$event)'>按钮</button>
+        <button @click='()=>{fn(10000)}'>按钮</button>
+        <button @click='true?fn:()=>{}'>按钮</button>
+        <hr>
+        <button @click.prevent='fn'>按钮</button>
+        <button @click.stop='fn'>按钮</button>
+        <div>{{msg}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // v-on -> 封装了添加事件的DOM操作
+        // v-on的简写是@
+        // v-on的指令值只能是函数或者函数调用。不能是其他表达式。
+        // v-on的指令也可以不是函数，直接写需要执行的语句。
+
+        // 事件如何访问vue实例的数据。(通过this访问)
+        // 事件如何传参. (直接写函数调用传参)
+        // 事件如何使用事件对象. 
+        //        1:指令值是函数.直接在形参内使用ev事件对象.
+        //        2:指令值是函数调用.手动传入$event
+        // 事件修饰符:prevent(阻止默认事件),stop(阻止事件冒泡).native.
+        
+
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'hello Vue'
+            },
+            methods:{
+                fn(str,ev){
+                    // console.log(vm.msg);
+                    // methods方法内的this指向当前的vue实例.
+                    // console.log(this.msg);
+
+                    // console.log(str);
+                    this.msg = 'hello React';
+                },
+                show(ev){
+                    console.log(ev);
+                }
+            }
+        })
+
+        // 原生事件的传参
+        // 1:
+        // oBtn.onclick = function(){
+        //     show(1000)
+        // }
+        // function show(res){
+        //     console.log(res)
+        // }
+
+        // 2:
+        // oBtn.onclick = show(1000);
+        // function show(res){
+        //     return function(){
+        //         console.log(res)
+        //     }
+        // }
+
+        // 3:
+        // oBtn.onclick = show.bind(1000);
+        // function show(res){
+        //     console.log(res)
+        // }
+
+    </script>
+
+</body>
+</html>

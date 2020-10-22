@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'></div>
+	</body>
+	<script src="../js/vue.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+        // v-for必须有key.否则后续可能出现一些无法预料的视图更新错误.
+        // key需要是独立的,更新前和更新后同级的key应该不相同.(不推荐使用下标来做key)
+        // 用下标做key,唯一的作用就是不报错.
+
+        // <li>1111</li> {content:11111,key:a} 0
+        // <li>2222</li> {content:22222,key:b} 1
+        // <li>3333</li> {content:33333,key:c} 2
+
+        // <li>2222</li> {content:22222,key:b} 0
+        // <li>1111</li> {content:11111,key:a} 1
+        // <li>3333</li> {content:33333,key:c} 2
+
+		const listItem = {
+			template:`
+				<li>
+					<span>{{i+1}}</span>--<span>{{item.content}}</span>
+                    <input type="text" value='' />
+					<input type='button' @click='up(i)' value='上移' />
+				</li>
+			`,
+			props:['item','i','up']
+		}
+
+		const App = {
+			template:`
+				<div id='div'>
+					<ul>
+						<list-item
+							:item='item' 
+							:i='i'
+                            v-for='(item,i) in arr'
+                            :key='item.id'
+							:up = 'up'
+						 />
+					</ul>
+				</div>
+			`,
+			methods:{
+				// 上移
+				up(i){
+					let prev = this.arr[i-1];
+					let now = this.arr[i];
+					if(i>0){
+						this.arr.splice(i-1,2,now,prev);
+					}
+				}
+			},	
+			components:{listItem},
+			data(){
+				return {
+					arr:[
+                        {content:11111,id:'a'},
+                        {content:22222,id:'b'},
+                        {content:33333,id:'c'}
+                    ],
+				}
+			}
+		}
+		
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+
+		
+	</script>
+</html>

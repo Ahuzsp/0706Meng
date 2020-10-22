@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src='js/vue-router.js'></script>
+    <script>
+
+        // $router -> 路由器 就是挂载的路由实例.(通过new VueRouter创建的实例)
+        // $route -> 路由选项,就是routes里面的配置项.
+        //           可以通过这个对象获取路由选项里面的大多数配置.
+        //           包括自定义字段.
+
+        // 要跳转的时候用带r的,不跳转时,全用不带r的.(路由参数,路由路径,理由mata,路由名)
+
+        // 任意组件都可以通过Vue实例(this)访问这两个对象.
+
+        const Home = {
+            template:`
+                <div>
+                    <h3>首页</h3>
+                </div>
+            `,
+        }
+
+        const News = {
+            template:`
+                <div>
+                    <h3>新闻</h3>
+                </div>
+            `
+        }
+
+        const Sport = {
+            template:`
+                <div>体育</div>
+            `
+        }
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/',
+                    component:Home,
+                    name:'home',
+                    meta:{
+                        mymsg:'自定义书画家'
+                    }
+                },{
+                    path:'/news',
+                    component:News,
+                    name:'news'
+                },{
+                    path:'/sport',
+                    component:Sport,
+                    name:'sport'
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>                   
+                    <button @click='toPage("/")'>首页</button>
+                    <button @click='toPage("/news")'>新闻</button>
+                    <button @click='toPage("/sport")'>体育</button>
+                    <keep-alive>
+                        <router-view />
+                    </keep-alive>
+                </div>
+            `,
+            methods:{
+                toPage(hash){
+                    this.$router.push({path:hash});
+                }
+            },
+            created(){
+                console.log('router',this.$router);
+                console.log('route',this.$route);
+                console.log('mymsg',this.$route.meta.mymsg);
+            }
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

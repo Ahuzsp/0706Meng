@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/redux.js"></script>
+	<script type="text/babel">
+
+        // 状态管理
+        //    1:多个组件可以共享同一个数据
+        //    2:这个数据变化,可以同时更新多个组件
+
+        // vuex是Vue的状态管理插件.
+
+        // React的状态管理有Redux,Mobx.
+        // Redux,Mobx不是react的插件,是第三方的.Vue也可以使用的
+
+        // Vuex的书写
+        // 1实例化:const store = new Vuex.Store({})。
+        // 2获取和修改:
+        //     获取:this.$store.state.数据名
+        //     修改:触发mutations修改
+        // 3挂载:可以挂载到任意组件的选项上。
+        // 4辅助方法:mapState,快速获取数据和方法
+
+        const {Component,Fragment} = React;
+        
+        // redux存储数据,是存到一个自定义函数的作用域内.(闭包存)
+        function reducer(num=9527){
+            return num
+        }
+
+        // 实例化store对象,以后用来获取和修改共享数据
+        const store = Redux.createStore(reducer);
+
+        // 获取共享数据
+        // store.getState()
+
+        class Son extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button>Son按钮</button>
+                        <div>{store.getState()}</div>
+                    </Fragment>   
+                )
+            }
+        }
+        
+        class Item extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button>Item按钮</button>
+                        <div>{store.getState()}</div>
+                    </Fragment>   
+                )
+            }
+        }
+
+        class App extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button>App按钮</button>
+                        <div>{store.getState()}</div>
+                        <Item />
+                        <Son />
+                    </Fragment>   
+                )
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

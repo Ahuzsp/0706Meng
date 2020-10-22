@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        #box{
+            background: red;
+        }
+        .active{
+            background: orange;
+        }
+        div>p{
+            background: brown;
+        }
+        body p{
+            background: green;
+        }
+        *{
+            background: skyblue;
+        }
+        body{
+            font-size:50px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    优先级：
+        只有一个选择器：
+            important > 行内 > id > 类 > 标签 > 通配符 > 默认样式 > 继承样式
+            如果优先级相同,写在下面的优先级高.
+            内部样式 > 外部样式
+        多个选择器:
+            先数id选择器个数,然后数类选择器个数,最后数标签选择器个数.
+            如果以上3个选择器的个数都一样,则写在下面的选择器优先级高.
+
+    <div>
+        <p id='box' class='active' style='background:tomato'>段落段落</p>
+    </div>
+
+</body>
+</html>

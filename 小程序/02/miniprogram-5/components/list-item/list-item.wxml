@@ -1,0 +1,13 @@
+<!--components/list-item/list-item.wxml-->
+<view>
+  <text>{{msg}}</text>
+  <button bindtap='fn'>修改msg</button>
+</view>
+<view>
+  <text>父组件传递的数据:{{str}}</text>
+  <button bindtap='setMsg'>修改父组件msg</button>
+</view>
+<view>
+  <button bindtap='sandMsg'>传递数据给父组件</button>
+</view>
+

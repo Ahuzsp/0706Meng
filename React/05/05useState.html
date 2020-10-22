@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        // hooks => 语法糖,让函数组件中可以使用状态和生命周期
+        // hooks没有改变任何api的特性.
+        // 使用了hooks之后,就可以不使用class组件了.
+
+        // useState可以让函数组件拥有状态.
+        // let [ 数据名,修改数据的方法名 ] = useState(数据的默认值);
+        // 修改数据名的方法,和setState类似.但是第二个参数不提供.需要在useEffect中使用
+        // 如果数据是引用类型，修改是传入方法内的引用必须是一个新的引用。否则视图不更新的
+
+        const {Component,Fragment,useState} = React;
+
+        function Item({item,del}){
+            return (
+                <li>
+                    <span>{item}</span>
+                    <button onClick={del}>删除</button>
+                </li>
+            )
+        }
+
+        function App(){
+
+            const [arr,setArr] = useState([111,222,333]);
+
+            return (
+                <ul>{
+                    arr.map((item,i)=>(
+                        <Item key={i} item={item} del={del.bind(null,i)} />
+                    ))
+                }</ul>
+            )
+
+            function del(i){
+                let newArr = arr.slice();
+                newArr.splice(i,1);
+                // 类似setState的作用,也是异步修改数据
+                setArr([...newArr]);
+                console.log('回调外',arr);
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html> 

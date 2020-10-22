@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        // React父传子
+        //    1:在子组件标签上添加自定义属性
+        //    2:在子组件内通过props获取以上自定义属性的值
+
+        // props对象 -> 存储所有组件标签上的属性
+
+        class Item extends React.Component{
+            constructor(props){
+                // 为了让子组件获得props属性
+                super(props); 
+                console.log('props',props);
+                // 只有在super内传递了props,才可以在constructor内通过this访问props
+                console.log('constructor',this.props);
+            }
+
+            render(){
+                console.log('render',this.props);
+                // 解构赋值获取所有的父组件传递的数据.
+                let {item,abc,data} = this.props;
+                return (
+                    <li>
+                        {item}-
+                        {abc}-
+                        {data}-
+                        <button>删除</button>
+                    </li>
+                )
+            }
+        }
+
+        class App extends React.Component{
+            constructor(){
+                super();
+                this.arr = [1111,2222,333];
+            }
+            render(){
+                return (
+                    <div>
+                        <h3>根组件</h3>
+                        <ul>
+                        {
+                            this.arr.map((item,i)=>(
+                                <Item item={item} abc='呵呵呵' data='9527' key={i}  />
+                            ))
+                        }
+                        </ul>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <button @click='fn'>修改</button>
+        <div>{{arr}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 数据驱动 -> 视图变化一定是通过数据变化引起的.(响应式数据)
+        // div的内容再变化.可以直接通过arr的变化来驱动.
+
+        // 直接操作数组的原生不会引起视图更新
+        // 直接修改length不会引起视图更新
+        // 使用不修改数组的方法操作数组,不会引起视图更新.
+
+        // 会修改数组的方法:push,pop,shift,unshift,splice,sort,reverse
+
+        // 把数组变成一个新数组,会更新视图吗?
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                arr:[1,2,3]
+            },
+            methods:{
+                fn(){
+                    // this.arr.push(4);
+                    // 修改数组的元素，不会引起视图更新
+                    // this.arr[3] = 4;
+                    // 修改数组的length，视图不更新。
+                    // this.arr.length = 0;
+                    // concat不会修改数组,因此视图不更新.
+                    // this.arr.concat([4,5]);
+
+                    // 变成新数组会导致视图更新
+                    // this.arr = [1,2,3,4];
+                    // 变成别的值会更新视图.
+                    // this.arr = 1000;
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

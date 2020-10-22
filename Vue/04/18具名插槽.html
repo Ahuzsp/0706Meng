@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 默认插槽,具名插槽
+
+        // 默认插槽:没有name属性的插槽.
+        // 具名插槽:有name属性的插槽.
+
+        // 可以通过具名插槽来对号入座复用时需要动态插入的不同html模板部分
+
+        const Item = {
+            template:`
+                <div>
+                    <h3>标题1111</h3>
+                    <slot name='b'></slot>
+                    <p>标题的段落内容</p>
+                    <slot name='a'></slot>
+                </div>
+            `,
+        }
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <div is='Item'>
+                        <button slot='a'>我是一个任性的button</button>
+                    </div>
+                    <div is='Item'>
+                        <input slot='b' type='button' value='我也是矫情的button' />
+                    </div>
+                </div>
+            `,
+            components:{Item}
+        }
+
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

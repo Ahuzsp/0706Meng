@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script>
+
+        // 响应式数据 -> 可以导致视图变化的vue数据.
+        // Vue是如何实现响应式的?
+        // 响应式 -> 数据变化时,直接更新视图.
+        // 如何知道Vue数据变化了?
+        //    Vue通过Object.defineProperty对data内的所有字段进行数据劫持(数据监听)
+        //    每当data内的数据发生变化时,就触发对应的setter函数更新视图.
+
+        let app = document.getElementById('app');
+
+        let obj = {
+            str:'hello Vue'
+        }
+
+        let val = obj.str;
+        // 默认渲染
+        app.innerText = val;
+
+        // Vue实现响应式效果的底层核心方法.
+        Object.defineProperty(obj,'str',{
+            get(){
+                return val
+            },
+            // 形参是新修改的值.
+            set(newValue){
+                val = newValue;
+                // str变化,更新对应的视图.
+                app.innerText = newValue;
+            }
+        })
+
+    </script>
+
+</body>
+</html>

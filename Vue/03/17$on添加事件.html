@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+        
+        // vue事件的$on可以无限绑定事件句柄 (和addEventListener一致)
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <h3>{{str}}</h3>
+                </div>
+            `,
+            data(){
+                return {str:''}
+            },
+            created(){
+                // 添加事件句柄1
+                this.$on('abc',()=>{
+                    console.log(100)
+                });
+                // 添加事件句柄2
+                this.$on('abc',()=>{
+                    console.log(200)
+                })
+            }
+        }
+
+        let vm = new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

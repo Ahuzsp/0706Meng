@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 这里是fn通过bind绑定了this,还是show绑定了this?
+        // 这里是fn绑定了this.不是show.
+        // obj1.fn = show.bind(obj1);
+
+        // bind返回的新函数在调用时(无论以何种方式调用)，this都指向bind的第一个参数。
+
+        let obj1 = {
+            name:'张三',
+            fn(){
+                console.log(this.name);
+            }
+        };
+
+        let obj2 = {name:'李四'};
+
+        // 给obj2添加一个fn属性,等于obj1的fn方法.
+        obj2.fn = obj1.fn;
+
+        // 把obj1的fn方法通过bind把this绑定到obj1
+        var fn = obj1.fn.bind(obj1);
+
+        obj1.fn.call(obj2); // 李四
+
+        // fn是通过bind返回的新函数。fn内的this永远指向obj1.
+        // fn'长得'和obj1.fn一样，但不是同一个函数。
+        fn(); // 张三
+        fn.call(obj2); // 张三
+        
+    </script>
+
+</body>
+</html>

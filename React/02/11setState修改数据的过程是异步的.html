@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // setState修改数据的过程是异步的.
+    // 如何指定数据修改完成了?
+    //      setState的第二个参数是一个回调函数,这个回调函数在数据修改完成时,自动触发
+
+    class App extends Component{
+        // num = 0
+        state = {
+            num:0
+        }
+        render(){          
+            return (
+                <Fragment>
+                    <button onClick={this.fn.bind(this)}>按钮</button>
+                    <div>{this.state.num}</div>
+                </Fragment>
+            )
+        }
+        fn(){
+            // 通过setState修改num
+            this.setState({
+                num:Math.random()
+            },()=>{
+                // num变化完成之后自动触发打印
+                console.log('回调内',this.state.num);
+            })
+            // setState之后打印num
+            console.log('回调外',this.state.num);
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

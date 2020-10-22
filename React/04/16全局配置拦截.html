@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch,Prompt} = ReactRouterDOM;
+        
+        // Prompt组件用于组件拦截.类似于Vue的beforeRouteLeave守卫
+        // Prompt是一个抽象组件，不会显示到视图上。
+        // Prompt的message属性的值可以是字符串也可以是函数
+        // message的函数return false就会跳转失败,return true可以正常跳转
+
+
+        class Home extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <h3>Home组件</h3>
+                    </Fragment>
+                )
+            }
+     }
+        
+        class News extends Component{
+			render(){
+				return <h3>News组件</h3>
+            }
+        }
+        
+        class Sport extends Component{
+			render(){
+				return <h3>Sport组件</h3>
+			}
+        }
+        
+        // 全局的拦截高阶组件
+        function HOCRoute(RouteComponent){
+            return class extends Component{
+                render(){                   
+                    return (
+                        <Fragment>
+                            <RouteComponent />
+                            <Prompt message={this.handler.bind(this)} />
+                        </Fragment>
+                    )
+                }
+                handler(location){
+                    console.log(this.props.location.pathname)
+                    return true               
+                }
+            }
+        }
+
+        const NewHome = HOCRoute(Home);
+        const NewNews = HOCRoute(News);
+        const NewSport = HOCRoute(Sport);
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <HashRouter>
+                            <NavLink to='/'>首页</NavLink>
+                            <NavLink to='/news'>新闻</NavLink>
+                            <NavLink to='/sport'>体育</NavLink>
+                            <Switch>
+                                <Route path='/' exact component={NewHome} />                        
+                                <Route path='/news' component={NewNews} />                        
+                                <Route path='/sport' component={NewSport} />
+                            </Switch>                        
+                        </HashRouter>
+                    </Fragment>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+
+	</script>
+</html>

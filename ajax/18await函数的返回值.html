@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // async和await是终极的异步编程解决方案.他们是Generator函数的语法糖.
+
+        function fn(msg,timer){
+            return new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    console.log(msg);
+                    // 每次定时器都随机生成一个随机数
+                    let num = Math.floor(Math.random()*5000);
+                    // 传到resolve内.这样可以通过await函数拿到这个number.
+                    resolve(num);
+                },timer)
+            })
+        }
+        
+        // await函数的返回值时resolve实参.
+
+        async function getTime(){
+            // num1是第一次异步操作的结果
+            let num1 = await fn('定时器1',1000);
+            console.log('num1',num1);
+            // num1作为第二次异步操作的参数.num2又可以作为第三次异步操作的参数.
+            let num2 = await fn('定时器2',num1);
+            console.log('num2',num2);
+            await fn('定时器3',num2);
+        }
+        
+        getTime();
+
+    </script>
+
+</body>
+</html>

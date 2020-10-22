@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        let Item = {
+            // 组件的html模板
+            template:`
+                <div @click='fn'>
+                    <h3>即时新闻</h3>
+                    <p>{{msg}}</p>
+                </div>
+            `,
+            data(){
+                return {
+                    msg:'contentListItem组件内容',
+                    arr:[1,2,3]
+                }
+            },
+            methods:{
+                fn(){
+                    console.log(1000)
+                }
+            }
+        }
+
+        // 根组件.
+        let App = {
+            template:`
+                <div id='app'>
+                    {{msg}}
+                    <Item @click.native='show' v-for='d in arr'></Item>
+                </div>
+            `,
+            data(){
+                return {
+                    msg:'App内的数据',
+                    arr:[1,2,3,4]
+                }                
+            },
+            methods:{
+                show(){
+                    console.log(2000);
+                }
+            },
+            components:{Item},
+        }
+        
+        let vm = new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}          
+        })
+
+
+    </script>
+
+</body>
+</html>

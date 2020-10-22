@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- 通过form发送请求.请求参数怎么写 -->
+
+    <!-- ajax是异步的.局部刷新. -->
+    <!-- form请求数据会刷新整个网页,用户体验不好,请求时同步的 -->
+    <!-- 现在一般都是登录的页面使用form表单 -->
+    <!-- 提交的数据默认是FormData格式 -->
+    <form action="http://localhost:8080/0525ajax03/php/1.post.php" method="post">
+        <input type="text" placeholder="用户名" name='username'>
+        <input type="text" placeholder="年龄" name='age'>
+        <input type="submit" value="提交">
+    </form>
+
+    <!-- 如果后端发送FormData的参数.但是又不能用form表单标签 -->
+
+    <input type="file" name="" id="">
+    <!-- 序列化字符串 -->
+    <button>哈哈哈</button>
+
+    <script src='js/axios.js'></script>
+    <script>
+
+        let oBtn = document.querySelector('button');
+        let oF = document.querySelector('[type="file"]');
+
+        // 全局的baseURL
+        axios.defaults.baseURL = 'http://tt.linweiqin.com/api/tt';
+        
+        oBtn.onclick = function(){
+
+            // 创建一个空的formData对象.
+            let fd = new FormData();
+
+            // 往这个空的formData对象内添加新的参数字段.
+            // fd.set('username','坤坤');
+            // fd.set('age','33');
+
+            fd.append('file',oF.files[0]);
+
+            // 通过文本框获取的图片数据
+            console.log(oF.files[0]);
+
+            // get就是访问这个formData对象内的某个参数字段.
+            console.log(fd.get('file'));
+
+            axios.post('/aliossUpload',fd)
+            .then((res)=>{
+                console.log(res.data)
+            })
+
+        }
+
+    </script>
+
+</body>
+</html>

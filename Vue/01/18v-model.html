@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <input type="text" v-model.lazy='str'>
+        <div>{{str}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // Vue的双向数据绑定原理.
+        //  1:数据驱动的原理.(响应式的原理)
+        //  2:v-model的原理.
+
+        // v-model用于实现vue的双向数据绑定。
+        // 数据驱动：数据变化导致视图变化。
+        // 如何实现视图变化驱动数据变化? v-model实现.
+
+        // 不管任何的框架,双向数据绑定只能通过表单元素来实现.
+        // 因此v-model只能用再表单元素上.
+
+        // 例如：用户在文本框中输入内容，把输入的内容变成Vue的数据。
+        // v-model='str' -> 表单元素输入的内容跟新str数据的值.
+        // lazy修饰符的作用就是在失焦后更新数据.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                str:'默认数据'
+            }
+        })
+
+    </script>
+
+</body>
+</html>

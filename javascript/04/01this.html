@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 严格模式
+        // 严格模式下，禁止this指向window。。(全局函数不属于某个对象,因此this指向undefined)
+        'use strict'
+        
+        // this指向:谁调用它,它就指向谁。(不严谨,会误导人)
+        // this指向:哪个对象调用this所在的函数,那this就指向这个对像.
+        // 怎么样才算调用?
+        //     函数都必须通过某个对象来调用.
+        //     show(),fn(),add()都是简写.省略了函数前面的对象.
+        
+        // 如何理解:
+        //    某个对象拥有某个方法(函数),那么这个方法一般情况下只能通过它的拥有者来调用.
+        //    函数要调用，一定需要通过自己的所有者（某个对象）才有资格调用。
+
+        // this正常情况就是在寻找函数的所有者。
+
+        // 对象 -> 英雄
+        // 函数 -> 技能
+
+        // 技能靠英雄发动.函数靠对象调用.
+        // this的指向 -> 找谁在用这个技能。
+
+        // call,apply就是偷技能.偷过来了之后就可以临时使用这个技能.
+        // A英雄自奶技能fn, B偷了这个技能.B使用fn技能，是奶自己，而不是奶A。
+
+        let obj1 = {};
+        let obj2 = {};
+
+        obj1.fn = function(){
+            console.log(this);
+        }
+
+        // obj1可以调用自己的方法
+        // obj1.fn(); // this指向obj1.
+        // obj2没有fn方法，因此它不能调用fn.       
+        // obj2.fn();
+
+        // obj2调用一个自己没有的方法。（用obj2调用obj1的fn方法。）
+        // obj1.fn.call(obj2); // this指向obj2
+
+        function fn(){
+            show();
+        }
+
+        function show(){
+            console.log(this); // this指向window，而不是fn。
+        }
+
+        fn();
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        let {Fragment} = React;
+        let msg = 'hello React';
+
+        // React修改数据后，如何更新视图？
+        let Vnode = ( 
+            <Fragment>
+                <button onClick={fn}>按钮</button>
+                <div>{msg}</div>
+            </Fragment>         
+        );
+
+        function fn(){
+            // 1:数据变化了
+            msg = Math.random();
+            // 2:替换虚拟节点.此时Vnode内的msg是修过之后的msg
+            Vnode = ( 
+                <Fragment>
+                    <button onClick={fn}>按钮</button>
+                    <div>{msg}</div>
+                </Fragment>         
+            );
+            // 重新挂载新的Vnode.
+            ReactDOM.render(Vnode,document.getElementById('root'));
+        }
+
+        // 挂载Vnode到#root上。
+        ReactDOM.render(Vnode,document.getElementById('root'));
+
+        // Vue的视图更新:
+        //    1:数据变化了
+        //    2:通过diff算法更新虚拟节点
+        //    3:更新真实节点
+
+    </script>
+
+</body>
+</html>

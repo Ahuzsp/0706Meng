@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <a href="#">首页</a>
+        <a href="#">新闻</a>
+        <a href="#">攻略</a>
+        <div>
+            <h3>首页</h3>
+            <p>首页的内容..<span>2018-07-22</span></p>
+        </div>
+        <div>
+            <h3新闻</h3>
+            <p>新闻的内容..<span>2018-07-23</span></p>
+        </div>
+        <div>
+            <h3>攻略</h3>
+            <p>攻略的内容..<span>2018-07-24</span></p>
+        </div>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script src="../js/vue-router.js"></script>
+<script>
+
+    // 动态路由:模板相同,内容不同的组件封装成一个组件.然后在路由跳转时传入对应的组件的内容
+
+    const Home = {
+        template:`
+            <div>
+                <h3>{{title}}</h3>
+                <p>{{content}}..<span>{{date}}</span></p>
+            </div>
+        `,
+        data(){
+            return {
+                data:{
+                    '/':['首页组件','首页的内容..','2018-07-22'],
+                    '/news':['新闻组件','新闻的内容..','2018-07-22'],
+                    '/guide':['攻略','攻略的内容..','2018-07-22']
+                }
+            }
+        },
+        // 计算属性什么时候触发
+        computed:{
+            title(){
+                return this.fn(0);
+            },
+            content(){
+                return this.fn(1);
+            },
+            date(){
+                return this.fn(2);
+            }
+        },
+        methods:{
+            fn(i){               
+                let path = this.$route.path;
+                return this.data[path][i]
+            }
+        }
+    }
+
+    const router = new VueRouter({
+        routes:[
+            {
+                path:'/',
+                component:Home
+            },{
+                path:'/news',
+                component:Home
+            },{
+                path:'/guide',
+                component:Home
+            }
+        ]
+    })
+
+    const App = {
+        template:`
+            <div id='app'>
+                <router-link to='/'>首页</router-link>
+                <router-link to='/news'>新闻</router-link>
+                <router-link to='/guide'>攻略</router-link>
+                <router-view />
+            </div>
+        `
+    }
+
+    new Vue({
+        router,
+        render:h=>h(App),
+        components:{App}
+    }).$mount('#app')
+    
+    
+</script>
+</html>

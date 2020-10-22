@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+		</div>
+	</body>
+	<script src="../js/react.development.js"></script>
+	<script src="../js/react-dom.development.js"></script>
+	<script src="../js/babel.js"></script>
+	<script type="text/babel">
+		
+		// react列表渲染的key和Vue一样,需要更新前和更新后同级的虚拟节点的key不一样
+        // 这样才不会采用就地更新的策略
+		
+		const { Component,Fragment } = React;
+
+		class Item extends Component{
+			render(){
+				let { i,item,del,up,down } = this.props;
+				return (
+					<li>
+						<span>序号:{i+1}-</span><span>{item}</span>
+                        <input type='text' />
+						<input type="button" onClick={up} value="上移"  />					
+						<input type="button" onClick={down} value="下移"  />
+						<input type="button" onClick={del} value="删除" />
+					</li>
+				)
+			}
+		}
+
+		class App extends Component{
+
+			arr = [
+                {content:111,id:1},
+                {content:222,id:2},
+                {content:333,id:3},
+            ]
+
+			render(){
+				return (
+					<Fragment>
+						<ul>
+						{
+							this.arr.map((item,i)=>(
+								<Item 
+									key={item.id} 
+									item={item.content} 
+									i={i} 
+									del={this.del.bind(this,i)}
+									up={this.up.bind(this,i)}
+									down={this.down.bind(this,i)}
+								/>
+							))
+						}
+						</ul>
+					</Fragment>
+				)
+			}
+			// 删除
+			del(i){
+				this.arr.splice(i,1);
+				this.forceUpdate();
+			}
+			// 上移
+			up(i){
+				if(i!=0){
+					[this.arr[i],this.arr[i-1]] = [this.arr[i-1],this.arr[i]];
+					this.forceUpdate();
+				}				
+			}
+			down(i){
+				if(i!=this.arr.length-1){
+					[this.arr[i],this.arr[i+1]] = [this.arr[i+1],this.arr[i]];
+					this.forceUpdate();
+				}
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'))
+
+	</script>
+</html>
+		

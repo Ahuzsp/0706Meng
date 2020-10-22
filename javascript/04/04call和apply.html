@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let obj1 = {name:'张三'};
+        let obj2 = {name:'李四'};
+
+        obj1.fn = function(str){
+            console.log(this.name,str);
+            return 200;
+        };
+
+        // call和apply可以让一个对象临时调用一个不属于自己的方法
+        // 用了call和apply,this指向调用方法的对象,而不是拥有方法的对象.
+
+        // call和apply的区别就是传参的方式不一样.apply传递的是数组.
+        // call和apply的返回值就是fn的返回值。
+
+        // obj1.fn();// 张三
+        // obj1.fn.call(obj2);// 李四
+        // obj1.fn.apply(obj2);// 李四
+
+        // obj1.fn('真棒');// 张三真棒
+        // obj1.fn.call(obj2,'真棒');// 李四真棒
+        // obj1.fn.apply(obj2,['真棒']);// 李四真棒
+
+        let res1 = obj1.fn();//200
+        let res2 = obj1.fn.call(obj2); //200
+
+        let arr = [1,2,3,6234,12,23,124,52,34];
+
+        // ...是es6的知识，有兼容性问题
+        // let num = Math.max(...arr);
+
+        // 通过apply来强行把数组传递给max。
+        let num = Math.max.apply(Math,arr);
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div>div{
+            float: left;
+            width: 100px;
+            height: 100px;
+            border:1px solid #000;
+            margin-left:1px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='app'>
+        <div @click='add1'>{{num1}}</div>       
+        <div @click='add2'>{{num2}}</div>       
+        <div @click='add3'>{{num3}}</div>             
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 点击第一个div,div内显示当前的点击次数,再次点击,次数+1
+        // 点击第二个div,div内显示当前的点击次数,再次点击,次数+1
+        // 点击第三个div,div内显示当前的点击次数,再次点击,次数+1
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                num1:0,
+                num2:0,
+                num3:0
+            },
+            methods:{
+                add1(){
+                    this.num1++
+                },
+                add2(){
+                    this.num2++
+                },
+                add3(){
+                    this.num3++
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!--page/component/list/list.wxml-->
+<!--商品列表页-->
+<view class="main">
+    <view class="banner">
+     <swiper autoplay="true" interval="1000" duration="800">
+        <block wx:for="{{pageData.bannerList}}"  wx:key="{{index}}">
+          <swiper-item>
+            <image src="{{item}}" class="slide-image" width="100%"/>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+
+    <view class="list-box">
+      <block wx:for="{{pageData.shopList}}" wx:key="{{index}}">
+          <view class="newest-list">
+              <navigator url="../details/details">
+                  <image src="{{item.imageUrl}}"></image>
+                  <view class="newest-text"><text>{{item.title}} {{item.count}}{{item.unit}}</text></view>
+                  <view class="newest-text"><text>￥ {{item.price}}</text></view>
+              </navigator>
+          </view>
+        </block>
+    </view>
+</view>

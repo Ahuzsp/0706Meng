@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <input type="checkbox" v-model='str'>
+        <input type="checkbox" v-model='flag'>
+        <div v-if='flag'>哈哈哈我不想走</div>
+        <div>{{str}}</div>
+        <hr>
+        <h3>请选择你稀饭的水果</h3>
+        <input type="checkbox" v-model='arr' value='苹果'>苹果
+        <input type="checkbox" v-model='arr' value='香蕉'>香蕉
+        <input type="checkbox" v-model='arr' value='山竹'>山竹
+        <div>{{arr}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // v-model可以绑定input输入框,textarea
+        // 还可以绑定checkbox,radio,select
+
+        // 给checkbox绑定一个数据,这个数据会在操作复选框的过程中变成布尔值.
+        // 应该给checkbox绑定布尔值的数据.
+
+        // 给checkbox绑定一个数组,则可以给数组添加或者删除元素.添加和删除的元素就是checkbox的value
+
+        new Vue({
+            el:'#app',
+            data:{
+                str:'hello Vue',
+                flag:true,
+                arr:[]
+            }
+        })
+
+    </script>
+
+</body>
+</html>

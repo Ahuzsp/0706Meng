@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 赋值的本质就是复制。
+        // 因为变量内存储的东西不一样，则复制的东西就不一样。
+
+        // 基本类型存的是值本身，赋值时，赋值的就是值本身。（1个值变成了2个值）
+        let x = 10;
+        let y = 20;
+        // 把y的值复制一份，再赋值给x。
+        x = y;
+
+        let oYm = {name:'杨幂'};
+        let oCy = {name:'超越'};
+
+        // oCy变量存储的是一个对象的地址，因此复制一份这个地址，存到oYm。(1个地址变成了2个地址)(对象本身没有变)
+        oYm = oCy;
+        // 修改名片还是修改背后的人。(有点就是改人)
+        oYm.name = '迪丽热巴';
+
+        console.log(oYm.name); // 迪丽热巴
+        console.log(oCy.name); // 迪丽热巴
+
+        // 创建一个新的名片，指向堆中一个新的对象。(没点就是改名片)
+        oYm = {name:'刘涛'};
+
+        console.log(oYm.name); // 刘涛
+        console.log(oCy.name); // 迪丽热巴
+        
+        // 值本身 -> 杨幂
+        // 地址 -> 杨幂的名片
+
+    </script><!--  -->
+
+</body>
+</html>

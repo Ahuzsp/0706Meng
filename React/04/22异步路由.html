@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch} = ReactRouterDOM;
+        
+        class Home extends Component{
+			render(){
+				return <h3>Home组件</h3>
+			}
+        }
+        
+        class News extends Component{
+			render(){
+				return <h3>News组件</h3>
+			}
+        }
+        
+        class Sport extends Component{
+			render(){
+				return <h3>Sport组件</h3>
+			}
+        }
+        
+        class Login extends Component{
+			render(){
+				return (
+                    <div>
+                        <h3>登录</h3>
+                        <button onClick={this.guestLogin}>普通用户登录</button>
+                        <button onClick={this.editorLogin}>管理员登录</button>
+                    </div>
+                )
+            }
+            
+            guestLogin(){
+                routes.push({
+                    path:'/home',
+                    component:Home,
+                    content:'首页',
+                });
+                ReactDOM.render(<App />,document.getElementById('root'));
+            }
+
+            editorLogin(){
+                routes.push({
+                    path:'/home',
+                    component:Home,
+                    content:'首页',
+                },{
+                    path:'/news',
+                    component:News,
+                    content:'新闻',
+                },{
+                    path:'/sport',
+                    component:Sport,
+                    content:'体育',
+                })
+                ReactDOM.render(<App />,document.getElementById('root'));
+            }
+        }
+        
+        class NotFound extends Component{
+			render(){
+				return (
+                    <div>
+                        <h3>NotFound404</h3>
+                    </div>
+                )
+            }
+		}
+
+        const routes = [
+            {
+                path:'/login',
+                component:Login,
+                content:'登录',
+            },{
+                path:'/404',
+                component:NotFound,
+                content:'404',
+            }
+        ];
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <HashRouter>
+                            {
+                                routes.map((item,i)=>(
+                                    <NavLink to={item.path}>{item.content}</NavLink>
+                                ))
+                            }
+                            <Switch>
+                            {
+                                routes.map((item,i)=>(
+                                    <Route 
+                                        key={item.path} 
+                                        path={item.path} 
+                                        component={item.component} 
+                                    />
+                                ))
+                            }
+                            </Switch>                        
+                        </HashRouter>
+                    </Fragment>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+
+	</script>
+</html>

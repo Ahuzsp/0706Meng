@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        // react的组件有3种
+        //    1:函数组件.
+        //    2:createClass组件.(配置式)
+        //    3:class组件(ES6的class).
+
+        // 组件的方法,就是class类的公有方法
+        // 组件内的自定义方法内的this默认不指向当前组件实例.(指向undefined)
+        // 那如何在组件内访问当前组件的数据和其他方法?
+
+        class App extends React.Component{
+            constructor(){
+                super();
+                // 私有属性(组件数据)
+                this.msg = '根组件内容'
+            }
+            render(){
+                return (
+                    <div>
+                        <h3>根组件</h3>
+                        <button onClick={this.fn.bind(this)}>按钮</button>
+                        <div>{this.msg}</div>
+                    </div>
+                )
+            }
+            // 组件方法就是class类的公有方法
+            fn(){
+               console.log(this);
+               // 修改当前组件的msg数据
+               this.msg = Math.random();
+               // 重新挂载挂载.(可以刷新视图)
+               // ReactDOM.render(<App />,document.getElementById('root'))
+               
+               // 强制刷新当前组件
+               this.forceUpdate();
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

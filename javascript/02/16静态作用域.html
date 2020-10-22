@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 作用域链是调用时才确定，还是声明时就确定了？
+        // js的作用域链跟在哪里调用没关系。是在声明的时候确定的。（静态作用域,词法作用域）
+
+        let x = 20;
+
+        function fn(){
+            let x = 10;
+            add(); // fn -> 全局
+        }
+
+        function add(){
+            // 我们应该分析声明时候的作用域链，而不是调用时的作用域链。
+            console.log(x);// add -> 全局 20
+        }
+
+        fn();
+
+    </script>
+
+</body>
+</html>

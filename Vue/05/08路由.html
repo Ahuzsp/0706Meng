@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src='js/vue-router.js'></script>
+    <script>
+
+        /* 
+            路由用来干嘛 -> 实现单页应用.(SPA)
+                单页应用:一个应用就一个html文件,其他分页做成组件.
+                路由实现单页应用的基本原理:
+                    监听url的哈希值变化,路由会根据哈希值来动态切换匹配路由组件。
+                    每当哈希值变化时，Vue会自动切换显示对应的路由组件。
+
+            路由大纲:
+                1:基本路由
+                2:嵌套路由
+                3:路由参数,动态路由，路由传参
+                4:路由守卫
+                5:异步路由.(权限)
+            
+            如何监听路由跳转 
+        */
+
+        /* 
+            写路由：
+                1：实例化路由。
+                    写路由表 （路径和路由组件的对应表）
+                2：挂载 
+        */
+
+        const Home = {
+            template:`
+                <div>首页</div>
+            `
+        }
+
+        const News = {
+            template:`
+                <div>新闻</div>
+            `
+        }
+
+        const Sport = {
+            template:`
+                <div>体育</div>
+            `
+        }
+
+        const router = new VueRouter({
+            // 路由模式,默认是哈希模式.
+            // mode:'hash',
+            // mode:'history',
+
+            routes:[
+                {
+                    path:'/home',
+                    component:Home
+                },{
+                    path:'/news',
+                    component:News
+                },{
+                    path:'/sport',
+                    component:Sport
+                },{
+                    path:'/',
+                    redirect:'/home'
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <router-link to='/home'>首页</router-link>
+                    <router-link to='/news'>新闻</router-link>
+                    <router-link to='/sport'>体育</router-link>
+                    <router-view />
+                </div>
+            `
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

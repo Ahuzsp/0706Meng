@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #wrap{
+            display:flex;
+        }
+        .aside{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            flex-grow:0;
+            flex-shrink:0;
+        }
+        .article{
+            height: 200px;
+            background-color: blue;
+            flex-grow:1
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='wrap'>
+        <div class='aside'></div>
+        <div class='article'>
+            我不想被盖住
+        </div>
+    </div>
+
+</body>
+</html>

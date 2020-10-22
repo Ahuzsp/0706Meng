@@ -1,0 +1,3 @@
+<!--components/box/box.wxml-->
+<view>test传递的数据：{{str}}</view>
+<view>item传递的数据：{{msg}}</view>

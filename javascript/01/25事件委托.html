@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>111</li>
+        <li>222</li>
+        <li>333</li>
+        <li>444</li>
+        <li>555</li>
+    </ul>
+
+    <script>
+
+        // 点击li让li变成红色
+
+        let aLi = document.querySelectorAll('li');
+        let oUl = document.querySelector('ul');
+
+        // 遍历给5个li添加事件，这样做性能不好。
+        // 如果有10000个li，就得循环10000次。
+        for(let i=0;i<aLi.length;i++){
+            aLi[i].onclick = function(){
+                this.style.background = 'red';
+            }
+        }
+
+        // 如何使得不管有多少个li，事件只需要添加一次？
+        // 事件委托 -> 给父元素添加事件，处理子元素的事件逻辑。性能更好。
+        // 事件委托的原理：通过事件冒泡来实现。
+
+        oUl.onclick = function(ev){
+            // 如果点击的是li，就变红。
+            if(ev.target.nodeName === 'LI'){
+                ev.target.style.background = 'red';
+            }  
+            
+            // 逻辑与相当于if判断
+            // ev.target.nodeName === 'LI' && (ev.target.style.background = 'red');
+
+            // 三目运算符相当于if else
+        }
+
+    </script>
+
+</body>
+
+</html>

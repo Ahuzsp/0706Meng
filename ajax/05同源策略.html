@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="js/axios.js"></script>
+    <script>
+
+        // 网络请求:
+        //    客户端请求服务器.
+        //    客户端有url,服务器有url
+        //    如果客户端的url和服务器的url的origin不一样就不能进行数据请求
+
+        // 跨域报错.
+        // 从A请求B时被紧张了.原因是B上没有Access-Control-Allow-Origin的配置.
+
+        // Access to XMLHttpRequest at 'http://localhost:8080/0525ajax03/php/getList.php' 
+        // from origin 'http://127.0.0.1:5500' has been blocked by CORS policy: 
+        // No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+        // 服务器地址的origin:http://localhost:8080
+        // 客户端地址的origin:http://127.0.0.1:5500
+
+        // 因为两个url的origin不一样,因此不让请求.
+        axios.get('http://localhost:8080/0525ajax03/php/getList.php')
+        .then((res)=>{
+            console.log(res);
+        })
+
+        // 同源策略 (web标准内的一个安全机制)
+        //   两个url的orgin必须相同才可以共享数据.否则不允许共享数据.
+        //   origin的3个组成部分,有其中一个不同,都不是相同的origin.
+
+        // 跨域 -> 不同origin(源)的两个文件企图共享数据.
+        // let num = localStorage.getItem('num');
+        // console.log(num);
+
+        // 面试题:
+        //   你怎么理解跨域的?
+        //   跨域怎么解决?
+        //      用ajax是永远解决不了跨域的.因为ajax请求必须遵循同源策略.
+        //      跨域解决的前提条件就是后端允许你跨域.
+        //            1:代理. (ng反向代理).(纯后端)
+        //            2:cors. (后端配置Access-Control-Allow-Origin) (纯后端)
+        //            3:jsonp. (前端后端都需要处理)(过时了)
+        //               jsonp的原理 -> 利用script标签的src可以跨域访问文件的原理.
+        //               过程:
+        //                    1:前端声明一个使用跨域数据的函数.
+        //                    2:通过script标签引入跨域文件.
+        //                    3:后端需要调用前端声明的函数.并且传入跨域数据.
+
+
+
+
+    </script>
+
+</body>
+</html>

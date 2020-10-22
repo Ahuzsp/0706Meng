@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+    <script>
+
+        // 如果多个组件A集合需要使用相同的数据。(需要同步状态)
+        //  目标:把数据和数据的修改方法都放到同一个地方
+        //  1:使用反向数据流.(比较繁琐,因为需要把数据和方法传递给子组件)
+        //  2:使用Vuex状态管理器
+
+        // 使用Vuex进行状态管理
+        //    1:实例化store.
+        //    2:挂载store.
+        //    3:获取state内的数据. (推荐使用计算属性获取)
+        //    4:如果要修改数据,通过actions和mutations修改.
+
+        // Vuex实例化.
+        const store = new Vuex.Store({
+            // 多个组件共享的数据
+            // state内的数据也会被Vue劫持,这些数据是有响应式效果的.
+            state:{
+                arr:[1,2,3]
+            },
+            // 对于共享数据的修改.
+            mutations:{
+                // 形参就是当前store的state数据
+                del(state,i){
+                    state.arr.splice(i,1);
+                }
+            }
+        })
+
+        const listItem = {
+            template:`
+                <li>
+                    {{item}}
+                    <button @click='fn'>删除</button>
+                </li>
+            `,
+            props:['item','i'],
+            methods:{
+                fn(){
+                    this.$store.commit("del",this.i)
+                }
+            }
+        }
+
+        const List = {
+            template:`
+                <ul>
+                    <list-item 
+                        :item='d' 
+                        v-for='(d,i) in arr'
+                        :i='i'
+                    ></list-item>
+                </ul>
+            `,
+            components:{listItem},
+            computed:{
+                arr(){
+                    // 获取Vuex的state内的数据.
+                    return this.$store.state.arr
+                }
+            }
+        }
+
+        const App = {
+            template:`
+                <div>
+                    <List></List>
+                    <List></List>
+                </div>
+            `,
+            components:{List},
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App},
+            // 挂载store
+            store
+        })
+
+
+    </script>
+
+</body>
+</html>

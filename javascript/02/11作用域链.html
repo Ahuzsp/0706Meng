@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 作用域链：确保变量的有序访问。
+        // 地点链：广东深圳南山大冲国际中心13楼1311教室泽平
+
+        // 变量查找：（如何确定变量的身份）
+        //    1：写出变量所在代码行的作用域链 （从里往外）
+        //    2：顺着个作用域链往上查找，查找变量声明，如果查找到，就停止查找
+
+        let x = 300;
+
+        function guandong(){
+            function shenzhen(){                
+                function nanshan(){
+                    // 顺着作用域查找x的变量，确定这里的x是shenzhen作用域内的x。
+                    x -= 100; // nanshan-> shenzhen -> guandong -> 全局作用
+                }
+                let x = 100;
+            }
+            let x = 200;
+        }
+
+    </script>
+
+</body>
+</html>

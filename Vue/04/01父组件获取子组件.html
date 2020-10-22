@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 可以通过vm.$children获取子组件,从而获得子组件数据
+        // 可以通过vm.$parent获取父组件,从而获得父组件数据
+
+        // 理论上以上两种属性也可以实现数据通信.但是作者不推荐使用.
+        // 这两个属性是应急API.会让组件的复用性变差。后期会难以维护。
+        // 这两个属性类似于硬编码。
+
+        const Item = {
+            template:`<div>111111</div>`,
+            data(){
+                return {name:'Item'}
+            },
+            created(){
+                // 获取父组件
+                console.log(this.$parent.name);
+            }
+        }
+
+        const App = {
+            template:`<div><Item /></div>`,
+            components:{Item},
+            mounted(){
+                // 获取子组件列表,$children是一个数组
+                // console.log(this.$children);
+                console.log(this.$children[0].name);
+            },
+            data(){
+                return {name:'App'}
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+
+    </script>
+
+</body>
+</html>

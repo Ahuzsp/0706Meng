@@ -1,0 +1,14 @@
+<!--pages/test/test.wxml-->
+<view>
+  <block wx:for="{{arr}}" wx:key='*this'>
+    <list-item bindmyevent='del' item='{{item}}' data-i='{{index}}'>
+      <box str='{{msg}}' />
+    </list-item>
+  </block>
+</view>
+<view>
+  <children>  
+    <text slot='a'>插槽的文本内11111</text>
+    <text slot='b'>插槽的文本内22222</text>
+  </children>  
+</view>

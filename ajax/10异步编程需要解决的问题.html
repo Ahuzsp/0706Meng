@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // Promise解决了什么问题？
+        // async和await解决了什么问题？
+
+        // Promise和async都是一些异步编程的解决方案。(如何把异步的代码写成同步的形式)
+
+        // 多个异步排队执行，应该怎么写代码。
+
+        // 定时器1在1秒后开启定时器2,定时器2在2秒后开启定时器三。
+
+        // 回调地狱 -> 难写,难以理解
+        // setTimeout(()=>{
+        //     console.log('定时器1');               
+        //     setTimeout(()=>{
+        //         console.log('定时器2')
+        //         setTimeout(()=>{
+        //             console.log('定时器3')
+        //         },3000)
+        //     },2000)
+        // },1000);
+        
+        // 异步操作没有代码阻塞,因此3个定时器是同时开始计时.
+        setTimeout(()=>{
+            console.log('定时器1')
+        },1000);
+
+        setTimeout(()=>{
+            console.log('定时器2')
+        },2000);
+
+        setTimeout(()=>{
+            console.log('定时器3')
+        },3000)
+
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src='js/vue-router.js'></script>
+    <script>
+
+        const Home = {
+            template:`
+                <div>首页</div>
+            `
+        }
+
+        const News = {
+            template:`
+                <div>新闻</div>
+            `
+        }
+
+        const Sport = {
+            template:`
+                <div>体育</div>
+            `
+        }
+
+        const Login = {
+            template:`
+                <div>登录</div>
+            `
+        }
+
+        const routes = [
+            {
+                path:'/home',
+                component:Home
+            },{
+                path:'/news',
+                component:News
+            },{
+                path:'/sport',
+                component:Sport
+            },{
+                path:'/',
+                redirect:'/home'
+            }
+        ]
+
+        const router = new VueRouter({
+            // 路由模式,默认是哈希模式.
+            // mode:'hash',
+            // mode:'history',
+
+            routes
+        })
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <router-link to='/home'>首页</router-link>
+                    <router-link to='/news'>新闻</router-link>
+                    <router-link to='/sport'>体育</router-link>
+                    <button @click='addRoute'>多加一个</button>
+                    <router-view />
+                </div>
+            `,
+            methods:{
+                addRoute(){
+                    routes.push({
+                        path:'/login',
+                        component:Login
+                    });
+
+                    this.$router.addRoutes([...routes]);
+
+                    console.log(this.$router);
+                }
+            }
+        }
+        
+        let vm = new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

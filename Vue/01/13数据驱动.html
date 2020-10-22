@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div>div{
+            float: left;
+            width: 100px;
+            height: 100px;
+            border:1px solid #000;
+            margin-left:1px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='app'>
+        <div @click='add(i)' v-for='(num,i) in arr'>{{num}}</div>                
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 3个div对应3个数组元素，对号入座操作数组元素驱动视图更新。
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+               arr:[0,0,0]
+            },
+            methods:{
+                add(i){
+                    // 获取元素
+                    let num = this.arr[i];
+                    // 通过splice修改元素。
+                    this.arr.splice(i,1,num+1);
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

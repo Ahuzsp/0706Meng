@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+    <script>
+
+        // mutations和actions的区别:
+        //    mutations内不能有异步.actions内可以.
+
+        // 描述一下Vuex的数据流.
+        // Vue视图 -> 触发actions -> 触发mutations -> 修改state -> 响应式更新到视图
+        
+        // Vuex的常用选项有哪些?
+        //    strict,state,mutations,actions,getters,module
+
+        // Vuex实例化.
+        const store = new Vuex.Store({
+            strict:true,
+            state:{
+                count:10,
+                price:20
+            },
+            // Vuex的计算属性.通过state内的数据计算而来.
+            getters:{
+                total(state){
+                    return state.price * state.count
+                }
+            }
+        })
+
+        const List = {
+            template:`
+                <ul>
+                    <div>总价:{{total}}</div>
+                </ul>
+            `,
+            computed:{
+                count(){
+                    return this.$store.state.count
+                },
+                price(){
+                    return this.$store.state.price
+                },
+                total(){
+                    // 获取Vuex的计算属性.
+                    return this.$store.getters.total
+                }
+            }
+        }
+
+        const App = {
+            template:`
+                <div>
+                    <List></List>
+                    <List></List>
+                </div>
+            `,
+            components:{List},
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App},
+            // 挂载store
+            store
+        })
+
+
+    </script>
+
+</body>
+</html>

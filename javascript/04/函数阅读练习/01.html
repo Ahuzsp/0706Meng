@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let y = 20;
+
+        function fn(x){
+            return add(x+y)
+        }
+
+        function add(x){
+            return x + 3
+        }
+
+        let num = fn(y*2);
+
+        // 打印什么
+        console.log(num);
+
+        // 1: y = 20 （全局的y）
+
+        // 把fn(y*2)的返回值赋值给num
+        // fn(y*2)的返回值是fn内return 的值。fn内return 的值是add(x+y)
+        // add(x+y)的值是add内return 的值。add内return 的值是 x + 3;
+        // num的值就是x + 3;
+
+        // x是add的形参，x的值取决于add调用，add调用时的实参是
+        // x+y (x是fn的x，40，y是全局的y，20)
+        // y*2 (y是全局的y 20)
+
+        // 2：num = fn(y*2); 
+        //     返回 add(x+y)
+        //         返回 x + 3 （add的形参）
+        // 3：打印num
+
+    </script>
+
+</body>
+</html>

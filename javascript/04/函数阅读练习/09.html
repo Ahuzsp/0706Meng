@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        var x = 5;
+
+        function P(y){
+            this.x = x + y
+        }
+
+        function S(x){
+            this.y = x * 2;
+            this.x = x + new P(this.y).x;
+        }
+
+        let oP = new P(x);
+        let oS = new S(x);
+
+        P.prototype.fn = function(x,o){
+            return this.x + x + o.x
+        }
+
+        var fn = S.prototype.fn = oP.fn;
+
+        let num = oS.fn(oP.x, oP) + oP.fn(oS.x, oP) + fn.call(oP, oS.x, window);
+
+        // 打印什么
+        console.log(num);
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <select @change='saveCountry' v-model='country'>
+            <option :value="item.AREA_NAME" v-for='item in arr1'>
+                {{item.AREA_NAME}}
+            </option>
+        </select>
+        <select @change='saveCity' v-model='city'>
+            <option :value="item.AREA_NAME" v-for='item in arr2'>
+                {{item.AREA_NAME}}
+            </option>
+        </select>
+        <select v-model='district'>
+            <option :value="item.AREA_NAME" v-for='item in arr3'>
+                {{item.AREA_NAME}}
+            </option>
+        </select>
+        
+        <div>省：{{country}} 市：{{city}} 区：{{district}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 3个数组驱动
+
+        let info = [
+            {
+                index: 1,
+                AREA_NAME: '广东',
+                city: [
+                    {
+                        index: 1,
+                        AREA_NAME: '深圳市',
+                        district: [
+                            {
+                                index: 1,
+                                AREA_NAME: '宝安区'
+                            },
+                            {
+                                index: 2,
+                                AREA_NAME: '南山区'
+                            },
+                            {
+                                index: 3,
+                                AREA_NAME: '福田区'
+                            }
+                        ]
+                    },{
+                        index: 1,
+                        AREA_NAME: '广州市',
+                        district: [
+                            {
+                                index: 1,
+                                AREA_NAME: '白云区'
+                            },
+                            {
+                                index: 2,
+                                AREA_NAME: '青秀区'
+                            },
+                            {
+                                index: 3,
+                                AREA_NAME: '崇文区'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                index: 2,
+                AREA_NAME: '河北',
+                city: [
+                    {
+                        index: 2,
+                        AREA_NAME: '石家庄市',
+                        district: [
+                            {
+                                index: 4,
+                                AREA_NAME: '长安区'
+                            },
+                            {
+                                index: 5,
+                                AREA_NAME: '桥东区'
+                            },
+                            {
+                                index: 6,
+                                AREA_NAME: '桥西区'
+                            }
+                        ]
+                    },
+                    {
+                        index: 3,
+                        AREA_NAME: '唐山市',
+                        district: [
+                            {
+                                index: 7,
+                                AREA_NAME: '路南区'
+                            },
+                            {
+                                index: 8,
+                                AREA_NAME: '路北区'
+                            },
+                            {
+                                index: 9,
+                                AREA_NAME: '古冶区'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+        
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                arr1:info,
+                arr2:info[0].city,
+                arr3:info[0].city[0].district,
+                country:'广东',
+                city:'深圳市',
+                district:'宝安区',
+            },
+            methods:{
+                saveCountry(ev){
+
+                    // console.log(ev.target.selectedIndex);
+                    // let i = ev.target.selectedIndex;
+
+                    // 查找所选项的下标
+                    let i = this.findIndex(this.arr1,'country');
+
+                    // 更新城市数组
+                    this.arr2 = info[i].city;
+                    // 更新区数组
+                    this.arr3 = info[i].city[0].district;
+                    // 更新显示的城市
+                    this.city = info[i].city[0].AREA_NAME;
+                    // 更新显示的区
+                    this.district = info[i].city[0].district[0].AREA_NAME;
+                    
+                },
+                saveCity(ev){
+
+                    // 查找所选项的下标
+                    let i = this.findIndex(this.arr2,'city');
+
+                    // 选中的城市在城市列表中的下标.
+                    // let i = ev.target.selectedIndex;
+
+                    // 对应城市的区
+                    this.arr3 = this.arr2[i].district;
+
+                    // 更新显示的区
+                    this.district = this.arr2[i].district[0].AREA_NAME;
+                },
+                findIndex(arr,key){
+                    return arr.findIndex((item,i)=>{
+                        return item.AREA_NAME == this[key]
+                    })
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

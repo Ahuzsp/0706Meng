@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        // hooks规则:
+        // 1:只能再函数组件中使用,不要再class组件中使用
+        // 2:不要在块级作用域中使用hooks.(循环,判断),应该在函数组件的最顶层使用
+        // 3:不要在一般函数内使用hooks
+
+        const {Component,Fragment,useState} = React;
+
+        function Item({item,del}){
+            return (
+                <li>
+                    <span>{item}</span>
+                    <button onClick={del}>删除</button>
+                </li>
+            )
+        }
+
+        function App(){
+            // 不推荐这样做
+            if(true){
+                var [arr,setArr] = useState([111,222,333]);
+            }
+            
+            return (
+                <ul>{
+                    arr.map((item,i)=>(
+                        <Item key={i} item={item} del={del.bind(null,i)} />
+                    ))
+                }</ul>
+            )
+
+            function del(i){
+                // 在一个普通函数del中使用hooks,这样不对,应该在App的作用域内使用hooks
+                // var [count,setCount] = useState(0);
+                
+                let newArr = arr.slice();
+                newArr.splice(i,1);
+                setArr([...newArr]);
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html> 

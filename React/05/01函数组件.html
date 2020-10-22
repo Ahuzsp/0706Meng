@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        // 函数组件和class组件的区别:
+        //    1:函数组件没有this
+        //    2:函数组件没有状态
+        //    3:函数组件没有生命周期
+
+        // class组件刷新时是render函数重新执行.
+        // 函数组件刷新时,是整个函数组件重新调用.
+              
+        // 什么时候用函数组件?
+        //    没有状态的组件,都可以使用函数组件.
+
+        // 基于反向数据流,子组件都可以是函数组件.
+
+        const {Component,Fragment} = React;
+
+        // 直接解构赋值获取父组件传递的数据
+        function Item({item,del}){
+            return (
+                <li>
+                    <span>{item}</span>
+                    <button onClick={del}>删除</button>
+                </li>
+            )
+        }
+
+        // 函数组件通过形参获取props对象.
+        // function Item(props){
+        //     return (
+        //         <li>
+        //             <span>{porps.item}</span>
+        //             <button onClick={porps.del}>删除</button>
+        //         </li>
+        //     )
+        // }
+
+        // class Item extends Component{
+        //     render(){
+        //         let {item,del} = this.props
+        //         return (
+        //             <li>
+        //                 <span>{item}</span>
+        //                 <button onClick={del}>删除</button>
+        //             </li>
+        //         )
+        //     }
+        // }
+
+        class App extends Component{
+            constructor(){
+                super();
+                this.state = {
+                    arr:[111,222,333]
+                }
+            }
+            render(){
+                return(
+                    <ul>
+                    {
+                        this.state.arr.map((item,i)=>(
+                            <Item item={item} del={this.del.bind(this,i)} />
+                        ))
+                    }
+                    </ul>
+                )
+            }
+            del(i){
+                let arr = this.state.arr.slice();
+                arr.splice(i,1);
+                this.setState({
+                    arr:[...arr]
+                })
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html> 

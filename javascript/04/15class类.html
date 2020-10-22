@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // class 类
+
+        // typeof Person === function
+
+        // class类的本质还是函数.也就是说es6的类class是es5类的语法糖.
+
+        class Person{
+            // 构造函数
+            constructor(name){
+                this.name = name
+            }
+            // 公有方法 (prototype上的方法)
+            speak(){
+                console.log(this.name)
+            }
+        }
+
+        // 子类继承父类必须在构造函数内写super.super必须在this的前面.
+        class Student extends Person{
+            constructor(num,name){
+                // Person.call(this);
+                super(name);
+                this.num = num;
+            }
+        }
+
+        // 还可以操作子类的原型来添加子类公有方法.
+        Student.prototype.fn = function(){
+            console.log(this.num);
+        }
+
+
+        let p1 = new Student(9527,'坤坤');
+
+        console.log(p1.name);
+        p1.speak();
+        p1.fn();
+
+    </script>
+
+</body>
+</html>

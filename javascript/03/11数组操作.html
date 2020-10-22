@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 会修改数组本身的方法有哪些？（7）
+        // push，pop，shift，unshift，splice，reverse，sort 
+
+        // 字符串方法，有哪些会修改字符串本身？
+        // 没有任何方法会修改字符串本身。
+
+        let arr = [1,2,3,4];
+        // 调用push，arr就已经发生改变。
+        // arr.push(5);
+        // concat不会修改数组本身，需要重新赋值才可以。
+        // arr = arr.concat([6,7]);
+
+        // 查找某个数组元素是否存在
+        // indexOf返回查找元素在数组中的下标。如果没有这个元素，则返回的下标是-1.
+        // if(arr.indexOf(10) != -1){alert('arr有10')};
+
+        // includes返回布尔值。如果数组中不存在指定元素，就返回false，否则返回true
+        // if(arr.includes(10)){alert('arr有10')}
+        
+        // 按条件查找对应元素的下标。
+        // let index = arr.findIndex((item,i)=>{
+        //     return item == 10
+        // });
+        // if(index != -1){alert('arr有10')}
+
+        // 数组和字符串的互换。
+        // 参数不填，默认用,号链接。
+        // 参数是空字符串。就是不需要链接符。
+        // let str = arr.join('');
+
+        // 数组截取
+        // 参数是开始下标和结束下标。（包头不包尾）
+        // 参数可以是负数。这时需要和length相加。
+        // let newArr = arr.slice(-3,-2);
+        
+        // 截取所有元素到新数组内
+        // let newArr = arr.slice(0);
+        // let newArr = arr.slice();
+
+
+    </script>
+
+</body>
+</html>

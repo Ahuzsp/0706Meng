@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			html,body{
+				height: 100%;
+			}
+			body>div{
+				display: flex;
+				flex-flow:column wrap;
+				height:100%;
+			}
+			ul{
+				flex-flow:row;
+				display: flex;
+			}
+			#header li{
+				list-style: none;
+				line-height: 50px;
+				flex-grow: 1;
+				background: pink;
+				margin-left:1px;
+				text-align: center;
+			}
+			#wrap>div:{
+				flex-grow: 1;
+			}
+			#header{
+				height:50px;
+				flex-grow:0;
+			}
+			#main{
+				flex-grow:3;
+				display: flex;
+				flex-direction: row;
+			}
+			.aside{
+				display: flex;
+				flex-direction: column;
+				flex-grow:1;
+			}
+			.aside>ul{
+				flex-grow:1;
+				display: flex;
+				flex-direction: column;
+			}
+			.aside li{
+				flex-grow:1;
+				list-style: none;
+				background: pink;
+				margin-top:1px;
+			}
+			.article{
+				height:inherit;
+				display: flex;
+				flex-direction:column;
+				flex-grow:4;
+			}
+			.article>ul{
+				display: flex;
+				flex-grow:1;
+				margin-top:1px;
+			}
+			.article>ul>li{
+				list-style: none;
+				background: pink;
+				margin-left:1px;
+			}
+			.article>ul:nth-child(1)>li:nth-child(1){
+				flex-grow:3
+			}
+			.article>ul:nth-child(1)>li:nth-child(2){
+				flex-grow:1
+			}
+			.article>ul:nth-child(2)>li{
+				flex-grow:1
+			}
+			.article>ul:nth-child(3)>li{
+				flex-grow:1
+			}
+			.article>ul:nth-child(3)>li:nth-child(1){
+				flex-basis: 300px;
+				flex-grow:0;
+				flex-shrink: 0;
+			}
+			#footer,#footer>ul{
+				display: flex;
+				flex-grow:1;
+			}
+			#footer>ul{
+				margin-top:1px;
+			}
+			ul>li{
+				flex-grow:1;
+				list-style: none;
+				margin-left:1px;
+				background: pink;
+			}
+			a{
+				color:#fff;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='wrap'>
+			<div id='header'>
+				<ul>
+					<li><a href="#">首页</a></li>
+					<li><a href="#">首页</a></li>
+					<li><a href="#">首页</a></li>
+					<li><a href="#">首页</a></li>
+					<li><a href="#">首页</a></li>
+				</ul>
+			</div>
+			<div id='main'>
+				<div class='aside'>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<div class='article'>
+					<ul>
+						<li></li>
+						<li></li>
+					</ul>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+			</div>
+			<div id='footer'>
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

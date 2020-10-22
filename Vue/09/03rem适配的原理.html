@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        div{
+            width: 20rem;
+            height: 300px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- rem做适配的原理,就是当视口变化时,动态修改html的字号. -->
+
+    <div>哈哈哈哈</div>
+
+    <script>
+
+        // 视口尺寸变化时,动态修改html的字号
+        window.addEventListener('resize',function(){
+            // 当前视口的宽
+            let currentWidth = document.body.clientWidth;
+            console.log(currentWidth);
+            document.documentElement.style.fontSize = 16*currentWidth/320 + 'px'
+        })
+
+    </script>
+
+</body>
+</html>

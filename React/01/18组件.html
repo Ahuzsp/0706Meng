@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        // react的组件有3种
+        //    1:函数组件.
+        //    2:createClass组件.(配置式)
+        //    3:class组件(ES6的class).
+
+        // 函数组件
+        // 使用的方式和Vue类似.(通过组件名来插入组件)
+        // React的组件名首字母必须式大写的.
+        // React组件的模板需要通过retrun返回
+        function App(){
+            // 局部变量作为函数的数据
+            let msg = 'App内的数据';
+            return (
+                <div>
+                    <h3>根组件</h3>
+                    <div>{msg}</div>
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let x = 10;
+
+        function show(){
+            fn(x);
+            return x*2
+        }
+
+        function fn(y){
+            x = y * 3
+        }
+
+        let y = show();
+
+        // x = 10;(x是全局)
+        // y = show(); (y的值是x*2)
+        //    fn(x); (x是全局的x,是10)
+        //        x = y * 3 (y是10,x是全局x,这里全局x变成了30)
+        //    return x*2 (x是全局的x,这里是30,因此x*2是60)
+
+
+
+    </script>
+
+</body>
+</html>

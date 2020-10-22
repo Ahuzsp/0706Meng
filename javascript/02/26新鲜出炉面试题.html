@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        new Promise((resolve,reject)=>{
+            console.log(1);
+            resolve(()=>{
+                console.log(2);
+            });
+            reject(()=>{
+                console.log(3);
+            });
+        }).then(()=>{
+            console.log(4);
+            setTimeout(()=>{
+                console.log(5);
+            },1000)
+        }).catch(()=>{
+            console.log(6);
+        })
+
+        setTimeout(()=>{
+            console.log(7);
+        },0)
+
+        console.log(8);
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+/* pages/news/news.wxss */
+
+.red{
+  background-color:red
+}
+.blue{
+  background-color:blue
+}
+.green{
+  background-color:green
+}
+
+swiper-item{
+  text-align: center;
+  line-height: 150px;
+  font-size:30px;
+}

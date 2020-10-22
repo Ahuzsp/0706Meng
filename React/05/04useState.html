@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        // hooks => 语法糖,让函数组件中可以使用状态和生命周期
+        // hooks没有改变任何api的特性.
+        // 使用了hooks之后,就可以不使用class组件了.
+        // hooks不能再class组件中使用,只能再函数组件中使用
+
+        // useState可以让函数组件拥有状态.
+        // let [ 数据名,修改数据的方法名 ] = useState(数据的默认值);
+
+        const {Component,Fragment,useState} = React;
+
+        // 直接解构赋值获取父组件传递的数据
+        function Item({item,del}){
+            return (
+                <li>
+                    <span>{item}</span>
+                    <button onClick={del}>删除</button>
+                </li>
+            )
+        }
+
+        function App(){
+            // useState的第一个参数就是当前函数组件App的状态数组,后续通过arr使用这个状态数组
+            // setArr是修改arr数组的逻辑.相当于class组件内的setState.
+            const [arr,setArr] = useState([111,222,333]);
+
+            return (
+                <ul>{
+                    arr.map((item,i)=>(
+                        <Item key={i} item={item} del={del.bind(null,i)} />
+                    ))
+                }</ul>
+            )
+
+            function del(i){
+                let newArr = arr.slice();
+                newArr.splice(i,1);
+                // 类似setState的作用
+                setArr([...newArr]);
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html> 

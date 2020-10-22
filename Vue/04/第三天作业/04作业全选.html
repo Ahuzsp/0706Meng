@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			
+		</div>
+	</body>
+	<script src="js/vue1.js"></script>
+	<script type="text/javascript">
+
+//		商品的勾选状态全部是勾选的,下面的复选框自动变成勾选状态
+//		商品的勾选状态只要有其中一个是不勾选的,下面的自动变成不勾选状态
+//		
+//		下面的复选框控制上面的所有勾选框的勾选状态。
+		
+//		全选复选框的勾选状态应该是一个计算属性，因为需要手动修改，因此必须设置setter		
+//		创建一个数组渲染所有的商品。这个数组的所有元素经过相应逻辑计算，得出全选复选框的状态
+
+//		[false,false,false,false] -> 数据驱动的数组。
+
+		const App = {
+			template:`
+				<div id="app">
+					<ul>
+						<li v-for='(d,i) in fruits' :key='d.id'>
+							<input type="checkbox" :value='d.fruit' v-model='d.flag'/>{{d.fruit}}
+						</li>
+					</ul>
+					<hr />
+					<input type="checkbox" v-model='flag' />全选
+				</div>
+			`,
+			data(){
+				return {
+					fruits:[
+						{fruit:'苹果',flag:false,id:1},
+						{fruit:'西瓜',flag:false,id:2},
+						{fruit:'香蕉',flag:false,id:3},
+						{fruit:'山竹',flag:false,id:4}
+					]
+				}
+			},
+			computed:{
+				flag:{
+					get(){
+						return this.fruits.every(item=>item.flag);
+					},
+					set(newVal){
+						this.fruits.forEach((item)=>{
+							item.flag = newVal
+						})
+					}
+				}
+			}
+		}
+
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+
+	</script>
+</html>

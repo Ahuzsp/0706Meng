@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src='js/vue-router.js'></script>
+    <script>
+
+        /*
+            路由选项匹配是有顺序优先级的.越靠上优先级越高.
+            与多个else if的属性对应.
+        */
+
+        // if(true){
+        //     console.log('1111');
+        // }else if(true){
+        //     console.log('2222');
+        // }else{
+        //     console.log('3333');
+        // }
+
+        const Home = {
+            template:`
+                <div>首页</div>
+            `
+        }
+
+        const News = {
+            template:`
+                <div>新闻</div>
+            `
+        }
+
+        const Sport = {
+            template:`
+                <div>体育</div>
+            `
+        }
+
+        // 每次url变化,都遍历routes的路由表.寻找和当前url的路径一致的路由选项.
+        // 从上往下遍历,查找到符合条件的,就不再查找了
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/',
+                    component:Home
+                },{
+                    path:'/news',
+                    component:News
+                },{
+                    path:'/sport',
+                    component:Sport
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <button @click='toPage("/")'>首页</button>
+                    <button @click='toPage("/news")'>新闻</button>
+                    <button @click='toPage("/sport")'>体育</button>
+                    <router-view />
+                </div>
+            `,
+            methods:{
+                toPage(path){
+
+                    // 原生js手动修改url的哈希值
+                    // location.hash = '#/news'
+
+                    // 跳转路由，有历史记录.
+                    // this.$router.push(path);
+                    // 跳转路由，没有历史记录。(从新闻跳到体育,新闻不会放入历史记录)
+                    // 不能往回跳转的时候,应该用replace
+                    // this.$router.replace(path);
+
+                    // 前进
+                    // this.$router.forward();
+                    // 后退
+                    // this.$router.back();
+                    // 指定跳转到历史记录中的某一页
+                    // this.$router.go();
+
+                }
+            }
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

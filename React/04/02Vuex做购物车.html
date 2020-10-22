@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'>
+			<div>
+				<h3>商品信息</h3>
+				<table cellspacing='20' cellpadding='20' border='1'>
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>名称</th>
+							<th>价格</th>
+							<th>数量</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr></tr>
+					</tbody>
+				</table>
+			</div>
+			<div>
+				<h3>购物车信息</h3>
+				<table>
+
+				</table>
+			</div>
+			<div>
+
+			</div>
+		</div>
+	</body>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+
+	<script type="text/javascript">
+		
+		//商品信息，购物车信息，清除构购物车做成3个不同的组件。
+		//这3个组件应该共享以下的商品数据。
+		// 根据incart的值,判断相应的商品是否显示在购物车内.(index有什么用吗?不知道你可以先不管)
+		
+		// 假设Vuex不用
+
+        const {mapState,mapGetters,mapMutations} = Vuex;
+
+		const arr = [
+			{name:'超越妹妹',count:1,price:100,inCart:false,index:1},
+			{name:'奶茶妹妹',count:1,price:200,inCart:false,index:2},
+			{name:'志林奶奶',count:1,price:300,inCart:false,index:3},
+			{name:'刘涛姐姐',count:1,price:400,inCart:false,index:4}
+		]
+
+        const store = new Vuex.Store({
+            strict:true,
+            state:{
+                goods:arr
+            },
+            getters:{
+                listData(state){
+                    // 过滤出需要显示到视图内的数据.
+                    return state.goods.filter((item)=>{
+                        return item.inCart
+                    })
+                },
+                // 总数量
+				t_c(state){
+					let num = 0;
+					state.goods.forEach((item,i)=>{
+						if(item.inCart){
+							num += item.count
+						}
+					})
+					return num
+				},
+				// 总价格
+				t_p(state){
+					let num = 0;
+					state.goods.forEach((item,i)=>{
+						if(item.inCart){
+							num += item.count * item.price
+						}
+					});
+					return num
+				}
+            },
+            mutations:{
+                // 清空购物车
+				delall(state,i){
+					state.goods.forEach((item)=>{
+						item.inCart = false
+					})
+				},
+				setInCart(state,i){
+					// 放入购物车
+					state.goods[i].inCart = true;
+				},
+				plus(state,i){
+					// 数量加
+					state.goods[i].count++
+				},
+				reduce(state,i){
+					// 数量减
+					if(state.goods[i].count>1){
+						state.goods[i].count--
+					}
+				},
+				del(state,i){
+					// 移出购物车
+					state.goods[i].inCart = false;
+				}
+            }
+        })
+
+		const Goods = {
+			template:`
+				<div>
+					<h3>商品信息</h3>
+					<table cellspacing='20' cellpadding='20' border='1'>
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>名称</th>
+								<th>价格</th>
+								<th>数量</th>
+								<slot name='th'></slot>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for='(d,i) in arr' :key='d.index'>
+								<td>{{d.index}}</td>
+								<td>{{d.name}}</td>
+								<td>{{d.price}}</td>
+								<td>{{d.count}}</td>
+								<slot name='total' :total='d.count * d.price'></slot>								
+								<td v-if='d.inCart'>
+									<button @click='plus(i)'>++</button>	
+									<button @click='reduce(i)'>--</button>
+									<slot name='btn' :i='i'></slot>	
+								</td>
+								<td v-else>
+									<button @click='setInCart(i)'>加入购物车</button>	
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			`,
+            props:['flag'],
+            methods:{
+                ...mapMutations(['setInCart','plus','reduce',''])
+            },
+			computed:{
+                ...mapGetters(['listData']),
+                ...mapState(['goods']),
+                arr(){
+                    return this.flag ? this.goods : this.listData
+                }
+            }
+		}
+
+		const Pay = {
+			template:`
+				<div>
+					<span>总价:{{t_p}}</span>
+					<span>总数量:{{t_c}}</span>
+					<button @click='delall'>清空购物车</button>
+				</div>
+			`,
+            methods:{
+                ...mapMutations(['delall'])
+            },
+            computed:{
+                ...mapGetters(['t_c','t_p'])
+            }
+		}
+
+		const App = {
+			template:`
+				<div id='app'>
+					<h3>Vuex购物车练习</h3>
+
+					<div is='Goods' flag='true'></div>
+
+					<Goods>
+						<template v-slot:total='slotProps'>
+							<td slot='total'>{{slotProps.total}}</td>
+						</template>
+						<template v-slot:btn='slotProps'>
+							<button slot='btn' @click='del(slotProps.i)'>XX</button>
+						</template>
+						<th slot='th'>总价</th>
+					</Goods>
+					<div is='Pay'></div>
+				</div>
+			`,
+            methods:{
+                ...mapMutations(['del'])
+            },
+			components:{Goods,Pay}
+		}
+
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App},
+            store
+		})
+				
+	</script>
+</html>

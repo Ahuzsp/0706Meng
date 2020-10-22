@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="root">
+			<input type="button" value="red" />
+			<input type="button" value="blue" />
+			<input type="button" value="green" />
+			<div>111</div>
+			<div>222</div>
+			<div>333</div>
+		</div>
+	</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type="text/babel">
+	
+    //每点击一次按钮,给ul插入一个新的li.li的内容随机取1-10的随机整数
+    //奇数li背景红,偶数li背脊绿(可以配合样式类)
+    
+    const { Component,Fragment } = React;
+
+    class App extends Component{
+        arr = [
+			{content:111,color:''},
+			{content:222,color:''},
+			{content:333,color:''}
+		]
+        colors = ['red','green','blue']
+		// 被点击按钮的颜色
+		color = ''
+
+        render(){
+            return (
+                <Fragment>
+                {
+                    this.colors.map((item,i)=>(
+                        <input 
+                            type="button" 
+                            key={i} 
+                            value={item} 
+                            onClick={this.saveColor.bind(this,i)}
+                        />
+                    ))
+                }
+                {
+                    this.arr.map((item,i)=>(
+                        <div 
+							key={i} 
+							onClick={this.setColor.bind(this,i)}
+							style={{background:item.color}}
+						>{item.content}</div>
+                    ))
+                }
+                </Fragment>
+            )
+        }
+		setColor(i){
+			// 把当前被点击的按钮的颜色放到currentColor的对应位置中,以更新视图
+			this.arr[i].color = this.color;
+			this.forceUpdate();
+		}
+        saveColor(i){
+            this.color = this.colors[i];            
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'))
+
+</script>
+</html>

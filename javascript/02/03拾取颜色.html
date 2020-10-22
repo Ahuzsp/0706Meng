@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div>div{
+            float: left;
+            width: 200px;
+            height: 200px;
+            border:1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <div id='btn'>
+        <input type="button" value='red'>
+        <input type="button" value='green'>
+        <input type="button" value='blue'>
+    </div>
+    <div id='content'>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <script>
+
+        // 最终目的：点div变颜色 （DOM操作实现）
+
+        let aDiv = document.querySelectorAll('#content>div');
+        let aBtn = document.querySelectorAll('#btn>input');
+        let color = '';
+
+        for(let i=0;i<aDiv.length;i++){
+            aBtn[i].onclick = function(){
+                // 点击哪个按钮，就把哪个按钮的颜色赋值给color变量，方便点击div时获取
+                color = this.value;
+            }
+        }
+
+        for(let i=0;i<aDiv.length;i++){
+            aDiv[i].onclick = function(){
+                this.style.background = color;
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>

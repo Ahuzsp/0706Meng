@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='root'>
+        
+    </div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        // let msg = 'hello React';
+        // let Vnode = <h3>{msg}</h3>;
+
+        // Vue使用{{}}来插入变量内容。Vue的插值表达式可以写任何变量.
+        // React使用{}来插入变量内容。
+        //      React的{}内不能是纯对象.
+        //      React的{}内不能是函数.
+        
+        // let arr = [1,2,3];
+        // let Vnode = <h3>{arr}</h3>;
+
+        // {} 内不能是函数.
+        // let fn = function(){};
+        // let Vnode = <h3>{fn}</h3>;
+
+        // {} 内不能是对象.
+        // let obj = {name:'hhhh'};
+        // let Vnode = <h3>{obj}</h3>;
+
+        // 布尔值,null和undefined是不显示到视图上的
+        // let Vnode = <h3>{1<2}</h3>;
+        // let Vnode = <h3>{null}</h3>;
+        // let Vnode = <h3>{undefined}</h3>;
+
+        // let Vnode = <h3>{false?100:200}</h3>
+        // let Vnode = <h3>{false || 300}</h3>
+        let Vnode = <h3>{100 && 300}</h3>
+
+        // 挂载Vnode到#root上。
+        ReactDOM.render(Vnode,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html>

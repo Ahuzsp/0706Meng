@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        //  mixins用来复用组件相同的选项部分
+        //  插槽用来复用组件相同的template部分 (也可以复用整个组件)
+
+        // 父传子props -> 组件复用时,显示不同的数据内容
+        // 插槽 -> 组件复用时,动态插入不同的html模板.
+
+        // 插槽需要写在组件标签的内容里.
+        // 组件的template内需要通过内置组件<slot></slot>来引入插槽.
+
+        const Item = {
+            template:`
+                <div>
+                    <h3>标题1111</h3>
+                    <p>标题的段落内容</p>
+                    <slot></slot>
+                </div>
+            `,
+        }
+
+        // const Son = {
+        //     template:`
+        //         <div>
+        //             <h3>标题1111</h3>
+        //             <p>标题的段落内容</p>
+        //             <input type='button' value='我也是矫情的button' />
+        //         </div>
+        //     `,
+        // }
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <div is='Item'>
+                        <button>我是一个任性的button</button>
+                    </div>
+                    <div is='Item'>
+                        <input type='button' value='我也是矫情的button' />
+                    </div>
+                </div>
+            `,
+            components:{Item}
+        }
+
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

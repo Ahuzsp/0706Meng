@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrap{
+            display: flex;
+            flex-flow: row wrap;
+            align-content: space-between;
+        }
+
+        *{
+            padding: 0;
+            margin: 0;
+        }
+
+        #wrap>div{
+            flex-basis: 100%;
+            height:150px;
+        }
+
+        body,html,#wrap{
+            height: 100%;
+        }
+
+        .one,.two,.there{
+            display: flex;
+        }
+        .one>div,.two>div,.there>div{
+            flex-grow: 1;
+            margin-left:1px;
+            background-color: red;
+        }
+        
+        .there>div:nth-child(2){
+            flex-grow: 3;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- wrap的弹性盒模型方向，垂直可以做。尝试用水平方向如何实现。 -->
+    <div id='wrap'>
+        <div class='one'>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class='two'>
+            <div></div>
+            <div></div>
+        </div>
+        <div class='there'>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</body>
+</html>

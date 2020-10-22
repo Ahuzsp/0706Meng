@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <button @click='saveName'>设置name</button>
+        {{obj.name}}
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 如果一开始不存在某个属性
+        // 将这个属性绑定在Vue视图内.
+        // 后续对个这个数据的修改,是不会有响应式的.
+
+        // 如何让一个一开始没有的属性,让它具备响应式.
+
+        // Vue实例初始化时没有进行监听的数据,可以通过set来设置数据监听(劫持)
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                obj:{}
+            },
+            methods:{
+                saveName(){
+                    // 全局的api的set
+                    // Vue.set(this.obj,'name','hehehehe');
+
+                    // vue实例的$set方法
+                    this.$set(this.obj,'name','uuuuuuuu')
+                }
+            }
+        })
+
+        // 给obj添加一个name属性.并设置数据监听,形成响应式效果
+        // Vue.set(vm.obj,'name','hehehehe');
+        
+    </script>
+
+</body>
+</html>

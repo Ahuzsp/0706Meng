@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <input type="text" placeholder="数量" v-model='count'>
+        <input type="text" placeholder="单价" v-model='price'>
+        <div>总价:{{count*price}}</div>
+        <div>总价:{{total}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // 计算属性不能包含异步操作.watch可以.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                count:1,
+                price:10,
+                num:50
+            },
+            computed:{
+                total(){
+
+                    // 这个做,total没有return,而是定时器的回调函数return.
+                    // 因此total永远返回undefined
+                    setTimeout(()=>{
+                        return this.count * this.price
+                    },2000);
+
+                    // 这样做,异步落后于同步,则total是先return,在定时器赋值
+                    // 因此total的值永远都是0
+                    // let total = 0;
+                    // setTimeout(()=>{
+                    //     total = this.count * this.price
+                    // },2000)
+                    // return total
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

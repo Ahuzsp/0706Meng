@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'>
+        <br>
+        <input type="text">
+        <img src="" alt="">
+    </div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+
+        // React的模板(React组件模板)都需要一个唯一的根节点
+        // let Vnode = (           
+        //     <span>hello React</span>
+        //     <span>hello Vue</span>            
+        // );
+
+        // JSX中所有的标签都必须正确闭合.
+        let Vnode = ( 
+            <div>
+                <span>hello React</span>
+                <span>hello Vue</span>  
+                <br />
+                <input type="text" />
+                <img src="" alt="" />
+            </div>          
+        );
+
+        // 挂载Vnode到#root上。
+        ReactDOM.render(Vnode,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+		</div>
+	</body>
+	<script src="../js/react.development.js"></script>
+	<script src="../js/react-dom.development.js"></script>
+	<script src="../js/babel.js"></script>
+	<script type="text/babel">
+		
+		//每点击一次按钮,给ul插入一个新的li.li的内容随机取1-10的随机整数
+		//奇数li背景红,偶数li背脊绿(可以配合样式类)
+		
+		const { Component,Fragment } = React;
+
+		class Item extends Component{
+			render(){
+				let { i,item,del,up,down } = this.props;
+				return (
+					<li>
+						<span>序号:{i+1}-</span><span>{item}</span>
+						<input type="button" onClick={up} value="上移"  />					
+						<input type="button" onClick={down} value="下移"  />
+						<input type="button" onClick={del} value="删除" />
+					</li>
+				)
+			}
+		}
+
+		class App extends Component{
+
+			arr = [111,222,333]
+
+			render(){
+				return (
+					<Fragment>
+						<ul>
+						{
+							this.arr.map((item,i)=>(
+								<Item 
+									key={i} 
+									item={item} 
+									i={i} 
+									del={this.del.bind(this,i)}
+									up={this.up.bind(this,i)}
+									down={this.down.bind(this,i)}
+								/>
+							))
+						}
+						</ul>
+					</Fragment>
+				)
+			}
+			// 删除
+			del(i){
+				this.arr.splice(i,1);
+				this.forceUpdate();
+			}
+			// 上移
+			up(i){
+				if(i!=0){
+					[this.arr[i],this.arr[i-1]] = [this.arr[i-1],this.arr[i]];
+					this.forceUpdate();
+				}				
+			}
+			down(i){
+				if(i!=this.arr.length-1){
+					[this.arr[i],this.arr[i+1]] = [this.arr[i+1],this.arr[i]];
+					this.forceUpdate();
+				}
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'))
+
+	</script>
+</html>
+		

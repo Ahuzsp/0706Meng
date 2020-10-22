@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 1：var 可以重复声明，let，const不可以
+        // 2：var 会发生变量提升，let，const不可以
+        // 3：var 不认识快级作用域。let，const认识
+        // 4：var 声明的全局变量会变成window的属性。let，const不会。
+
+        // const 声明的同时必须赋值。声明之后就不能改变。
+
+        // const x = 10;
+
+        // 通过const声明的数组，能进行push操作吗？可以。
+        const arr = [1,2,3];
+        arr.push(4);//不报错
+        arr = [1,2,3,4]; // 报错
+
+    </script>
+
+</body>
+</html>

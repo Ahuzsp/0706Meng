@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 动态组件在切换时会被重复的创建和销毁.
+        //      被销毁的组件再次被创建时,会回到最初始的状态.
+
+        // 能不能让动态组件切换时保留组件(保存状态).
+        //      使用抽象组件keep-alive (Vue的内置组件)
+        // 抽象组件 -> 最终不会渲染到视图上.
+
+        // Vue的内置组件:
+        //      keep-alive,router-view,template,transition,slot
+        
+        // color是Item的一个响应式数据,则你可以认为color就是Item组件的一个状态.
+        // 点击后,Item的状态变成了blue.
+
+        const Item = {
+            template:`
+                <div :style='{background:color}' @click='color="blue"'>Item组件</div>
+            `,
+            data(){
+                return {
+                    color:'red'
+                }
+            },
+            created(){
+                console.log('item组件被重复创建了')
+            }
+        }
+
+        const Son = {
+            template:`<div>Son组件</div>`
+        }
+
+        const App = {
+            template:`
+                <div>
+                    <h3>App组件</h3>
+                    <keep-alive>
+                        <div :is='cn'></div>
+                    </keep-alive>
+                </div>
+            `,
+            data(){
+                return {
+                    cn:'Item'
+                }
+            },
+            components:{Item,Son}
+        }
+
+        let vm = new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

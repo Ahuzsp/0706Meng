@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vuex.js"></script>
+    <script>
+
+        // 获取辅助函数,可以方便的获取Vuex内的数据.
+        const {mapState,mapGetters} = Vuex;
+
+        // Vuex实例化.
+        const store = new Vuex.Store({
+            strict:true,
+            state:{
+                count:10,
+                price:20
+            },
+            // Vuex的计算属性.通过state内的数据计算而来.
+            getters:{
+                total(state){
+                    return state.price * state.count
+                }
+            }
+        })
+
+        const List = {
+            template:`
+                <ul>
+                    <div>数量:{{c}}</div>
+                    <div>单价:{{p}}</div>
+                    <div>总价:{{t}}</div>
+                </ul>
+            `,
+            computed:{
+                // 获取state内的count和price
+                // ...mapState(['count','price']),
+                // ...mapGetters(['total'])
+
+                // 获取count存到c中.获取price存到p中.
+                ...mapState({"c":"count","p":'price'}),
+                // 获取total存到t中.
+                ...mapGetters({'t':'total'})
+            }
+        }
+
+        const App = {
+            template:`
+                <div>
+                    <List></List>
+                    <List></List>
+                </div>
+            `,
+            components:{List},
+        }
+
+        new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App},
+            // 挂载store
+            store
+        })
+
+
+    </script>
+
+</body>
+</html>

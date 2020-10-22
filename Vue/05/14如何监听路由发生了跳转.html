@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src='js/vue-router.js'></script>
+    <script>
+
+        // 首页跳转到新闻页,并且传递首页的数据给新闻页.
+
+        // 新闻页需要接受这个数据.什么时候接受?
+        //    1:新闻页创建时接受 (被缓存时只创建一次).
+        //    2:路由从首页跳到新闻时接受.(动态组件切换时接受).
+
+        // 动态组件在切换时,会默认的创建和销毁;这样不利于组件状态的保存.
+        // 为了保存动态组件的状态,需要使用keep-alive保存
+        // 使用了keep-alive后,组件的created等创建阶段的钩子就只触发一次.
+        // 那又如何知道动态组件发生了切换?
+        // 被缓存的动态组件的两个钩子函数:activated(激活时触发),deactivated(失活时触发)
+
+        // 如何监听路由发生跳转?
+        //    1:不缓存的组件可以通过created和mounted等生命周期钩子函数
+        //    2:缓存的可以通过activated(激活时触发)和deactivated(失活时触发)来监听
+        //    3:不管缓存不缓存都可以使用watch来监听$route对象的变化.(计算属性)
+        //    4:通过路由守卫.
+
+        const Home = {
+            template:`
+                <div>
+                    <h3>首页</h3>
+                    <button @click='toNews'>Home里面的按钮</button>
+                    <input type='text' v-model='msg' />
+                </div>
+            `,
+            methods:{
+                toNews(){
+                    // 从首页跳到新闻页
+                    // query路由传参会通过url参数来传递。因此长度有限制.
+                    // query传递的参数,在新闻页刷新后还存在.
+                    // query传参,能使用path键名和name键名
+                    this.$router.push({
+                        // name:'news',
+                        path:'/news',
+                        query:{
+                            msg:this.msg
+                        }
+                    })
+                }
+            },
+            data(){
+                return {msg:''}
+            }
+        }
+
+        const News = {
+            template:`
+                <div>
+                    <h3>新闻</h3>
+                    <div>{{msg}}</div>
+                </div>
+            `,
+            data(){
+                return {
+                    msg:''
+                }
+            },
+            watch:{
+                // 每次路由切换时,this.$route都会发生变化,从而触发handler
+                "$route":{
+                    handler(){
+                        // 路由切换时,修改当前组件的msg
+                        this.msg = this.$route.query.msg
+                    }
+                }
+            },
+
+            // 可以直接在计算属性内获取共享数据.因为$route变化也能触发计算属性
+            // computed:{
+            //     msg(){
+            //         return this.$route.query.msg
+            //     }
+            // },
+
+            // 在路由组件没有被缓存时,可以用created或者mounted来监听路由发生了跳转
+            created(){
+                console.log('news创建');
+            },
+            mounted(){
+                console.log('news挂载');
+            },
+            // 缓存时,从别的路由组件跳转到news触发.
+            activated(){
+                console.log('news激活');
+            },
+            // 缓存时,从news跳到别的组件触发.
+            deactivated(){
+                console.log('news失活');
+            }
+        }
+
+        const Sport = {
+            template:`
+                <div>体育</div>
+            `
+        }
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/',
+                    component:Home,
+                    name:'home'
+                },{
+                    path:'/news',
+                    component:News,
+                    name:'news'
+                },{
+                    path:'/sport',
+                    component:Sport,
+                    name:'sport'
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>                   
+                    <button @click='toPage("/")'>首页</button>
+                    <button @click='toPage("/news")'>新闻</button>
+                    <button @click='toPage("/sport")'>体育</button>
+                    <keep-alive>
+                        <router-view />
+                    </keep-alive>
+                </div>
+            `,
+            methods:{
+                toPage(hash){
+                    this.$router.push({path:hash});
+                }
+            }
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <input type="text">
+        <input type="button" value='插入li'>
+        <section></section>
+        <div id='content'></div>
+    </div>
+</body>
+<script src="js/vue1.js"></script>
+<script>  
+
+    //每次点击按钮在section内插入一个组件vBox,组件包含一个checkbox和一个span。span的内容从文本框获取
+    //把div#content写成组件vContent,每勾选vBox内的一个checkbox都将checkbox后面span的内容显示到组件vContent内
+
+    // 思路1.App把文本框内容通过props传递给vBox.vBox把span的内容传递给vContent
+    // 思路2.在App组件内创建一个数组,通过props传递给vBox和vContent.vBox内修改App的这个数组.
+
+    // 组件通信.
+
+    let vBox = {
+        template:`
+            <div>
+                <input type='checkbox' value='' />
+                <span>11111</span>
+            </div>
+        `
+    }
+
+    let App = {
+        template:`
+            <div id='app'>
+                <input type="text" v-model='msg'>
+                <input type="button" value='插入li' @click='fn'>
+                <section>
+                    <v-box v-for='d in arr' />
+                </section>
+                <div id='content'></div>
+            </div>
+        `,
+        data(){
+            return {
+                arr:[],
+                msg:''
+            }
+        },
+        methods:{
+            fn(){
+                this.arr.push(this.msg)
+            }
+        },
+        components:{vBox}
+    }
+
+    new Vue({
+        el:'#app',
+        template:`<App />`,
+        components:{App}
+    })
+
+</script>
+</html>

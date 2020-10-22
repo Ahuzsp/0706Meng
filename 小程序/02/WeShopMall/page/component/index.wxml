@@ -1,0 +1,51 @@
+<!--首页结构-->
+<view class="main">
+    <!--首页轮播图
+      swiper是内置组件，interval指两张图之间的间隔时间，duration指一张图滚动持续的时间，circular指是否无缝轮播
+    -->
+    <swiper indicator-dots="true" autoplay="true" interval="{{interval}}" duration="{{duration}}"  circular="true">
+        <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+            <swiper-item>
+                <image src="{{item}}" class="slide-image" width="100%"/>
+            </swiper-item>
+        </block>
+    </swiper>
+    <!--精选主题-->
+   <view class="selected">
+        <view class="select-title"><text>精选主题</text></view>
+        <view class="select-top">
+            <view class="select-top-small">
+                <!--navigator组件是导航组件，相当于跳转链接，url指跳转的目标页面
+                  路径后的?id=guowei表示传递到目标页面的参数
+                -->
+                <navigator url="list/list?id=guowei">
+                    <image src="/image/s1.png"></image>
+                </navigator>
+            </view>
+            <view class="select-top-small">
+                <navigator url="list/list?id=dianxin">
+                    <image src="/image/s2.png"></image>
+                </navigator>
+            </view>
+        </view>
+        <view class="select-bottom">
+            <navigator url="list/list?id=chaohuo">
+                <image src="/image/s3.png"></image>
+            </navigator>
+        </view>
+    </view>
+
+    <!--最近新品-->
+    <view class="newest">
+        <view class="newest-title"><text>最近新品</text></view>
+        <view class="newest-box">
+            <view class="newest-list" wx:for="{{newest}}" wx:key="{{index}}">
+                <navigator url="details/details?id={{item.id}}">
+                    <image src="{{item.imageUrl}}"></image>
+                    <view class="newest-text"><text>{{item.title}} {{item.count}}{{item.unit}}</text></view>
+                    <view class="newest-text"><text>￥ {{item.price}}</text></view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+</view>

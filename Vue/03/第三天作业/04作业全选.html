@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<ul>
+				<li><input type="checkbox" value='苹果'/>苹果</li>
+				<li><input type="checkbox" value='西瓜'/>西瓜</li>
+				<li><input type="checkbox" value='草莓'/>草莓</li>
+				<li><input type="checkbox" value='香蕉'/>香蕉</li>
+			</ul>
+			<hr />
+			<input type="checkbox" v-model='flag' />全选
+		</div>
+	</body>
+	<script type="text/javascript">
+
+//		商品的勾选状态全部是勾选的,下面的复选框自动变成勾选状态
+//		商品的勾选状态只要有其中一个是不勾选的,下面的自动变成不勾选状态
+//		
+//		下面的复选框控制上面的所有勾选框的勾选状态。
+		
+//		全选复选框的勾选状态应该是一个计算属性，因为需要手动修改，因此必须设置setter		
+//		创建一个数组渲染所有的商品。这个数组的所有元素经过相应逻辑计算，得出全选复选框的状态
+
+//		[false,false,false,false] -> 数据驱动的数组。
+
+	</script>
+</html>

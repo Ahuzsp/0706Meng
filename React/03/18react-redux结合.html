@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/redux.js"></script>
+    <script src="js/react-redux.js"></script>
+	<script type="text/babel">
+
+        const {Component,Fragment} = React;
+        const {createStore,combineReducers} = Redux;
+        const {Provider,connect} = ReactRedux;
+        
+        //   通过高阶组件connect,把现有的组件和redex结合,让redux的数据个方法变成组件的props
+        //   connect的第一个参数是映射state,第二个参数是映射dispatch
+        //   如果一个组件只显示共享数据,不修改共享数据,可以没有第二个参数
+
+        function getNum(num=100,actions){           
+            switch(actions.type){
+                case 'PLUS':
+                    num += actions.step;
+                    return num
+                case 'REDUCE':
+                    num -= actions.step;
+                    return num
+                default:
+                    return num
+            }
+        }
+
+        // 实例化
+        const store = createStore(combineReducers({getNum}));
+
+        class Son extends Component{
+            render(){
+                let {plus,reduce,num} = this.props;
+                return (
+                    <Fragment>
+                        <button onClick={()=>{plus(1)}}>num++</button>
+                        <button onClick={()=>{reduce(1)}}>num--</button>
+                        <div>{num}</div>
+                    </Fragment>   
+                )
+            }
+        }
+              
+        class Item extends Component{
+            render(){
+                let {plus,reduce,num} = this.props;
+                return (
+                    <Fragment>
+                        <button onClick={()=>{plus(2)}}>num++</button>
+                        <button onClick={()=>{reduce(2)}}>num--</button>
+                        <div>{num}</div>
+                    </Fragment>   
+                )
+            }
+        }
+
+        // 把state映射成Props
+        function mapStateToProps(state){
+            // 形参state就是store.getState()
+            return {
+                // num:store.getState().getNum
+                num:state.getNum
+            }
+        }
+
+        // 把dispatch映射成props
+        function mapDispatchToProps(dispatch){
+            // 这里的形参dispatch就是Store的dispatch方法
+            return {
+                plus(step){
+                    dispatch({
+                        type:'PLUS',
+                        step
+                    })
+                },
+                reduce(step){
+                    dispatch({
+                        type:'REDUCE',
+                        step
+                    })
+                }
+            }
+        }
+
+        // 高阶组件将Item和redux结合
+        const NewItem = connect(mapStateToProps,mapDispatchToProps)(Item);
+        // 高阶组件将Son和redux结合
+        const NewSon = connect(mapStateToProps,mapDispatchToProps)(Son);
+
+        class App extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <h3>App组件</h3>
+                        <div>{this.props.num}</div>
+                        <NewItem />
+                        <NewSon />
+                    </Fragment>   
+                )
+            }
+        }
+
+        // App只显示,不修改,可以不传mapDispatchToProps
+        const NewApp = connect(mapStateToProps)(App);
+
+        ReactDOM.render((
+            <Provider store={store}>
+                <NewApp />
+            </Provider>   
+        ),document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

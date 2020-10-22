@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="root"></div>
+
+    <script src="../js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/babel">
+
+        // Vue的父子组件的生命周期钩子顺序:
+        //     父beoforeCreate
+        //     父created
+        //     父beoforeMount
+        //     子beoforeCreate
+        //     子created
+        //     子beoforeMount
+        //     子mounted
+        //     父mounted
+
+        const {Component,Fragment} = React;
+
+        class Item extends Component{
+            constructor(props){
+                super(props);
+                console.log('子constructor')
+            }
+            componentWillMount(){
+                console.log('子componentWillMount')
+            }
+            render(){
+                console.log('子render')
+                return (
+                    <div>
+                        <h3>Item组件</h3>
+                    </div>
+                )
+            }
+            componentDidMount(){
+                console.log('子componentDidMount')
+            }
+        }
+
+        class App extends Component{
+            constructor(props){
+                super(props);
+                console.log('父constructor');
+                this.flag = false;
+            }
+            componentWillMount(){
+                console.log('父componentWillMount')
+            }
+            render(){
+                console.log('父render')
+                return (
+                    <div>
+                        <h3>App组件</h3>
+                        {this.flag && <Item />}
+                    </div>
+                )
+            }
+            componentDidMount(){
+                console.log('父componentDidMount');
+                this.flag = true;
+                this.forceUpdate();
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+</body>
+</html>

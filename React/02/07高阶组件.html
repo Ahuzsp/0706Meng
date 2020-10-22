@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // 高阶组件 -> 是一个函数 -> 这个函数用来加工组件 -> 函数封装的思维
+    // 高阶组件用于封装多个组件相同的逻辑.
+
+    class Son extends Component{
+        render(){
+            return (
+                <div>                   
+                    <p>{this.props.num}</p>
+                    <p>{this.props.data}</p>
+                </div>
+            )
+        }
+    }
+
+    class Item extends Component{
+        render(){
+            return (
+                <div>
+                    <h3>{this.props.num}</h3>
+                    <h3>{this.props.data}</h3>
+                </div>
+            )
+        }
+    }
+
+    // 高阶组件应该需要return一个class类。这个class类就是形参Component组件的父组件。
+    function HOC(Component){
+        return class extends Component{
+            num = 9527;
+            render(){
+                return <Component num={this.num} data={this.props.data}  />
+            }
+        }
+    }
+
+    // NewItem经过HOC高阶组件加工处理后的新组件
+    let NewItem = HOC(Item);
+    // NewSon经过HOC高阶组件加工处理后的新组件
+    let NewSon = HOC(Son);
+
+    class App extends Component{
+        render(){          
+            return (
+                <Fragment>
+                    <NewItem data='8888' />
+                    <NewSon data='7777' />
+                </Fragment>
+            )
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        div{
+            width: 200px;
+            height: 200px;
+            border:1px solid #000;
+        }
+
+        button{
+            margin-left:300px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div>
+        <button>按钮</button>
+    </div>
+
+    <script>
+
+        // 事件对象用来获取当前事件的信息。
+        // 例如，事件发生的标签。事件流。默认事件。。。
+        // 事件冒泡。默认事件
+
+        let oDiv = document.querySelector('div');
+        let oBtn = document.querySelector('button');
+
+        // 点击子元素，也会触发父元素的点击事件？为什么？
+
+        // 事件流：
+        // 1：事件冒泡：节点的任意事件都会沿着DOM树逐层传递，直到顶层对象document
+        // 2：事件捕获：时间会从顶层对象沿着DOM树传递给发生事件的标签（事件源）
+
+        // 阻止事件冒泡：ev.stopPropagation();
+
+        document.onclick = function(){
+            console.log('document被点击了');
+        }
+
+        document.body.onclick = function(ev){
+            // 阻止事件冒泡
+            ev.stopPropagation();
+            console.log('body被点击了');
+        }
+
+        oDiv.onclick = function(){
+            console.log('div被点击了');
+        }
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            height: 3000px;
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+
+        // 防抖节流 -> 防止事件频繁触发。为了性能。
+        // 原理：
+        //    在单位时间内不触发，少触发.单位时间之后可以再次触发。
+        //    例如通过定时器来设置。定时器事件没到，就不触发。
+        //    例如通过时间戳来设置一个时间间隔，时间间隔小于特定的值，就不触发
+        
+        document.onscroll = fn();
+
+        function fn(){
+            let timer = null;
+            return function(){
+                // 如果timer不是空的，就停止之前的定时器。
+                if(timer != null){
+                    // 根据定时器的timer对号入座停止对应的定时器。
+                    clearTimeout(timer);
+                }
+                // 开启一个新的定时器。
+                timer = setTimeout(handle,200);
+            }            
+        }
+
+        function handle(){
+            console.log(1000);
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        {{msg}}
+        <content-list-item></content-list-item>
+        <content-list-item></content-list-item>       
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 什么是组件.
+        // 为什么要用组件.
+
+        // 组件就是为了复用html模板.为了减少开发和维护成本.
+
+        // 组件书写:
+        //    1:写模板
+        //    2:注册(全局,局部)
+        //    3:挂载
+
+        // 每个组件都是Vue实例.每个组件都可以写所有的Vue选项.(除了el)
+        // 每个组件都有自己独立的数据和视图.
+        // 每个组件的data都必须是函数.(为什么)
+
+        // 一个组件复用了两次,则生成两个Vue实例,意即两个不同的Vue组件.他们的数据和视图是独立的.
+        // (组件其实就是一个函数)一个函数调用两次,创建两个不同的作用域,创建不同的变量.
+
+        let contentListItem = {
+            // 组件的html模板
+            template:`
+                <div>
+                    <h3>即时新闻</h3>
+                    <p>{{msg}}</p>
+                </div>
+            `,
+            data(){
+                return {
+                    msg:'contentListItem组件内容'
+                }
+            }
+        }
+        
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'App内的数据'
+            },
+            components:{contentListItem}
+        })
+
+
+    </script>
+
+</body>
+</html>

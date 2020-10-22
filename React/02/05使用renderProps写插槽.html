@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // 父子解耦之后,可以通过renderProps的方式把Item组件的数据传递给Son组件
+
+    class Son extends Component{
+        render(){
+            return (
+                <div>                   
+                    <h3>Son子组件</h3>
+                    <div>{this.props.msg}</div>
+                    <div>{this.props.data}</div>
+                </div>
+            )
+        }
+    }
+
+    class Item extends Component{
+        data = 9527
+        render(){
+            return (
+                <div>
+                    <h3>子组件</h3>
+                    <div>11111</div>
+                    <hr />
+                    {this.props.render(this.data)}
+                </div>
+            )
+        }
+    }
+
+    class App extends Component{
+        str = 'App的数据'
+        render(){          
+            return (
+                <Fragment>
+                    <Item render={(data)=>(
+                        <Son msg={this.str} data={data} />
+                    )}/>
+                </Fragment>
+            )
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

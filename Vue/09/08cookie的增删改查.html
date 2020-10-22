@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 增和改.
+
+        // setCookie('msg','9999',100);
+        setCookie('msg','8888',66);
+
+        function setCookie(key,val,day){
+            let d = new Date();
+            let t = d.getTime();
+            d.setTime(t + 24*60*60*1000*day);
+            document.cookie = key+'='+val+'; Expires=' + d.toUTCString();
+        }
+
+        // 删
+        // delCookie('msg');
+        // function delCookie(key){
+        //     setCookie(key,'',-1);
+        // }
+
+        // 查
+        let data = getCookie('msg');
+
+        function getCookie(key){
+
+            // 所有cookie数据的数组
+            let arr = document.cookie.split('; ');
+            // 最后的value结果
+            let val = '';
+            
+            arr.forEach((item,i)=>{
+                // 如果当前数据有我们需要的key
+                if(item.search(key)!=-1){
+                    val = item.split('=')[1]
+                }               
+            })
+
+            return val
+        }
+
+    </script>
+
+</body>
+</html>

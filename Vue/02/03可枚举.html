@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 可枚举 -> 可for in
+
+        let obj = {
+            name:'幂幂',
+            age:32,
+            height:168
+        }
+
+        // obj.toString();
+
+        Object.prototype.fn = '我时fn';
+
+        // 对象有多少个属性就能循环多少次.
+        // 对象原型链上有多少个可枚举的属性,就循环多少次.
+
+        for(let key in obj){
+            console.log(key);
+        }
+
+    </script>
+
+</body>
+</html>

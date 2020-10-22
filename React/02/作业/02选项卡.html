@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div>div{
+            width: 200px;
+            height: 200px;
+            border:1px solid #000;
+            display: none;
+        }
+        div.active{
+            display: block
+        }
+        input.active{
+            background:red
+        }
+    </style>
+</head>
+<body>
+    <div id='div'>
+        <input type="button" value="">
+        <div>{{d}}</div>
+    </div>
+</body>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type="text/babel">
+	
+    //每点击一次按钮,给ul插入一个新的li.li的内容随机取1-10的随机整数
+    //奇数li背景红,偶数li背脊绿(可以配合样式类)
+    
+    const { Component,Fragment } = React;
+
+    class App extends Component{
+        // 组件数据
+        arr = [111,222,333]
+        index = 0
+
+        render(){
+            return (
+                <Fragment>
+                {
+                    this.arr.map((item,i)=>(
+                        <input 
+                            type="button" 
+                            className={this.index==i ? "active" : ""} 
+                            key={i} 
+                            value={item} 
+                            onClick={this.tab.bind(this,i)}
+                        />
+                    ))
+                }
+                {
+                    this.arr.map((item,i)=>(
+                        <div key={i} className={this.index==i ? "active" : ""}>{item}</div>
+                    ))
+                }
+                </Fragment>
+            )
+        }
+        tab(i){
+            this.index = i;
+            this.forceUpdate();
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('div'))
+
+</script>
+</html>

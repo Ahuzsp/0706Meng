@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let arr = [4,2,11,6,123,23,12,54,44,57,878];
+        // 4和2比较
+        // [2,4,11,6]
+        // 4和11比较
+        // [2,4,11,6]
+        // 11个6比较
+        // [2,4,6,11]
+
+        for(let j=arr.length-1;j>0;j--){
+            for(let i=0;i<j;i++){
+                if(arr[i] < arr[i+1]){
+                    // 解构赋值交互位置
+                    [arr[i],arr[i+1]] = [arr[i+1],arr[i]];
+                }
+            }
+        }
+
+        // 找最大的数
+        // for(let i=0;i<3;i++){
+        //     if(arr[i] > arr[i+1]){
+        //         // 解构赋值交互位置
+        //         [arr[i],arr[i+1]] = [arr[i+1],arr[i]];
+        //     }
+        // }
+
+        // 找到数第二大的数
+        // for(let i=0;i<2;i++){
+        //     if(arr[i] > arr[i+1]){
+        //         // 解构赋值交互位置
+        //         [arr[i],arr[i+1]] = [arr[i+1],arr[i]];
+        //     }
+        // }
+
+        // 找到数第三的数
+        // for(let i=0;i<1;i++){
+        //     if(arr[i] > arr[i+1]){
+        //         // 解构赋值交互位置
+        //         [arr[i],arr[i+1]] = [arr[i+1],arr[i]];
+        //     }
+        // }
+
+        // 冒泡排序（假设升序）：
+        //      循环数组length-1次，每次循环找出一个最大值，放到数组的最后面。
+        //      从第一个元素开始，两两比较，大的往后挪，小的往前挪。全都比较之后，最大的自然再最后面。
+
+        // 排序。a-b是升序，b-a是降序
+        // arr.sort((a,b)=>{
+        //     return b-a
+        // })
+
+    </script>
+
+</body>
+</html>

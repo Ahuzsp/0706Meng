@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // 受控组件 -> 针对表单元素而言.-> 只有表单元素可以实现双向数据绑定
+    // 表单元素:input系列,textarea,select
+
+    // 表单元素写了value就是受控组件.(没有value就是非受控组件)
+    // 受控组件有啥性质?
+    // 1:value必须绑定state数据.
+    // 2:受控组件的value变化,必须通过修改state来更新.
+    // 3:修改state内的绑定数据,必须通过onChange事件来触发.
+  
+    class App extends Component{
+
+        state = {
+            msg:10
+        }
+
+        render(){         
+            return (
+                <Fragment>
+                    <input type='text' onChange={this.fn.bind(this)} value={this.state.msg} />
+                    <div>总价:{this.state.msg}</div>
+                </Fragment>
+            )
+        }
+
+        fn(ev){           
+            this.setState({
+                msg:ev.target.value
+            })
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div>div{
+            width: 100px;
+            height: 100px;
+            border:1px solid #000;
+            float: left;
+            margin-left:1px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='app'>
+        <button 
+            v-for='(color,i) in arr'
+            @click = 'saveColor(i)'
+        >{{color}}</button><br>
+        <div 
+            v-for='(color,i) in colors'
+            :style='{background:color}'
+            @click='changeColor(i)'
+        ></div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 3个div的背景变化通过一个数组来驱动。
+        
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                // 驱动视图的数组
+                colors:['','',''],
+                // 列表渲染按钮的数组
+                arr:['red','green','blue'],
+                // 被点击的按钮的颜色.
+                currentColor:''
+            },
+            methods:{
+                changeColor(i){
+                    // 把对应的数组元素设置为当前的currentColor,意即被点击的按钮颜色.
+                    this.colors.splice(i,1,this.currentColor);
+                },
+                saveColor(i){
+                    // 把当前点击的按钮颜色存储到currentColor上
+                    this.currentColor = this.arr[i];
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

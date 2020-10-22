@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <!-- <script src='js/vue-router.js'></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.3/vue-router.js"></script>
+    <script>
+
+        const Item = {
+            template:`<h3>item组件</h3>`
+        }
+
+        const Home = {
+            template:`
+                <div>
+                    <h3>首页</h3>
+                    <div>首页内容</div>
+                </div>
+            `
+        }
+
+        const News = {
+            template:`
+                <div>
+                    <h3>新闻</h3>
+                    <div>新闻内容</div>
+                </div>
+            `
+        }
+
+        const Sport = {
+            template:`
+                <div>
+                    <h3>体育</h3>
+                    <div>体育内容</div>
+                </div>
+            `
+        }
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/',
+                    components:{Home,Item},
+                    name:'home',
+                    // 路由独享守卫。(实际上跟写在home和item上是一个效果)
+                    beforeEnter(to,from,next){
+                        console.log('跳到了home和item');
+                        next();
+                    }
+                },{
+                    path:'/news',
+                    component:News,
+                    name:'news'
+                },{
+                    path:'/sport',
+                    component:Sport,
+                    name:'sport'
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>                   
+                    <button @click='toPage("/")'>首页</button>
+                    <button @click='toPage("/news")'>新闻</button>
+                    <button @click='toPage("/sport")'>体育</button>
+                    <keep-alive>
+                        <router-view name='Home'></router-view>
+                    </keep-alive>
+                    <router-view name='Item'></router-view>
+                    <router-view />
+                </div>
+            `,
+            methods:{
+                toPage(hash){
+                    this.$router.push({path:hash});
+                }
+            }
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='root'>
+
+		</div>
+	</body>
+
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.js"></script>
+    <script src="js/react-router-dom.js"></script>
+
+	<script type="text/babel">
+		
+        const {Component,Fragment} = React;
+        const {HashRouter,Route,NavLink,Redirect,Switch} = ReactRouterDOM;
+        
+        // 有些页面需要登录，有些页面不需要登录
+        // Home不需要登录，News和Sport需要登录
+        // 跳转到Home不需要判断是否需要登录,直接跳转
+        // 跳到News和Sport需要判断是否需要登录,如果需要登录,再判断是否已经登录成功了
+        // 如果需要登录,直接跳转到登录页,登录页成功后再跳到源目标页面
+        // { requireLogin ? <Login /> : <Home /> }
+
+        class Home extends Component{
+			render(){
+				return <h3>Home组件</h3>
+			}
+        }
+        
+        class News extends Component{
+			render(){
+				return <h3>News组件</h3>
+			}
+        }
+        
+        class Sport extends Component{
+			render(){
+				return <h3>Sport组件</h3>
+			}
+        }
+        
+        class Login extends Component{
+			render(){
+				return (
+                    <div>
+                        <h3>登录</h3>
+                        <button>快递登录</button>
+                    </div>
+                )
+			}
+		}
+
+        function HOC(){
+            return class extends Component{
+                render(){
+                    let {path,component} = this.props;
+                    return (
+                        <Route path={path} component={true ? Login : component} />
+                    )
+                }
+            }
+        }
+
+        const PrivateRoute = HOC();
+
+		class App extends Component{
+			render(){
+				return (
+                    <Fragment>
+                        <HashRouter>
+                            <NavLink to='/'>首页</NavLink>
+                            <NavLink to='/news'>新闻</NavLink>
+                            <NavLink to='/sport'>体育</NavLink>
+                            <Switch>
+                                <Route path='/' exact component={Home} />                        
+                                <PrivateRoute path='/news' component={News} />                        
+                                <PrivateRoute path='/sport' component={Sport} />
+                                <Route path='/Login' component={Login} />
+                            </Switch>                        
+                        </HashRouter>
+                    </Fragment>
+				)
+			}
+		}
+
+		ReactDOM.render(<App />,document.getElementById('root'));
+
+
+	</script>
+</html>

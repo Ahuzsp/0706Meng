@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let x = 100;
+
+        function fn(){
+            let x = 100;
+            function add(){
+                x = 300; 
+                console.log(x);// 300
+            }
+            add();
+            console.log(x);// 300
+        }
+
+        fn();
+        console.log(x);
+
+        // 1：写步骤 2：变量查找
+
+        // 1:x = 100 (全局x)
+        // 2:fn调用
+        //     let x = 100; (fn的x)
+        //     add调用
+        //         x = 300; (fn的x)
+        //         打印x (fn的x)
+        //     打印x (fn内的x)
+        // 3：打印x (全局的x)
+
+    </script>
+
+</body>
+</html>

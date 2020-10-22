@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <div v-pre>{{str}}</div>
+        <div v-once v-cloak>{{msg}}</div>
+        <div v-cloak>{{eeeeeeeeeeeeeeeeeee}}</div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 假设我们希望div内显示{{}},思路就是让浏览器不解析插值表达式.v-pre可以实现
+        // v-once -> 只有默认渲染生效.后续数据更新,不会更新改视图节点
+        // v-cloak防止初始化时闪动.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                str:'1111',
+                msg:'22222',
+                eeeeeeeeeeeeeeeeeee:'100'
+            }
+        })
+
+    </script>
+
+</body>
+</html>

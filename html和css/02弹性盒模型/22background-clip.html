@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+
+            width: 400px;
+            height: 400px;
+            background:url(timg.jpg) no-repeat;
+            border:30px solid rgba(0,0,0,0.1);
+            background-size:400px 400px;
+            padding:50px;
+            box-sizing: border-box;
+
+            /* 背景裁剪 */
+            background-clip: content-box;
+            /* 背景显示的区域 */
+            background-origin:content-box;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 精灵图的好处 -> 减少图片的url请求 （减少请求次数） -->
+    <!-- 浏览器的坐标轴。Y轴式朝下的 -->
+
+    <div></div>
+    <!-- <img src="坤坤.jpg" width="500" alt=""> -->
+
+</body>
+</html>

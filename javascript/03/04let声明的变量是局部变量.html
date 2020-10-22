@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div>
+        <button>1111</button>0
+        <button>2222</button>1
+        <button>3333</button>2
+    </div>
+
+    <script>
+
+        let aBtn = document.querySelectorAll('button');
+
+        let i=0;
+        for(;i<aBtn.length;i++){
+            aBtn[i].onclick = function(){
+                // 点击按钮时，循环已经结束了。因此i是3.
+                // aBtn[3]表示第4个按钮。aBtn没有第4个元素。因此就是undefined
+                aBtn[i].style.background = 'red';
+            }
+        }
+
+    </script>
+
+</body>
+</html>

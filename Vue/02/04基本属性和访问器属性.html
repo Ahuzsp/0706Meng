@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 对象的基本属性和访问器属性的区别.
+
+        let obj = {
+            // 基本属性
+            name:'幂幂'
+        }
+
+        // 访问器属性.
+        // 设置了get和set的访问器属性不能再设置value和writable属性
+        // 访问器属性的value需要通过get函数返回.
+        // 访问器属性可以检测到属性的变化.(通过get和set函数)
+
+        let val = 32;
+
+        Object.defineProperty(obj,'age',{
+            // age被访问时触发
+            get(){
+                console.log('age被访问');
+                return val
+            },
+            // age被修改时触发.
+            // 形参是新修改的值.
+            set(newValue){
+                val = newValue;
+                console.log('age修改')
+            }
+        })
+
+    </script>
+
+</body>
+</html>

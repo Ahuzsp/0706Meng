@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div>
+        <button>1111</button>0
+        <button>2222</button>1
+        <button>3333</button>2
+    </div>
+
+    <script>
+
+        let aBtn = document.querySelectorAll('button');
+
+        // 3个按钮需要3个不同的变量来表示下标
+        // 循环3次，产生3个函数作用域，3个函数作用域内的i是各不相同的。
+
+        for(var j=0;j<aBtn.length;j++){
+            show();
+        }
+
+        // 闭包。
+        function show(){
+            var i = j; // show -> 全局
+            aBtn[i].onclick = function(){
+                aBtn[i].style.background = 'red'
+            }
+        }
+
+        // for(var j=0;j<aBtn.length;j++){
+        //     (function(){
+        //         var i = j;
+        //         aBtn[i].onclick = function(){
+        //             aBtn[i].style.background = 'red'
+        //         }
+        //     })();
+        // }
+        
+        // (function(){
+        //     var i = 0;
+        //     aBtn[i].onclick = function(){
+        //         aBtn[i].style.background = 'red'
+        //     }
+        // })();
+
+        // (function(){
+        //     var i = 1;
+        //     aBtn[i].onclick = function(){
+        //         aBtn[i].style.background = 'red'
+        //     }
+        // })();
+
+        // (function(){
+        //     var i = 2;
+        //     aBtn[i].onclick = function(){
+        //         aBtn[i].style.background = 'red'
+        //     }
+        // })();
+
+        // var i=0;
+        // aBtn[i].onclick = function(){
+        //     aBtn[i].style.background = 'red'
+        // }
+
+        // var j=1;
+        // aBtn[j].onclick = function(){
+        //     aBtn[j].style.background = 'red'
+        // }
+
+        // var y=2;
+        // aBtn[y].onclick = function(){
+        //     aBtn[y].style.background = 'red'
+        // }
+
+
+
+    </script>
+
+</body>
+</html>

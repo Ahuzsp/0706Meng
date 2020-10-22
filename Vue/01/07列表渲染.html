@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <button>1111</button>
+    <button>2222</button>
+    <button>3333</button>
+    <button>4444</button>
+
+    <div id='app'>
+        <ul>
+            <li v-for='(item,i) in arr'>
+                {{i}}-{{item}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for='(value,key) in obj'>
+                {{key}}-{{value}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for='num in 10'>
+                {{num}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for='str in "abcdefg"'>
+                {{str}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for='btn in aBtn'>
+                {{btn.nodeName}}
+            </li>
+        </ul>
+    </div>
+    
+    <script src="js/vue.js"></script>
+
+    <script>
+
+        // v-for='(item,i) in arr'
+        // item就是数组的每一项
+        // i就是数组的每一项
+
+        // v-for='(value,key) in obj'
+        // value就是对象的属性值
+        // key就是对象的属性名
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                arr:[111,222,333],
+                obj:{
+                    name:'坤坤',
+                    age:32,
+                    height:168
+                },
+                aBtn:document.querySelectorAll('button')
+            }
+        })
+
+    </script>
+
+</body>
+</html>

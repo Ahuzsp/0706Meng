@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        {{str}}
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+        
+        // Vue和React都是视图框架.
+        // 理念,概念,要解决的问题都基本是一样的.(写法不一样)
+
+        // 视图框架
+        // 1:数据绑定 (插值表达式)
+        //     绑定内容,绑定属性
+        // 2:组件
+        //     组件通信
+        // 3:状态管理        
+        // 4:路由
+        //     基本路由
+        //     嵌套路由
+        //     路由参数
+        //     路由传参
+        //     路由守卫
+        //     异步路由
+
+        // Vue是一个只关注用户界面的渐进式视图框架.
+
+        // 什么是框架?jq是框架吗?jq是库。
+        // Vue框架编程和原生js编程有什么区别?
+
+        // jq就是铲子.Vue就是挖掘机.
+
+        // 原生js -> 想目的 -> 用DOM操作实现你的目的.
+        // DOM操作:1获取.2:对号入座操作元素
+
+        // let oDiv = document.getElementById('app');
+        // let str = 'hello str';
+        // DOM操作oDiv修改内容。
+        // oDiv.innerHTML = str;
+        // 如果要修改内容,需要再次DOM操作修改.
+        // oDiv.innerHTML = str+1111;
+
+        // vue把数据渲染到视图上,是不需要DOM操作的.
+        // 用Vue来进行项目开发,不需要考虑如何DOM操作.
+        // 如果需要修改视图,直接修改数据即可.依然不需要DOM操作.
+        // Vue是通过数据驱动的方式里进行视图更新的.
+
+        // Vue -> 想目的 -> 用数据驱动实现你的目的.
+        // Vue的两个核心基本概念:视图(html标签),数据(html标签的内容).
+        // 数据驱动:1:视图怎么变化. 2:找到一个数据来驱动这个变化.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                str:'hello Vue'
+            }
+        })
+
+    </script>
+
+</body>
+</html>

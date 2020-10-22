@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 判断的()内必须是布尔值，不是就隐式转换。
+        if(1<2){
+            alert('真的')
+        }
+
+        // 布尔值用于表示，对错，真假，有无。
+        let oDiv = document.getElementById('div');
+
+        // 把oDiv的返回值转换为布尔值。
+        // oDiv的返回值是null，那null转换为布尔值是true还是false？
+        // 哪些常量（直接量）隐式转换为布尔值是false？
+        // 共5个。0,NaN,'',null,undefined.
+
+        // 显示转换布尔值。Boolean();
+
+        // 判断oDiv是否存在
+        if(oDiv){
+            alert('嘻嘻嘻');
+        }else{
+            alert('呵呵呵');
+        }
+
+        let obj = {};
+        // 判断obj有没有name属性
+        if(obj.name){
+            alert('嘻嘻嘻');
+        }
+
+        let arr = [0];
+        // 判断arr有没有第一个元素
+        if(arr[0]===undefined){
+            alert('没有');
+        }else{
+            alert('有');
+        }
+
+        console.log(1 + '1' + 1); // '111'
+        console.log(1 + 1 + '1'); // '21'
+
+        // 如果 + 的操作数内有字符串。则会把不是字符串的操作数隐式转换为字符串
+        let str = 1+'1';
+        let num = str + 1;
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // this -> 查找方法的所有者.
+
+        // 如何给一个对象添加一个方法,让这个方法属于这个对象?
+    
+        /*
+            let obj = {
+                name:'张三',
+                // 查找fn的所有者的名字
+                fn(){
+                    console.log(this.name);
+                }
+            }
+
+            obj.fn(); 
+        */
+
+        /* 
+            let arr = [1,2,3];
+            arr.abc = function(){console.log(100)};
+            arr.abc(); 
+        */
+        
+        // push系统自带的方法.不需要手动添加.
+        let arr = [1,2,3];
+        arr.abc = 200;
+        // arr.push(4);
+        
+        // 检测arr是否拥有push这个属性.返回true或者false
+        // let flag = arr.hasOwnProperty('push');
+        
+        // 检测arr是否拥有abc这个属性.返回true或者false
+        let flag = arr.hasOwnProperty('abc');
+        console.log(flag);
+        
+        // obj不是数组,无法使用push
+        // let obj = {};
+        // obj.push();
+        
+
+        
+
+    </script>
+
+</body>
+</html>

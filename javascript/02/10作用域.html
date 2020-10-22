@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 作用域 -> 房子 (地点)
+        // 声明在不同房子内的变量是不同的
+
+        // 作用域：
+        //     1：全局作用域  （公共场合）{}之外的地方都是全局作用域                     
+        //     2：局部作用域  （私有场地）{}之内的地方都是局部作用域
+        //            a:函数作用
+        //            b:块级作用域
+
+        // 全局变量：声明在全局作用域内的变量.
+        // 局部变量：声明在局部作用域内的变量.
+
+        // 全局变量可以在任何地方访问
+        // 局部变量只能在局部作用域内访问
+
+        // 全局变量
+        let x = 10;
+
+        function fn(x){
+            // 局部变量
+            x = 20; // fn -> 全局
+        }
+        
+        fn();
+        
+        // 全局作用域内打印，只能访问全局作用域内的变量。
+        console.log(x);// 10
+
+    </script>
+
+</body>
+</html>

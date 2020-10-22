@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/react-dom.development.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/babel.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/redux.js"></script>
+	<script type="text/babel">
+
+        const {Component,Fragment} = React;
+        const {createStore,combineReducers} = Redux;
+        
+        // redux存储数据,是存到一个自定义函数的作用域内.(闭包存)
+        // 多个不关联的数据存到多个不同的函数内
+        // 数据和修改数据的逻辑都存放到同一个函数内
+
+        function getNum(num=0,actions){
+            // 如果是PLUS操作
+            if(actions.type === 'PLUS'){
+                num += actions.step
+            }
+            return num
+        }
+
+        // 实例化Redux的真正写法
+        const store = createStore(combineReducers({getNum}));
+
+        // 修改共享数据，可以通过store.dispatch(actions)来修改
+        // reducer函数内的第二个参数,就是dispatch的实参config对象
+
+        class Son extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button onClick={this.fn.bind(this)}>num++</button>
+                        <div>{store.getState().getNum}</div>
+                    </Fragment>   
+                )
+            }
+            fn(){
+                // 修改store内的数据,触发的逻辑是PLUS
+                store.dispatch({
+                    type:'PLUS',
+                    step:1
+                })
+
+                ReactDOM.render(<App />,document.getElementById('root'))
+            }
+        }
+              
+        class Item extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button onClick={this.fn.bind(this)}>num++</button>
+                        <div>{store.getState().getNum}</div>
+                    </Fragment>   
+                )
+            }
+            fn(){
+                // 修改store内的数据,触发的逻辑是PLUS
+                store.dispatch({
+                    type:'PLUS',
+                    step:2
+                })
+
+                ReactDOM.render(<App />,document.getElementById('root'))
+            }
+        }
+
+        class App extends Component{
+            render(){
+                return (
+                    <Fragment>
+                        <button onClick={this.fn.bind(this)}>num++</button>
+                        <div>{store.getState().getNum}</div>
+                        <Item />
+                        <Son />
+                    </Fragment>   
+                )
+            }
+            fn(){
+                // 修改store内的数据,触发的逻辑是PLUS
+                store.dispatch({
+                    type:'PLUS',
+                    step:3
+                })
+                ReactDOM.render(<App />,document.getElementById('root'))
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>

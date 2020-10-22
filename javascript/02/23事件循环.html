@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 事件循环：event loop
+
+        // 异步还分为两种类型：
+        //    宏任务（定时器）
+        //    微任务 (promise的then)
+
+        // 两种异步同时出现时，先执行微任务，再执行宏任务。
+
+        // 事件循环：
+        //     1：首先js会执行完所有的同步任务
+        //     2：检测微任务队列，依次执行所有微任务。
+        //     3：检测宏任务队列，依次执行宏任务，
+        //     每次执行完宏任务，都会检测是否产生了新的微任务，如果有，转而执行微任务。
+        //     (总是循环检测是否有微任务，如果有，就去执行)
+
+        new Promise((resolve,reject)=>{
+            resolve();
+        }).then(()=>{
+            console.log(2);
+        })
+
+        setTimeout(()=>{
+            console.log(1)
+        },0)
+
+        console.log(3);
+
+    </script>
+
+</body>
+</html>

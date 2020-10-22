@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 确定一个变量是哪个变量 -> 变量查找 -> 在作用域链上查找
+
+        // 如何确定一个属性是哪个属性 -> 属性查找 -> 在原型链上查找.
+
+        let arr = [1,2,3];
+
+        // 这里arr需要调用toString.能不能调用,调用哪个toString,需要进行属性查找.
+        arr.toString();
+
+        // 数组的原型链:
+        //    arr -> Array.prototype -> Object.prototype
+
+        // 属性查找步骤:
+        //    1:写对象的原型链
+        //    2:沿着这个原型链逐层往上查找,查找当前的原型对象有没有这个私有属性.
+        //    3:如果有,就停止查找.如果没有,就往上一级查找.如果整个原型链上都没有,就返回undefined
+
+        // 检测数组类型:
+        // 为什么是通过call来调用Object.prototype.toString.
+        // 如果不用call手动调用,通过属性查找默认调用的是Array.prototype.toString
+
+        // if(Object.prototype.toString.call(arr) == '[object Array]'){
+        //     alert('arr是数组')
+        // }
+
+    </script>
+
+</body>
+</html>

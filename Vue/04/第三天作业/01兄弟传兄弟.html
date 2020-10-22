@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'>
+			<Box1 />
+			<Box2 />
+		</div>
+	</body>
+	<script src="js/vue1.js"></script>
+	<script type="text/javascript">
+		
+//		点击Box1的按钮,把Box1的文本框的内容传递给Box2的str.
+
+//		-----------提示-----------------
+//		把Box1的msg传递给App，再通过App把msg传递给Box2的str。
+
+//      bus传递.Box1的数据传递给Box2.
+//      给谁绑定事件? (谁用谁绑定)
+//			给Box2绑定事件,Box1触发,并且传递Box1的数据		
+
+//		第三方Vue实例.
+		let bus = new Vue({});
+
+		let Box1 = {
+			template:`
+				<div>
+					<input type='text' v-model='msg' />
+					<input type='button' value='把msg传递给Box2' @click='fn' />
+				</div>
+			`,
+			data(){
+				return {msg:''}
+			},
+			methods:{
+				fn(){
+					// 触发事件
+					bus.$emit('myevent',this.msg);
+				}
+			}			
+		}
+		
+		let Box2 = {
+			template:`
+				<div>
+					接收Box1的msg数据:{{str}}
+				</div>
+			`,
+			data(){
+				return {str:''}
+			},
+			created(){
+				// 添加事件
+				bus.$on('myevent',(msg)=>{
+					this.str = msg
+				})
+			}			
+		}
+
+		const App = {
+			template:`
+				<div id='app'>
+					<Box1 />
+					<Box2 />
+				</div>
+			`,
+			components:{Box1,Box2}
+		}
+
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+		
+	</script>
+</html>

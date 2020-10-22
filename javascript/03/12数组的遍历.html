@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 数组的遍历有哪些。forEach,map,filter.
+        // 哪些可以终止遍历。
+        // 例如：forEach如何终止遍历。利用异常捕获。
+
+        let arr = [1,2,3,4,5,6];
+
+        // 遍历所有元素。每次遍历执行指定操作逻辑。
+        // 返回undefined
+        // arr.forEach((item,i)=>{
+        //     console.log(item);
+        // })
+        
+        // map用于将老数组生成新的数组，
+        // 回调函数的返回值是新数组的元素。
+        // item是老数组的元素。
+        // 返回一个新的数组
+        // let newArr = arr.map((item,i)=>{
+        //     return item + 1
+        // })
+
+        // filter返回复合条件的所有元素，组成新的数组
+        // 返回新数组
+        // 回调函数返回的值是筛选条件
+        // 老数组中的元素让筛选条件为true的，就放到新数组内。
+        // let newArr = arr.filter((item,i)=>{
+        //     return item%2 == 0
+        // })
+
+    </script>
+
+</body>
+</html>

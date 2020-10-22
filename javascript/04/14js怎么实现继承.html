@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // js最重要的两个概念.原型链(继承),作用域链(闭包).
+
+        // 子类继承父类如何实现? (组合继承,寄生继承)
+        //     1:如何继承私有属性
+        //         子类内调用父类构造函数,并且用call把this指向子类实例.
+
+        //     2:如何继承公有方法
+        //         让子类原型变成继承父类原型的对象
+
+        // 父类
+        function Person(name){
+            // 父类私有属性
+            this.name = name;
+        }
+
+        // 父类公有方法
+        Person.prototype.speak = function(){
+            console.log(this.name);
+        }
+        
+        // p1的原型链:
+        //     p1 -> Person.prototype -> Object.prototype
+
+        // let p1 = new Person();
+
+        // 子类
+        function Student(num,name){
+            // 子类内调用父类构造函数,并且用call把this指向子类实例.
+            Person.call(this,name);
+            this.num = num;
+        }
+        
+        // 子类原型等于父类实例.
+        // Student.prototype = p1;
+
+        // 这样做有瑕疵,因为父类构造函数多余调用了一次.有性能问题.
+        // Student.prototype = new Person();
+
+        // Object.create()创建一个对象,参数是这个新对象的继承对象.
+        Student.prototype = Object.create(Person.prototype);
+
+        // s1的原型链:
+        //     s1 -> Student.prototype -> Person.prototype -> Object.prototype
+
+        let s1 = new Student(9527,'坤坤');
+
+        console.log(s1.name);
+        s1.speak();
+
+
+
+
+
+    </script>
+
+</body>
+</html>

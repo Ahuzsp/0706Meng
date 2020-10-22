@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            height: 200px;
+            /* border:1px solid #000; */
+        }
+        .fixed:after{
+            content:'';
+            display: block;
+            clear:both;
+        }
+        li{
+            float: left;
+            width: 200px;
+            height: 200px;
+            background:red;
+            margin-left:1px;
+            list-style: none;
+            border:1px solid orange;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <!-- 父元素最好不要设置高 -->
+    <!-- 最好通过子元素撑开 -->
+
+    <!-- 调试 -->
+    <!-- 哪里有问题就调哪里 -->
+
+    <ul class='fixed'>
+        <li>1111</li>
+        <li>2222</li>
+    </ul>
+    <ul class='fixed'>
+        <li>1111</li>
+        <li>2222</li>
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 数组的所有方法都是Array.prototype的私有方法.
+        // Array.prototype就是数组的 原型
+
+        // 为什么把所有数组的方法都存在Array.prototype上?
+
+        // 原型:一次性给所有对象实例添加公有的方法
+
+        let arr1 = [1,2,3];
+        let arr2 = [1,2,3];
+
+        // 手动添加push,如果有10000个数组,需要手动添加10000次.
+        // 有了原型,就不需要手动添加方法,自动可以使用.这就是原型功劳
+        // arr1.push = 默认有的push;
+        // arr2.push = 默认有的push;
+
+        // 如何给arr1和arr2同时添加一个abc方法?
+
+        // 给数组的原型添加一个属性,则所有的数组实例都可以访问这个属性.
+        Array.prototype.abc = '公共的abc属性';
+
+        console.log(arr1.abc);
+        console.log(arr2.abc);
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id='app'>
+			<ul>
+				<li v-for='d in arr'>
+					<input type="text" value='11111' />
+					<input type='button' value='点击'>
+				</li>
+				<li v-for='d in arr'>
+					<input type="text" value='2222' />
+					<input type='button' value='点击'>
+				</li>
+				<li v-for='d in arr'>
+					<input type="text" value='3333' />
+					<input type='button' value='点击'>
+				</li>
+			</ul>
+			<p>li内所有数据:{{1111,2222,3333}}</p>
+		</div>
+	</body>
+	<script src="js/vue1.js"></script>
+	<script type="text/javascript">
+		
+//		把App做成根组件
+//		把li做成组件,并且根据arr渲染3个li组件
+//		p内显示所有li的内文本框的内容。例如：111,222,333
+//		
+//		在每个li的文本框内输入文字,点击按钮,更新p的内容
+
+//		思路1:子传父.把子组件li的文本框value传递给App组件
+//      思路2:子组件直接修改父组件App的arr数组.把修改方法写在父组件.子组件调用这个方法
+
+//		思考,如果不点击按钮,一边输入一边修改p的内容,怎么做?
+		
+		const Item = {
+			template:`
+				<li>
+					<input type="text" value='' v-model='msg' />
+					<input type='button' value='点击' @click='fn'>
+				</li>
+			`,
+			data(){
+				return {msg:''}
+			},
+			methods:{
+				fn(){
+					this.$emit('myevent',this.msg);
+				}
+			}		    
+		}
+
+		const App = {
+			template:`
+				<div id='app'>
+					<ul>
+						<Item v-for='(d,i) in 3' @myevent='(msg)=>{getMsg(msg,i)}' />
+					</ul>
+					<p>li内所有数据:{{content}}</p>
+				</div>
+			`,
+			data(){
+				return {
+					arr:[]
+				}
+			},
+			methods:{
+				getMsg(msg,i){
+					// this.arr[i] = msg;
+					this.arr.splice(i,1,msg)
+				}
+			},
+			computed:{
+				content(){
+					return this.arr.join();
+				}
+			},
+			components:{Item}
+		}
+
+		new Vue({
+			el:'#app',
+			template:`<App />`,
+			components:{App}
+		})
+
+	</script>
+</html>

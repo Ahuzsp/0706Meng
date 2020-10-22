@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // 动态组件.
+        //   给is属性动态绑定一个Vue数据.
+        //   则可以根据这Vue数据对应的不同组件名来显示不同的组件.
+
+        // 路由的router-view就是一个动态组件.
+
+        // 动态组件在切换时,组件默认会被重复的创建和销毁.
+        // 路由组件在切换时,默认会被销毁和创建.
+      
+        const Item = {
+            template:`<div>Item组件</div>`,
+            created(){
+                console.log('item组件被重复创建了')
+            },
+            destroyed(){
+                console.log('item组件被销毁')
+            }
+        }
+
+        const Son = {
+            template:`<div>Son组件</div>`,
+            created(){
+                console.log('Son组件被重复创建了')
+            }
+        }
+
+        const App = {
+            template:`
+                <div>
+                    <h3>App组件</h3>
+                    <div :is='cn'></div>
+                </div>
+            `,
+            data(){
+                return {
+                    cn:'Item'
+                }
+            },
+            components:{Item,Son}
+        }
+
+        let vm = new Vue({
+            el:'#app',
+            template:`<App />`,
+            components:{App}
+        })
+
+    </script>
+
+</body>
+</html>

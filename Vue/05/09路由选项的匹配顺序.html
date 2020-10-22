@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src='js/vue-router.js'></script>
+    <script>
+
+        /*
+            路由选项匹配是有顺序优先级的.越靠上优先级越高.
+            与多个else if的属性对应.
+        */
+
+        // if(true){
+        //     console.log('1111');
+        // }else if(true){
+        //     console.log('2222');
+        // }else{
+        //     console.log('3333');
+        // }
+
+        const Home = {
+            template:`
+                <div>首页</div>
+            `
+        }
+
+        const News = {
+            template:`
+                <div>新闻</div>
+            `
+        }
+
+        const Sport = {
+            template:`
+                <div>体育</div>
+            `
+        }
+
+        // 每次url变化,都遍历routes的路由表.寻找和当前url的路径一致的路由选项.
+        // 从上往下遍历,查找到符合条件的,就不再查找了
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/',
+                    component:Home
+                },{
+                    path:'/news',
+                    component:News
+                },{
+                    path:'/sport',
+                    component:Sport
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>
+                    <router-link to='/home'>首页</router-link>
+                    <router-link to='/news'>新闻</router-link>
+                    <router-link to='/sport'>体育</router-link>
+                    <router-view />
+                </div>
+            `
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='root'>
+        
+    </div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+
+        // 这里的createElement和Vue的render函数功能和参数都是一样的.
+        // let Vnode = React.createElement('h3',null,['hello React']);
+
+        // React如何使用字符串来写模板,createElement写模板太麻烦了.
+        // let Vnode = '<h3>hello React</h3>';
+
+        // JSX语法写模板.(不带引号的字符串).
+        // JSX跟React没有半毛钱关系,Vue也可以使用JSX写模板.
+        // 要使用JSX,必须使用对应的JSX的babel.
+
+        // 这里引入的babel插件就是把JSX的模板转换为React的虚拟节点。
+        let Vnode = <h3>hello React</h3>;
+
+        // 挂载Vnode到#root上。
+        ReactDOM.render(Vnode,document.getElementById('root'));
+
+        // new Vue({
+        //     el:'#root',
+        //     template:'<h3>hello React</h3>'
+        // })
+
+    </script>
+
+</body>
+</html>

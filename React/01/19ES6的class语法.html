@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // typeof Person === function
+
+        class Person{
+            constructor(name){
+                // 私有属性
+                this.name = name
+            }
+            // 私有属性
+            age = 34
+
+            // 公有方法
+            speak(){
+                console.log(this.name)
+            }
+        }
+
+        // Student继承Person类
+        class Student extends Person{
+            constructor(name,num){
+                // 继承父类的私有属性.(这样子类的this才可以使用.)
+                super(name);
+                // 子类私有属性
+                this.num = num;
+            }
+
+            // 子类的公有方法
+            study(){
+                console.log(this.num)
+            }
+        }
+
+        let s = new Student('坤坤',9527);
+
+
+    </script>
+
+</body>
+</html>

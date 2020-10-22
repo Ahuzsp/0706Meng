@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        let {Fragment} = React;
+
+        // React的列表渲染的两个条件
+        //    1:{}内的表达式必须返回的是数组
+        //    2:这个数组内的每个元素都应该JSX的虚拟节点(视图模板template)
+
+        let obj = {
+            name:'幂幂',
+            age:34,
+            height:168
+        };
+
+        // 对象的列表渲染,需要把对象转换成数组.
+        let Vnode = ( 
+            <Fragment>
+                <ul>
+                {
+                    Object.values(obj).map((item,i)=>(
+                       <li key={i}>{item}</li>
+                    ))
+                }
+                {
+                    Object.entries(obj).map(([key,value],i)=>(
+                       <li key={i}>{key}-{value}</li>
+                    ))
+                }
+                </ul>
+            </Fragment>         
+        );
+
+        // 挂载Vnode到#root上。
+        ReactDOM.render(Vnode,document.getElementById('root'));
+
+
+    </script>
+
+</body>
+</html>

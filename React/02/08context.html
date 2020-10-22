@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // Vue多层父传子的解决方案:
+    //    1:一层一层传递
+    //    2:插槽传递。(父子解耦,解决办法是作用域插槽)
+    //    3:bus传值.
+
+    // React多层父传子的解决方案:
+    //    1:一层一层传递
+    //    2:插槽传递。(父子解耦,解决办法是renderProps)
+    //    3:context。(可用,但是会让组件的复用性变低,后期只需要使用useContext)
+
+    // context -> 用于多层传值。
+
+    // 创建一个上下文对象
+    const ThemeContext = React.createContext('默认值');
+
+    // 通过ThemeContext解构获取Provider组件.
+    // Provider包裹住的组件以及所有的子孙组件,都可以访问Provider的value属性.
+    // 如何访问?
+    // 1:在访问的组件内:static contextType = ThemeContext;
+    // 2:在组件内通过this.context来获取最近的Provider上的value.
+    // 如果没有任何Provider,this.context获取的是createContext的默认值参数.
+
+    const {Provider} = ThemeContext;
+
+    class Son extends Component{
+        // 静态属性contextType
+        static contextType = ThemeContext;
+        render(){
+            return (
+                <div>                   
+                    <h3>Son子组件</h3>
+                    <div>{this.context}</div>
+                </div>
+            )
+        }
+    }
+
+    class Item extends Component{
+        render(){
+            return (
+                <div>
+                    <h3>Item子组件</h3>
+                    <Provider value='我最近，选我'>
+                        <Son />
+                    </Provider>
+                </div>
+            )
+        }
+    }
+
+    // Provider包裹住的组件以及所有的子孙组件,都可以访问Provider的value属性.
+    class App extends Component{
+        str = 'App的数据'
+        render(){          
+            return (
+                <Fragment>
+                    <Provider value={this.str}>
+                        <Item></Item>
+                    </Provider>
+                </Fragment>
+            )
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

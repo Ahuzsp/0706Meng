@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+
+    </div>
+
+    <script src="js/vue.js"></script>
+    <!-- <script src='js/vue-router.js'></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.0.4/vue-router.js"></script>
+    <script>
+
+        // params传参之后,刷新目标页面,参数会消失.为什么.
+        // 从首页跳到新闻时通过params传参,一定是从首页跳到新闻页才可以获取params.
+        // 从sport到news是没有parmas参数的.
+        // 刷新相当于路由从news到news,这个过程不是从home到news,因此param消失.
+
+        // query传参,是把参数放url上,刷新后url没有改变,因此刷新后参数还在.
+
+        const Home = {
+            template:`
+                <div>
+                    <h3>首页</h3>
+                    <button @click='toNews'>Home里面的按钮</button>
+                    <input type='text' v-model='msg' />
+                </div>
+            `,
+            methods:{
+                toNews(){
+                    this.$router.push({
+                        name:'news',
+                        params:{
+                            msg:this.msg
+                        }
+                    })
+                }
+            },
+            data(){
+                return {msg:''}
+            }
+        }
+
+        const News = {
+            template:`
+                <div>
+                    <h3>新闻</h3>
+                    <div>9999999</div>
+                </div>
+            `,
+            // 这是一个路守卫.(本质上就是函数)(别的路由跳转到当前路由选项时触发).
+            // to就是目标路由,from就是上一个路由.这里的to和from实际上就是vue实例的$route属性.
+            // next就是跳转的回调函数.必须写,不写next就会跳转失败.
+
+            beforeRouteEnter(to,from,next){
+                // 访问路由选项对象
+                // console.log('to',to);
+                // console.log('to',from);
+
+                // 访问路径
+                // console.log('to',to.path);
+                // console.log('from',from.path);
+
+                // 访问路由传参的msg数据
+                // console.log('msg',to.params.msg);
+
+                // 正常跳转
+                // next();
+
+                // 参数时false就跳转失败.
+                // next(false);
+
+                // 不跳到新闻,转而跳到体育路由.参数时路径
+                // next('/sport');
+
+                // 跳转到体育时,也传参.
+                next({path:'/sport',query:{msg:to.params.msg}});
+            }
+        }
+
+        const Sport = {
+            template:`
+                <div>体育-{{$route.query.msg}}</div>
+            `
+        }
+
+        const router = new VueRouter({
+            routes:[
+                {
+                    path:'/',
+                    component:Home,
+                    name:'home'
+                },{
+                    path:'/news',
+                    component:News,
+                    name:'news'
+                },{
+                    path:'/sport',
+                    component:Sport,
+                    name:'sport'
+                }
+            ]
+        })
+
+        const App = {
+            template:`
+                <div id='app'>                   
+                    <button @click='toPage("/")'>首页</button>
+                    <button @click='toPage("/news")'>新闻</button>
+                    <button @click='toPage("/sport")'>体育</button>
+                    <keep-alive>
+                        <router-view />
+                    </keep-alive>
+                </div>
+            `,
+            methods:{
+                toPage(hash){
+                    this.$router.push({path:hash});
+                }
+            }
+        }
+        
+        new Vue({
+            el:'#app',
+            render:h=>h(App),
+            components:{App},
+            router
+        })
+
+
+
+    </script>
+
+</body>
+</html>

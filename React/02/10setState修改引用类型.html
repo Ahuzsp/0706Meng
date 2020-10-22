@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+</body>
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.js"></script>
+<script type='text/babel'>
+    
+    const {Component,Fragment} = React;
+
+    // react的组件状态用state声明
+    // 如何获取state数据:this.state.数据名
+    // 如何修改state数据:this.setState({新的数据});
+
+    class App extends Component{
+        // num = 0
+        state = {
+            arr:[111,222,333]
+        }
+        render(){          
+            return (
+                <Fragment>
+                    <ul>
+                    {
+                        this.state.arr.map((item,i)=>(
+                            <li key={i}>
+                                <span>{item}</span>
+                                <button onClick={this.del.bind(this,i)}>删除</button>
+                            </li>
+                        ))
+                    }
+                    </ul>
+                </Fragment>
+            )
+        }
+        del(i){
+            // state数据只能使用setState来修改.
+            // this.arr.splice(i,1);
+
+            // 修改state数据
+            // this.state.arr.splice(i,1);
+
+            // 把修改后的state数据通过setState赋值后更新视图.
+            // this.setState({
+            //     arr:this.state.arr
+            // });           
+            
+            // --------------------------------------------------------
+            
+            // React推崇"数据不可变性"
+            // 1:不要修改原来的引用类型.
+            // 2:数据变化后,应该是一个新的引用,而不是原来的引用(对象).
+            
+            // 缓存原来的数据
+            // let arr = this.state.arr.slice();
+            
+            // 操作缓存的数据
+            // arr.splice(i,1);
+            
+            // 如果state内的数据是引用类型,每次state变化,都应该赋值一个新的对象
+            // this.setState({
+            //     arr:[...arr]
+            // });           
+
+            // --------------------------------------------------------------- 
+            
+            // 如果state内的数据是引用类型,每次state变化,都应该赋值一个新的对象
+            this.setState({
+                arr:[
+                    ...this.state.arr.slice(0,i),
+                    ...this.state.arr.slice(i+1)
+                ]
+            });  
+        }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>
+
+
+</html>

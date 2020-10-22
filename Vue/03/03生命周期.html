@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <button>哈哈哈韩</button>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+
+        // Vue的生命周期
+        // 1:Vue实例创建阶段
+        //        a:数据劫持 (为了捕获数据修改变更)
+        //            通过Object.defineProperty进行数据劫持
+        //        b:渲染视图 (编译template,生成虚拟节点,转换为真实节点)
+        //            compile (编译) template组件html模板 (把html转换为AST抽象语法树)
+        //            编译之后,生成虚拟节点.createElement(标签名,属性列表,子节点列表)
+        //            生成虚拟节点之后,就生成对应的真实DOM节点.
+        //            最后把真实的DOM节点替换(挂载)到body内.
+
+        // 2:程序运行阶段
+
+        // 数据劫持前后,分别触发两个钩子函数(beforeCreate,created)
+        // beforeCreate辣鸡,没用.
+        // created 给数据做一些初始化操作.可以做数据请求吗?不推荐.
+
+        new Vue({
+            el:'#app',
+            data:{
+                msg:'',
+            },
+            beforeCreate(){
+                // 无法访问data数据
+                console.log(this.msg);// undefined
+            },
+            created(){
+                // 可以访问组件的所有数据.data,computed,props
+                console.log(this.msg);// 8888
+                this.msg = '8888';
+            }
+        })
+
+        function myVue(config){
+            // 数据劫持前,触发beforeCreate.
+            config.beforeCreate();
+
+            // 做数据映射.把config的data变成Vue实例的data.
+            this.$data = config.data;
+            // 劫持数据.
+            Object.defineProperty();
+
+            // 数据劫持后触发created
+            config.created();
+        }
+
+    </script>
+
+</body>
+</html>

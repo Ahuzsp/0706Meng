@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id='root'></div>
+
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.js"></script>
+
+    <script type='text/babel'>
+        
+        // 子组件传递数据x给父组件
+        // 在子组件内调用父组件传递的方法,并传入x
+
+        // 任意两个组件通信:
+        //    组件A传递数据给组件B
+        //    在组件A内调用组件B的方法,并传入组件A的数据
+
+        // React内的子传父,也可以使用以上逻辑.
+
+        class Item extends React.Component{
+            constructor(props){
+                super(props);
+                this.str = '子组件的str数据'
+            }
+            render(){
+                let {getData} = this.props;
+                return (
+                    <div>
+                        <p>{this.str}</p>
+                        <button onClick={()=>{getData(this.str)}}>按钮</button>
+                    </div>
+                )
+            }
+        }
+
+        class App extends React.Component{
+            constructor(){
+                super();
+                this.msg = 'App组件';
+            }
+            render(){
+                return (
+                    <div>
+                        <h3>根组件</h3>
+                        <div>{this.msg}</div>
+                        <Item getData={this.getData.bind(this)} />
+                    </div>
+                )
+            }
+
+            getData(str){
+                this.msg = str;
+                this.forceUpdate();
+            }
+        }
+
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+    </script>
+
+</body>
+</html>
