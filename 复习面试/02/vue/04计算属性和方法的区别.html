@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <input type="text" v-model='count'>
+        <input type="text" v-model='price'>
+        <div>总价：{{total()}}</div>
+        <div>总价：{{tag}}</div>
+        <input type="text" v-model='num'>
+    </div>
+
+    
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+    <script>
+
+        // 如果把计算属性写成方法，那每次视图更新都会重新执行这个方法
+        // 计算属性,只有当计算属性内的数据发生变化,才会从新调用
+
+        // 如果计算属性依赖的数据没有发生变化,在视图更新时,显示的是前一次计算属性的值.(缓存的值)
+        // 而不会获取计算属性的方法来获取计算属性的值.(为了性能)
+        // 如果两次视图更新的计算属性是一样的,则使用缓存渲染,不会重新调用计算属性的方法.
+        // 如果关闭缓存,则每次视图更新,都会重新调用计算属性的方法来渲染视图.
+
+        let vm = new Vue({
+            el:"#app",
+            data:{
+                count:10,
+                price:5,
+                num:0,
+            },
+            methods:{
+                total(){
+                    console.log('方法total');
+                    return this.count * this.price
+                }
+            },
+            computed:{
+                // tag(){
+                //     console.log('计算属性');
+                //     return this.count * this.price
+                // }
+                tag:{
+                    // 关闭计算属性的缓存功能.
+                    cache:false,
+                    get(){
+                        console.log('计算属性');
+                        return this.count * this.price
+                    }
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>

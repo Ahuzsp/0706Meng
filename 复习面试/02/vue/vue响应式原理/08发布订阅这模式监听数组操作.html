@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <span>{{num}}</span>
+        <div>
+            <h3>{{num}}</h3>
+            <div>{{num}}</div>
+            <ul>
+                <li>{{str}}</li>
+            </ul>
+        </div>
+        <p>{{num}}</p>
+    </div>
+
+    <script>
+
+        // 数组的操作:
+        // 在get内收集依赖
+        // 在push时通知所有的依赖更新视图.
+
+        let data = {
+            num:100,
+            str:'list1',
+            goods:{name:'口红'},
+            arr:[111,222,333]
+        }
+
+        function def(data,key,val){
+            Object.defineProperty(data,key,{
+                value:val,
+                enumerable:false
+            })
+        }
+
+        class CreateCustomMethod{
+            constructor(arr){
+                this.arr = arr;
+                this.methods = ["push","pop","shift","unshift","splice","sort","reverse"];
+                this.init();
+            }
+            init(){
+                // 自定义对象.
+                let customPrototype = {};
+                // 循环添加自定义push等方法
+                for(let i=0;i<this.methods.length;i++){
+                    // 给这个自定义对象添加自定义的push等方法.
+                    customPrototype[this.methods[i]] = (...args)=>{
+                        console.log('111111');
+                        // 触发原生的push等方法
+                        Array.prototype[this.methods[i]].apply(this.arr,args);
+                        // 数据修改后,通知所i有的依赖更新视图.
+                        this.arr.__ob__.dep.notify();
+                    }
+                }
+                // 把自定义对象添加到数组的原型链上覆盖原生push等方法.
+                this.arr.__proto__ = customPrototype;
+            }
+        }
+
+        // 一个数据对应一个Observer.
+        class Observer{
+            constructor(data){
+                // 这里的dep只为数组服务.
+                this.dep = new Dep();
+                // 给每个数据添加一个__ob__,这个属性用于存放对应的Observer实例.
+                def(data,'__ob__',this);
+                // 如果监听的数据是一个数组,则进行原型覆盖的操作.
+                if(Array.isArray(data)){
+                    new CreateCustomMethod(data);
+                }else{
+                    this.walk(data);
+                }               
+            }
+            walk(data){
+                for(let prop in data){
+                    // 遍历对象监听所有数据.
+                    this.defineReactive(data,prop,data[prop]);
+                }
+            }
+            defineReactive(data,prop,val){
+                // 判断当前的数据是不是纯对象,如果是,递归监听.
+                let childOb = this.observe(val);
+
+                // 实例化dep,存放待跟新视图的数组,每个数据对应一个dep.
+                let dep = new Dep();
+
+                // 监听数据.
+                Object.defineProperty(data,prop,{
+                    enumerable:true,
+                    configurable:true,
+                    get(){
+                        // get触发,通过depend收集视图.
+                        if(Array.isArray(val)){
+                            childOb.dep.depend();
+                        }else{
+                            dep.depend();
+                        }                       
+                        return val
+                    },
+                    set(newVal){   
+                        val = newVal;
+                        // set触发.通过notify更新所有视图.
+                        dep.notify();
+                    }
+                })
+            }
+            observe(data){
+                // 可能的Observer实例
+                let ob = null;
+                // 如果当前数据是纯对象,则递归监听数据.
+                // console.log(data == 'object');
+                if(typeof data == 'object'){
+                    ob = new Observer(data);
+                }
+                return ob
+            }
+        }
+
+        // Dep类.
+        class Dep{
+            constructor(){
+                Dep.target = null;
+                this.sub = [];
+            }
+            // 集使用了num的视图
+            depend(){
+                // 只再第一个get触发时存视图.
+                if(Dep.target){
+                    this.sub.push(Dep.target);
+                    Dep.target = null;
+                }               
+            }
+            // 通知dep数组内的所有组件更新视图
+            notify(){
+                this.sub.forEach((item)=>{
+                    item.render();
+                })
+            }
+        }
+
+        class Watcher{
+            constructor(expre,render){
+                // 视图内的数据
+                this.expre = expre;
+                // 视图的渲染函数
+                this.render = render;
+                // 把当前的实例存到window上.方便再depend内获取当前的实例.
+                Dep.target = this;
+                // 访问了监听的数据,触发这个数据的get方法.在get内把当前的watcher实例push到dep内
+                data[expre];
+            }
+        }
+
+        // 给data内的所有字段以及子字段添加数据监听.每个数据对应一个dep.
+        new Observer(data);
+
+        // 实例化监听num
+        new Watcher('num',function(){
+            console.log("<span>" + data.num + "</span>")
+        })
+        
+        // 实例化监听num
+        new Watcher('num',function(){
+            console.log("<h3>" + data.num + "</h3>")
+        })
+       
+        // 实例化监听num
+        new Watcher('num',function(){
+            console.log("<div>" + data.num + "</div>")
+        })
+
+        // 实例化监听str
+        new Watcher('str',function(){
+            console.log("<div>" + data.str + "</div>")
+        })
+
+        // 实例化监听arr
+        new Watcher('arr',function(){
+            console.log("<div>" + data.arr + "</div>")
+        })
+                
+
+
+
+    </script>
+
+</body>
+</html>

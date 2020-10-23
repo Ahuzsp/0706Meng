@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import 'style.css';
+    </style>
+</head>
+<body>
+    <div class='active'>11111</div>
+    <script>
+
+        // ajax是一个js的对象.需要通过XMLHttpRequest构造器创建.
+        let xhr = new XMLHttpRequest();
+
+        // 然后通过这个对象去发起ajax请求.
+        xhr.open('GET','URL');
+        xhr.send();
+
+        // ajax是异步的,因此需要设置事件监听ajax请求完成.
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                if(xhr.status == 200){
+                    // 拿到数据之后的事情。
+                }
+            }
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id='app'></div>
+
+    <div class='active'>
+        <div>{{msg}}</div>
+        <p>{{msg}}</p>
+        <span>{{msg}}</span>
+    </div>
+    <script>
+
+        // 数据劫持类 (Observer类)
+        // Dep类
+        // Watcher类
+
+        let oDiv = document.querySelectorAll('div>div')[0];
+        let oP = document.querySelectorAll('div>p')[0];
+        let oSpan = document.querySelectorAll('div>span')[0];
+
+        let data = {
+            msg:100
+        }
+
+        let val = data.msg;
+
+        // setter触发通知视图更新.
+        // getter触发收集依赖.(msg的依赖是oDiv,oP,oSpan)
+
+        // 存放视图的数组.
+        let dep = new Dep();
+
+        // 缓存watcher的实例
+        let target = null;
+
+        Object.defineProperty(data,'msg',{
+            get(){
+                console.log('msg被访问');
+                // get内收集依赖
+                dep.depend(target.el);
+                return val
+            },
+            set(newVal){
+                val = newVal;
+                // 通知视图更新。
+                dep.notify(newVal);
+            }
+        })
+
+        // Dep类。
+        function Dep(){
+            this.dep = [];
+        }
+
+        Dep.prototype.depend = function(watcher){
+            this.dep.push(watcher);
+        }
+
+        Dep.prototype.notify = function(newVal){
+            this.dep.forEach((item)=>{
+                item.innerText = newVal;
+            })
+        }
+
+        function Watcher(el,callback){
+            this.callback = callback;
+            this.el = el;
+            // 缓存watcher实例。
+            target = this;
+            this.callback();
+        }
+
+        new Watcher(oDiv,function(){
+            return `<div>${data.msg}</div>`
+        })
+        
+        new Watcher(oP,function(){
+            return `<p>${data.msg}</p>`
+        })
+
+        new Watcher(oSpan,function(){
+            return `<span>${data.msg}</span>`
+        })
+
+    </script>
+
+</body>
+</html>

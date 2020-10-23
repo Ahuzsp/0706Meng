@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script>
+
+        // MVC,MVVM 软件设计模式.
+
+        // MVC 模式
+        // M -> model(数据), v -> view(视图), c -> controlar (控制器)
+        // 最最经典的MVC模式 -> 看电视
+        // M -> 电视节目, v - 电视机, c -> 遥控器 (用户通过c控制器来控制v显示不同的m)
+        // MVC优点就是直观,方便细节操作.
+        // MVC的缺点就是c控制器权力太大,太臃肿,太复杂.要掌握c控制器需要额外成本.
+
+        // model (m)
+        let msg = '中央五套';
+        // 电视机 (v)
+        let oDiv = document.getElementById('app');
+        // DOM显示电视节目. (c)
+        oDiv.innerText = msg;
+
+    </script>
+
+</body>
+</html>

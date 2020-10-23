@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <span>{{num}}</span>
+        <div>
+            <h3>{{num}}</h3>
+            <div>{{num}}</div>
+            <ul>
+                <li>{{str}}</li>
+            </ul>
+        </div>
+        <p>{{num}}</p>
+    </div>
+
+    <script>
+
+        // 双向数据绑定原理。(vue如何实现响应式)
+        // Vue如何箭头数组操作. 
+
+        let data = {
+            num:100,
+            str:'list1',
+            goods:{name:'口红'}
+        }
+
+        class Observer{
+            constructor(data){
+                this.walk(data);
+            }
+            walk(data){
+                for(let prop in data){
+                    // 遍历对象监听所有数据.
+                    this.defineReactive(data,prop,data[prop]);
+                }
+            }
+            defineReactive(data,prop,val){
+                // 判断当前的数据是不是纯对象,如果是,递归监听.
+                this.observe(val);
+
+                // 存放待跟新视图的数组,每个数据对应一个dep.
+                let dep = [];
+
+                // 监听数据.
+                Object.defineProperty(data,prop,{
+                    enumerable:true,
+                    configurable:true,
+                    // num被访问,被求值就会触发
+                    // get的返回值就是num的值.
+                    get(){
+                        depend(dep);
+                        return val
+                    },
+                    // num被修改的时候触发
+                    set(newVal){
+                        // 通知num的所有视图更新.              
+                        val = newVal;
+                        notify(dep);
+                    }
+                })
+            }
+            observe(data){
+                // 如果当前数据是纯对象,则递归监听数据.
+                if(typeof data === 'object'){
+                    new Observer(data)
+                }
+            }
+        }
+
+        // 集使用了num的视图
+        function depend(dep){
+            dep.push(window.target);
+        }
+
+        // 通知dep数组内的所有组件更新视图
+        function notify(dep){
+            dep.forEach((item)=>{
+                item.render();
+            })
+        }
+
+        // 给data内的所有字段以及子字段添加数据监听.每个数据对应一个dep.
+        new Observer(data);
+
+        class Watcher{
+            constructor(expre,render){
+                // 视图内的数据
+                this.expre = expre;
+                // 视图的渲染函数
+                this.render = render;
+                // 把当前的实例存到window上.方便再depend内获取当前的实例.
+                window.target = this;
+                // 访问了监听的数据,触发这个数据的get方法.在get内把当前的watcher实例push到dep内
+                data[expre];
+            }
+        }
+
+        // 实例化监听num
+        new Watcher('num',function(){
+            console.log("<span>" + data.num + "</span>")
+        })
+        
+        // 实例化监听num
+        new Watcher('num',function(){
+            console.log("<h3>" + data.num + "</h3>")
+        })
+       
+        // 实例化监听num
+        new Watcher('num',function(){
+            console.log("<div>" + data.num + "</div>")
+        })
+
+        // 实例化监听str
+        new Watcher('str',function(){
+            console.log("<div>" + data.str + "</div>")
+        })
+
+        // 实例化监听goods
+        new Watcher('goods',function(){
+            console.log("<div>" + data.goods + "</div>")
+        })
+
+        // 实例化监听name
+        new Watcher('goods.name',function(){
+            console.log("<div>" + data.goods + "</div>")
+        })
+                
+
+
+
+    </script>
+
+</body>
+</html>

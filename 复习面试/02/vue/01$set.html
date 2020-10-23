@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button @click='fn'>用set修改obj的name</button>
+        <button @click='show'>不用set修改obj的name</button>
+        <div>obj.name:{{obj.name}}</div>
+        <div>obj.age:{{obj.age}}</div>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+    <script>
+
+        // $set可以给没有数据劫持的数据添加数据劫持.
+        // 数据请求成功之后,给某个字段设置数据劫持.
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                obj:{
+                    age:'8888'
+                },
+                list:[],
+            },
+            updated(){
+                console.log('视图更新了');
+            },
+            methods:{
+                fn(){
+                    // 沒有响应式。因为Vue初始化时，没有给name设置数据劫持。
+                    // this.obj.name = '秘密';
+
+                    // 给this.obj添加一个name属性,并且设置数据劫持.
+                    this.$set(this.obj,'name',Math.random());
+                },
+                show(){
+                    // this.obj.name = Math.random();
+                    // this.obj.age = undefined;
+
+                    // this.arr[0] = 100;
+
+                    // 以此方法监听属性的删除。删除后视图更新。
+                    this.$delete(this.obj,'name');
+
+                    // 不会视图更新
+                    // delete this.obj.age;
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

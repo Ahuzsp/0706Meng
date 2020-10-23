@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <span>{{num}}</span>
+        <div>
+            <h3>{{num}}</h3>
+            <div>{{num}}</div>
+            <ul>
+                <li>{{str}}</li>
+            </ul>
+        </div>
+        <p>{{num}}</p>
+    </div>
+
+    <script>
+
+        // 双向数据绑定原理。(vue如何实现响应式)
+        // Vue如何箭头数组操作. 
+
+        let data = {
+            num:100,
+            str:'list1'
+        }
+
+        // 存放num待更新的视图.
+        let dep = [];
+
+        // 缓存当前的num属性值.
+        let val = data.num;
+
+        // 如何知道num发生了变化?
+        Object.defineProperty(data,'num',{
+            enumerable:true,
+            configurable:true,
+            // num被访问,被求值就会触发
+            // get的返回值就是num的值.
+            get(){
+                return val
+            },
+            // num被修改的时候触发
+            set(newVal){
+                // 通知num的所有视图更新.                
+                val = newVal;
+                notify();
+            }
+        })
+
+        // 集使用了num的视图
+        function depend(component){
+            dep.push(component);
+        }
+
+        // 通知dep数组内的所有组件更新视图
+        function notify(){
+            dep.forEach((item)=>{
+                item.render();
+            })
+        }
+
+        // 伪组件span
+        let SpanComponent = {
+            render(){
+                console.log("<span>" + data.num + "</span>")
+            }
+        }
+        depend(SpanComponent);
+
+        // 伪组件h3
+        let H3Component = {
+            render(){
+                console.log("<h3>" + data.num + "</h3>")
+            }
+        }
+        depend(H3Component);
+
+         // 伪组件div
+        let DivComponent = {
+            render(){
+                console.log("<div>" + data.num + "</div>")
+            }
+        }
+        
+        depend(DivComponent);
+
+        /*
+        num 对应4个标签
+            1:就把这4个需要通知的视图放到一个数组内.
+            2:num的set触发时,循环这个数组通知所有的视图.
+        str 对应1个标签
+            1:就把这1个需要通知的视图放到一个数组内.
+            2:str的set触发时,循环这个数组通知所有的视图. 
+        
+        每个被监听的数据都应该对应一个存放待更新视图的数组.
+        
+        在get内收集使用了num的视图.
+        在set中通知数组内的所有视图更新.
+
+        */
+
+        // num变化时,如何知道应该更新多少视图.
+        // num变化时,如何通知视图更新.
+
+
+    </script>
+
+</body>
+</html>

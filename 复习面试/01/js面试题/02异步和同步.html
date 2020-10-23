@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // 同步操作的性质 -> 有代码阻塞 -> 前面的没执行完，后面的就无法执行。
+        alert('你变个红给我看下');
+        document.body.style.background = 'red';
+
+        // 异步操作的性质 -> 没有代码阻塞 -> 前面的没有执行完毕,后面的就可以开始执行
+        // setTimeout(() => {
+        //     alert('你变个红给我看下');
+        // },0);
+        // document.body.style.background = 'red';
+        
+        // 数据请求.应该是同步的,否则在请求的过程中页面会假死.
+        // axios.get(url).then((res)=>{DOM操作渲染页面});
+        // document.body.style.background = 'red';
+
+    </script>
+
+</body>
+</html>

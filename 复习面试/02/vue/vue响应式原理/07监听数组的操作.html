@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'>
+        <span>{{num}}</span>
+        <div>
+            <h3>{{num}}</h3>
+            <div>{{num}}</div>
+            <ul>
+                <li>{{str}}</li>
+            </ul>
+        </div>
+        <p>{{num}}</p>
+    </div>
+
+    <script>
+
+        // 发布订阅者模式如何监听数组的push等操作?push操作无法触发set.
+
+        // 数组的操作:
+        // 在get内收集依赖
+        // 在push时通知所有的依赖更新视图.
+
+        // 如何在原生js的push方法调用时,执行一些别的操作?
+        // Vue会自定义一些方法来覆盖原生的push等方法.
+
+        // 在arr的原型链上添加一个自定义对象,这个自定义对象有自己的push方法.
+        // arr -> customPrototype(自定义push) -> Array.prototype(原生push) -> Object.prototype
+
+        // 会修改数组本身的方法:push,pop,shift,unshift,splice,sort,reverse
+
+        let arr = [111,222,333];
+        let methods = ["push","pop","shift","unshift","splice","sort","reverse"];
+
+        function createCustomMethod(arr){
+            let customPrototype = {};
+            for(let i=0;i<methods.length;i++){
+                // 给这个自定义对象添加自定义的push等方法.
+                customPrototype[methods[i]] = function(...args){
+                    console.log('arr'+methods[i]+'了');
+                    // 触发原生的push等方法
+                    Array.prototype[methods[i]].apply(arr,args);
+                    // 数据修改后,通知所i有的依赖更新视图.
+                    // dep.notify();
+                }
+            }
+            
+            // 把这个对象添加到arr的原型链上,以覆盖原生的push等方法.
+            // 如果__proto__用不了,则直接把7个自定义方法添加到数组上.
+            arr.__proto__ = customPrototype;
+        }
+
+        createCustomMethod(arr);
+        
+                
+
+
+
+    </script>
+
+</body>
+</html>

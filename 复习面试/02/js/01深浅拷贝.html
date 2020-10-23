@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // 深浅拷贝针对引用类型而言.
+
+        // 引用类型存的是引用,而不是对象本身.
+
+        // 拷贝 -> 赋值 -> 复制
+
+        // 浅拷贝 -> 浅复制 -> 只赋值引用类型内引用.
+        // 深拷贝 -> 深复制 -> 创建一个新对象来进行浅复制.
+
+        let oYm = {
+            "name":"幂幂",
+            data:{
+                num:999,
+                person:{
+                    age:8989
+                }
+            }
+        }
+
+        // 浅复制.
+        // let oBj = oYm;
+
+        // 深复制.
+        // let oBj = {...oYm};
+        // 最简单的深复制
+        // let oBj = JSON.parse(JSON.stringify(oYm));
+        
+        function deepCopy(obj){
+            let oCy = {};
+            // 循环判断递归深拷贝
+            for(let prop in obj){
+                if(typeof obj[prop] == 'object'){
+                    oCy[prop] = deepCopy(obj[prop])
+                }else{
+                    oCy[prop] = obj[prop]
+                }
+            }
+            return oCy
+        }
+        
+        let oBj = deepCopy(oYm);
+
+    </script>
+</body>
+</html>

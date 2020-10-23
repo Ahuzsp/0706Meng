@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app"></div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+    <script>
+
+        // Vue的inject和React的context作用类似.
+
+        const App = {
+            template:`
+            <div id="app">
+                <div>str:{{strrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr}}</div>
+            </div>
+            `,
+            data(){
+                return {
+                    strrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:'1111'
+                }
+            }
+        }
+
+        let vm = new Vue({
+            el:'#app',
+            template:'<App />',
+            components:{App}
+        })
+
+    </script>
+</body>
+</html>

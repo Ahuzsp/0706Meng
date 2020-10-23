@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id='app'></div>
+
+    <script>
+
+        // MVC,MVVM 软件设计模式.
+
+        // MVVM 模式
+        // M -> model(数据), v -> view(视图), vm -> 视图数据层 (相当于是c的作用)
+        // 最最经典的MVC模式 -> 看电视.
+        // MVVM模式就是声控电视,没有遥控器.
+        // 通过vm层来关联M和V层.
+
+        // model (m)
+        let tv = '中央五套';
+        // 电视机 (v)
+        let oDiv = document.getElementById('app');
+        // DOM显示电视节目. (c)
+        oDiv.innerText = msg;
+
+        // vm实例就是mvvm的vm层
+        let vm = new Vue({
+            el:'#app',
+            // 视图层
+            template:`<div id='app'>{{msg}}</div>`,
+            // 数据层
+            data:{tv:'中央五套'}
+        })
+        // 直接操作数据层来更新视图层.
+        vm.tv = '中央八套';
+
+    </script>
+
+</body>
+</html>

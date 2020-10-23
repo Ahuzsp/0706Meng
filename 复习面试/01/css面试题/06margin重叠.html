@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 200px;
+            height: 200px;
+            /* border:1px solid #000; */
+            background-color: blue;
+            /* overflow:hidden */
+            /* border-top:1px solid #000; */
+            /* float: left; */
+            margin-bottom:50px;
+        }
+        .box>div{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin-top:50px;
+            margin-left:50px;
+        }
+        .active{
+            width: 200px;
+            height: 200px;
+            background-color: green;
+            margin-top:50px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 
+        标准文档流中,垂直margin重叠:
+        1:父子之间的重叠 (子元素的margin跑到了父元素身上,以数值大的为准)
+            解决办法:
+                overflow:hidden,添加border,脱标 (浮动,定位)
+
+        2:兄弟之间的重叠 
+    -->
+
+    <div class='box'>
+        <div></div>
+    </div>
+    <div class='active'></div>
+
+</body>
+</html>

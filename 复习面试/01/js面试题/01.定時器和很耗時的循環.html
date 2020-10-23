@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        setTimeout(()=>{
+            console.log('我要打印')
+        },5000)
+
+        // 循環耗時8秒,循環的過程中,定時器的即時已經結束,因此定時在循環結束之後馬上打印。
+        for(let i=0;i<100000;i++){
+            console.log(i);
+        }
+
+    </script>
+
+</body>
+</html>

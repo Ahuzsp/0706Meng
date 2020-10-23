@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+
+//		以下代码是Vue源码中发布订阅者模式更新视图的核心逻辑.(过程和逻辑几乎一样)
+//		Observer(发布者) -> Dep(经纪人) -> Watcher(订阅者)
+
+//		初始数据。
+		let data = {
+			a:10,
+			b:20
+		}
+
+//		根据data发布消息。消息就是data的key
+		class Observer {
+			constructor(data){
+				//发布消息
+				this.walk(data)
+			}
+			walk(){
+				let keys = Object.keys(data);
+				//根据data的key个数发布相应个数的消息。
+				for(let i=0;i<keys.length;i++){
+					this.defineReactive(keys[i],data[keys[i]])
+				}
+			}
+			defineReactive(key,val){
+				//如果val是纯对象，递归数据劫持。
+				this.observer(val);
+				
+				//为每个属性key绑定一个dep实例。每个dep实例会存储对应个数的Watcher，方便在set触发时通知所有的Watcher
+				//这里的key就是发布的消息,每个key对应一个dep(即Broker),dep内存放的都是这个key(消息)的订阅者.
+				//这里是通过闭包存储dep.某个key的get多次触发,访问到的是同一个dep.不同的key访问不同的dep.
+				let dep = new Dep();
+				
+				//缓存observer,方便在set中使用.
+				let _observer = this.observer;
+				
+				//数据劫持
+				Object.defineProperty(data,key,{
+					enumerable:true,
+					configurable:true,
+					get(){
+						//每次get被触发，都把相应的Watcher实例存储到Dep的subs中。
+						dep.addSubs()
+						return val
+					},
+					set(newVal){
+						if(newVal == val){
+							return
+						}
+						//每次set触发，都通知subs内的所有Watcher实例。
+						dep.notify();
+						//如果新的值是新的对象，则对这个新的对象也进行数据劫持。
+						//新的对象产生新的key，新的消息，需要新的dep。(这里新的key就是Watcher新的'依赖')
+						_observer(newVal);
+						//更新数据。
+						val = newVal;
+					}
+				})
+			}
+			//发布器.
+			observer(data){
+				//如果新的值不是纯对象,则不进行数据劫持.
+				if(Object.prototype.toString.call(data)!=='[object Object]'){
+					return
+				}
+				new Observer(data)
+			}
+		}
+		
+		//发布订阅模式中的Broker。
+		class Dep{
+			constructor(){
+				//sub用于存储订阅者Watcher
+				this.subs = []
+			}
+			addSubs(){
+				//把Watcher存入subs中
+				this.subs.push(Dep.target)
+			}
+			notify(){
+				//set触发通知所有的Watcher
+				this.subs.forEach(function(watcher){
+					watcher.fn();
+				})
+			}
+		}
+		
+		//存储Watcher的中间变量。每次实例化Watcher，都将这个变量赋值为这个Watcher实例。
+		Dep.target = null;
+		
+		//订阅者。
+		class Watcher {
+			constructor(exp,fn){
+				//订阅者订阅的消息,这里是一个表达式
+				this.exp = exp;
+				//订阅的消息更新需要触发的回调.
+				this.fn = fn;
+				//把当前的Watcher实例赋值给DepTarget，这样可以在set触发时正确的调用相应Watcher实例的fn
+				this.pushTarget(this);
+				//对data的某个属性求值，从而触发data相应属性的get属性访问器
+				//每个Watcher的exp就是该Watcher订阅的消息.
+				//每次订阅都会触发发布者Observer的get,通过dep.addSubs()将该Watcher存入Dep中.这样消息改变触发set时,能正确通知相应的订阅者.
+				data[exp];
+			}
+			//将DepTarget赋值为Watcher实例。
+			pushTarget(watcher){
+				Dep.target = watcher
+			}
+		}
+		
+		
+		//实例化发布者。这里根据data的属性,发布了两个消息a和b.
+		new Observer(data);
+		
+		//实例化订阅者。这里实例化3个。		
+		//订阅'a',a变化,触发回调.打印a的观察者11111
+		new Watcher('a',function(){
+			console.log('a的观察者11111');
+		})
+		
+		//订阅'a',a变化,触发回调.打印a的观察者22222
+		new Watcher('a',function(){
+			console.log('a的观察者22222');
+		})
+		
+		//订阅'b',b变化,触发回调.打印:b的观察者33333
+		new Watcher('b',function(){
+			console.log('b的观察者33333');
+		})
+		
+		
+		
+	</script>
+</html>

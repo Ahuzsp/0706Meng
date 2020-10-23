@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button @click='fn'>把item的msg给父组件的str</button>
+        <div>str:{{str}}</div>
+        <item ref='item' />
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+    <script>
+
+        // Vue的inject和React的context作用类似.
+
+        const Box = {
+            template:`<div>Box:{{num}}</div>`,
+            inject:['num']
+        }
+
+        const item = {
+            data(){
+                return {
+                    msg:'item的msg'
+                }
+            },
+            template:`<div><Box /></div>`,
+            components:{Box}
+        }
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                str:''
+            },
+            provide(){
+                return {
+                    num:'1000'
+                }
+            },           
+            methods:{
+                fn(){
+                    this.str = this.$refs.item.msg
+                }
+            },
+            components:{item}
+        })
+
+    </script>
+</body>
+</html>

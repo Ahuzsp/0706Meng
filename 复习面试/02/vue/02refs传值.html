@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button @click='fn'>把item的msg给父组件的str</button>
+        <div>str:{{str}}</div>
+        <item ref='item' />
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+    <script>
+
+        // $set可以给没有数据劫持的数据添加数据劫持.
+        // 数据请求成功之后,给某个字段设置数据劫持.
+
+        const item = {
+            data(){
+                return {
+                    msg:'item的msg'
+                }
+            },
+            template:`<div></div>`,
+        }
+
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                str:''
+            },
+            methods:{
+                fn(){
+                    // console.log(this.$children);
+
+                    // 通过$children获取子组件.
+                    // this.str = this.$children[0].msg
+
+                    // 通过refs获取子组件
+                    this.str = this.$refs.item.msg
+                }
+            },
+            components:{item}
+        })
+
+    </script>
+</body>
+</html>

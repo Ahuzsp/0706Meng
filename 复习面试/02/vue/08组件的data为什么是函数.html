@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app"></div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+    <script>
+
+        // 组件在复用后,数据必须是相互独立的.不能共用.
+        // 为了实现以上效果,data必须是函数,每次组件复用,data函数返回一个新的data数据.
+
+        const Item = {
+            template:`
+                <div>
+                    <div>{{num}}</div>
+                    <button @click='fn'>按钮</button>
+                </div>
+            `,
+            data(){
+                return {
+                    num:100
+                }
+            },
+            methods:{
+                fn(){
+                    this.num = Math.random();
+                }
+            }
+        }
+
+        const App = {
+            template:`
+            <div id="app">
+                <Item />
+                <Item />
+            </div>
+            `,
+            components:{Item}
+        }
+
+        let vm = new Vue({
+            el:'#app',
+            template:'<App />',
+            components:{App}
+        })
+
+    </script>
+</body>
+</html>

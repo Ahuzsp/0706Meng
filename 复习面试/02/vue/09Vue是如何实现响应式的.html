@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div>{{msg}}</div>
+        <p>{{msg}}</p>
+        <span>{{msg}}</span>
+    </div>
+    <script>
+
+        let oDiv = document.querySelectorAll('div>div')[0];
+        let oP = document.querySelectorAll('div>p')[0];
+        let oSpan = document.querySelectorAll('div>span')[0];
+
+        let data = {
+            msg:100
+        }
+
+        let val = data.msg;
+
+        // 如果msg在多个视图内被使用了，在msg变化时需要通知所有的这些视图去更新。
+        // 如何通知?这里需要把所有的这些视图放到一个数组内.在msg变化时,遍历这个数组更新所有视图.
+        // 何时往数组里放视图? (收集依赖)
+
+        // 存放视图的数组.
+        let dep = [];
+
+        dep.push(oDiv);
+        dep.push(oP);
+        dep.push(oSpan);
+
+        Object.defineProperty(data,'msg',{
+            // msg被访问的时候
+            get(){
+                console.log('getter')
+                return val
+            },
+            // msg的值发生变化时
+            set(newVal){
+                val = newVal;
+                // oDiv.innerText = newVal;
+                // oP.innerText = newVal;
+                // oSpan.innerText = newVal;
+                dep.forEach((item)=>{
+                    item.innerText = newVal;
+                })
+            }
+        })
+
+    </script>
+
+</body>
+</html>

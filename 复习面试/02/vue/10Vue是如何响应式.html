@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id='app'></div>
+
+    <div class='active'>
+        <div>{{msg}}</div>
+        <p>{{msg}}</p>
+        <span>{{msg}}</span>
+    </div>
+    <script>
+
+        let oDiv = document.querySelectorAll('div>div')[0];
+        let oP = document.querySelectorAll('div>p')[0];
+        let oSpan = document.querySelectorAll('div>span')[0];
+        let app = document.querySelectorAll('#app')[0];
+
+        let data = {
+            msg:100
+        }
+
+        let val = data.msg;
+
+        // 如果msg在多个视图内被使用了，在msg变化时需要通知所有的这些视图去更新。
+        // 如何通知?这里需要把所有的这些视图放到一个数组内.在msg变化时,遍历这个数组更新所有视图.
+        // 何时往数组里放视图? (收集依赖) 数据的getter触发时往数组内放视图。
+
+        // setter触发通知视图更新.
+        // getter触发收集依赖.(msg的依赖是oDiv,oP,oSpan)
+
+        // 存放视图的数组.
+        let dep = [];
+
+        Object.defineProperty(data,'msg',{
+            // msg被访问的时候
+            get(){
+                console.log('msg被访问');
+                return val
+            },
+            // msg的值发生变化时
+            set(newVal){
+                val = newVal;
+                dep.forEach((item)=>{
+                    item.innerText = newVal;
+                })
+            }
+        })
+
+        app.innerHTML = render1() + render2() + render3();
+
+        // 每次render函数触发,msg都会被访问一次.
+        function render1(){
+            return `<div>${data.msg}</div>`
+        }
+
+        function render2(){
+            return `<p>${data.msg}</p>`
+        }
+
+        function render3(){
+            return `<span>${data.msg}</span>`
+        }
+
+    </script>
+
+</body>
+</html>
